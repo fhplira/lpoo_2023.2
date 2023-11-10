@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Emprestimo {
 	
 	private double multa = 0;
@@ -8,15 +10,15 @@ public class Emprestimo {
 	private long cpf;
 	private int idLocal;
 	private long isbn;
-	private String dataEmprestimo;
-	private String dataDevolucao;
+	private LocalDateTime dataEmprestimo;
+	private LocalDateTime dataDevolucao;
 	
-	public Emprestimo(long isbn, int idLocal, long cpf, String dataEmprestimo, String dataDevolucao) {
+	public Emprestimo(long isbn, int idLocal, long cpf) {
 		this.isbn = isbn;
 		this.idLocal = idLocal;
 		this.cpf = cpf;
-		this.dataEmprestimo = dataEmprestimo;
-		this.dataDevolucao = dataDevolucao;
+		this.dataEmprestimo = LocalDateTime.now();
+		this.dataDevolucao = this.getDataEmprestimo().plusDays(15);
 	}
 
 	public double getMulta() {
@@ -67,19 +69,19 @@ public class Emprestimo {
 		this.isbn = isbn;
 	}
 
-	public String getDataEmprestimo() {
+	public LocalDateTime getDataEmprestimo() {
 		return dataEmprestimo;
 	}
 
-	public void setDataEmprestimo(String dataEmprestimo) {
+	public void setDataEmprestimo(LocalDateTime dataEmprestimo) {
 		this.dataEmprestimo = dataEmprestimo;
 	}
 
-	public String getDataDevolucao() {
+	public LocalDateTime getDataDevolucao() {
 		return dataDevolucao;
 	}
 
-	public void setDataDevolucao(String dataDevolucao) {
+	public void setDataDevolucao(LocalDateTime dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
 
