@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Emprestimo {
 	
@@ -12,6 +13,10 @@ public class Emprestimo {
 	private long isbn;
 	private LocalDateTime dataEmprestimo;
 	private LocalDateTime dataDevolucao;
+	private String dataEmprestimoFormatada;
+	private String dataDevolucaoFormatada;
+	
+	DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
 	public Emprestimo(long isbn, int idLocal, long cpf) {
 		this.isbn = isbn;
@@ -19,6 +24,8 @@ public class Emprestimo {
 		this.cpf = cpf;
 		this.dataEmprestimo = LocalDateTime.now();
 		this.dataDevolucao = this.getDataEmprestimo().plusDays(15);
+		this.dataEmprestimoFormatada = getDataEmprestimo().format(padraoHora);
+		this.dataDevolucaoFormatada = getDataDevolucao().format(padraoHora);
 	}
 
 	public double getMulta() {
@@ -85,5 +92,19 @@ public class Emprestimo {
 		this.dataDevolucao = dataDevolucao;
 	}
 
+	public String getDataEmprestimoFormatada() {
+		return dataEmprestimoFormatada;
+	}
 	
+	public void setDataEmprestimoFormatada(String dataEmprestimoFormatada) {
+		this.dataEmprestimoFormatada = dataEmprestimoFormatada;
+	}
+	
+	public void setDataDevolucaoFormatada(String dataDevolucaoFormatada) {
+		this.dataDevolucaoFormatada = dataDevolucaoFormatada;
+	}
+	
+	public String getDataDevolucaoFormatada() {
+		return dataDevolucaoFormatada;
+	}
 }
