@@ -3,9 +3,9 @@ package model;
 public class Leitor {
 	private String nome;
 	private String email;
-	private long cpf;
+	private String cpf;
 	
-	public Leitor(String nome, String email , long cpf) {
+	public Leitor(String nome, String email , String cpf) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
@@ -19,11 +19,11 @@ public class Leitor {
 		this.nome = nome;
 	}
 	
-	public long getCpf() {
+	public String getCpf() {
 		return this.cpf;
 	}
 	
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	

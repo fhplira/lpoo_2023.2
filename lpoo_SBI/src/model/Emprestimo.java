@@ -8,9 +8,9 @@ public class Emprestimo {
 	private double multa = 0;
 	private int limiteLivro = 0;
 	private int diasAtrasados = 0; 
-	private long cpf;
-	private int idLocal;
-	private long isbn;
+	private String cpf;
+	private long idLocal;
+	private String isbn;
 	private LocalDateTime dataEmprestimo;
 	private LocalDateTime dataDevolucao;
 	private String dataEmprestimoFormatada;
@@ -18,9 +18,9 @@ public class Emprestimo {
 	
 	DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
-	public Emprestimo(long isbn, int idLocal, long cpf) {
-		this.isbn = isbn;
+	public Emprestimo(long idLocal, String isbn, String cpf) {
 		this.idLocal = idLocal;
+		this.isbn = isbn;
 		this.cpf = cpf;
 		this.dataEmprestimo = LocalDateTime.now();
 		this.dataDevolucao = this.getDataEmprestimo().plusDays(15);
@@ -52,27 +52,27 @@ public class Emprestimo {
 		this.diasAtrasados = diasAtrasados;
 	}
 
-	public long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
-	public int getIdLocal() {
+	public long getIdLocal() {
 		return idLocal;
 	}
 
-	public void setIdLocal(int idLocal) {
+	public void setIdLocal(long idLocal) {
 		this.idLocal = idLocal;
 	}
 
-	public long getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(long isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
