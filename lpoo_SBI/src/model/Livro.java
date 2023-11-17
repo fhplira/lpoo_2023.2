@@ -3,19 +3,16 @@ package model;
 public class Livro {
 	String titulo;
 	String autor;
-	String edicao;
 	String editora;
-	int ano;
+	String isbn;
+	String DataPublicacao;
+	String img;
 	int quantidade;
 	int emprestados;
 	int disponivel;
 	
-	public Livro(String titulo, String autor, String edicao, String editora, int ano) {
-		this.titulo = titulo;
-		this.autor = autor;
-		this.edicao = edicao;
-		this.editora = editora;
-		this.ano = ano;
+	public Livro() {
+		
 	}
 
 	public String getTitulo() {
@@ -34,14 +31,6 @@ public class Livro {
 		this.autor = autor;
 	}
 
-	public String getEdicao() {
-		return edicao;
-	}
-
-	public void setEdicao(String edicao) {
-		this.edicao = edicao;
-	}
-
 	public String getEditora() {
 		return editora;
 	}
@@ -50,12 +39,28 @@ public class Livro {
 		this.editora = editora;
 	}
 
-	public int getAno() {
-		return ano;
+	public String getIsbn() {
+		return isbn;
 	}
 
-	public void setAno(int ano) {
-		this.ano = ano;
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getDataPublicacao() {
+		return DataPublicacao;
+	}
+
+	public void setDataPublicacao(String dataPublicacao) {
+		DataPublicacao = dataPublicacao;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public int getQuantidade() {
@@ -80,5 +85,7 @@ public class Livro {
 
 	public void setDisponivel(int disponivel) {
 		this.disponivel = disponivel;
-	}	
+	}
+	
+	
 }
