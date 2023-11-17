@@ -8,9 +8,9 @@ public class Emprestimo {
 	private double multa = 0;
 	private int limiteLivro = 0;
 	private int diasAtrasados = 0; 
-	private String cpf;
 	private long idLocal;
 	private String isbn;
+	private String cpf;
 	private LocalDateTime dataEmprestimo;
 	private LocalDateTime dataDevolucao;
 	private String dataEmprestimoFormatada;
