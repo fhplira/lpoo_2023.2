@@ -5,10 +5,7 @@ public class Leitor {
 	private String email;
 	private String cpf;
 	
-	public Leitor(String nome, String email , String cpf) {
-		this.nome = nome;
-		this.cpf = cpf;
-		this.email = email;
+	public Leitor() {
 		}
 	
 	public String getNome() {
