@@ -1,3 +1,5 @@
-lpoo_SBI/bin/
-lpoo_SBI/target/
+projeto-sbi/target/
+projeto-sbi/.settings/
 .metadata/
+projeto-sbi/.classpath
+projeto-sbi/.project
