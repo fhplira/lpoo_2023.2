@@ -1,8 +1,8 @@
 package controller;
 
-public class Main {
+public class Principal {
 	public static void main(String[] args) {
-		LivroController livro = new LivroController();
+		LivroControlador livro = new LivroControlador();
 		
 	
 		

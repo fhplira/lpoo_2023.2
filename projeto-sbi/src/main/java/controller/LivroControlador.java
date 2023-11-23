@@ -9,9 +9,9 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import model.Livro;
+import model.LivroModelo;
 
-public class LivroController {
+public class LivroControlador {
 		
 		public String cadastrarLivroPorISBN(String isbn){
 			
@@ -42,7 +42,7 @@ public class LivroController {
 		  
 		 	//System.out.println((((Map) map.get("volumeInfo")).get("imageLinks")));
 		 
-		 	Livro livro = new Livro();
+		 	LivroModelo livro = new LivroModelo();
 		 	livro.setTitulo((String)((Map) map.get("volumeInfo")).get("title"));
 		 	livro.setDataPublicacao((String)((Map) map.get("volumeInfo")).get("publishedDate").toString());
 		 	livro.setAutor((String)((Map) map.get("volumeInfo")).get("authors").toString());
@@ -53,9 +53,9 @@ public class LivroController {
 		 
 	}
 		
-		public Livro cadastrarLivro(String titulo, String autor, String editora, String isbn, String dataPublicacao) {
+		public LivroModelo cadastrarLivro(String titulo, String autor, String editora, String isbn, String dataPublicacao) {
 			// Fazer verificação dos dados
-			Livro livro = new Livro();
+			LivroModelo livro = new LivroModelo();
 			livro.setTitulo(titulo);
 		 	livro.setDataPublicacao(dataPublicacao);
 		 	livro.setAutor(autor);
@@ -64,22 +64,22 @@ public class LivroController {
 			return livro;
 		}
 		
-		public List<Livro> BuscarTodosLivros(){
+		public List<LivroModelo> BuscarTodosLivros(){
 			//return Dao.buscarTodosLivros;
 			return null;
 		}
 		
-		public Livro buscarLivroPorAutor(String autor) {
+		public LivroModelo buscarLivroPorAutor(String autor) {
 			//return Dao.buscarLivroPorAutor;
 			return null;
 		}
 		
-		public Livro buscarLivroPorISBN(String isbn) {
+		public LivroModelo buscarLivroPorISBN(String isbn) {
 			//return Dao.buscarLivroPorAutor;
 			return null;
 		}
 		
-		public Livro buscarLivroPorTitulo(String titulo) {
+		public LivroModelo buscarLivroPorTitulo(String titulo) {
 			//return Dao.buscarLivroPorTitulo;
 			return null;
 		}

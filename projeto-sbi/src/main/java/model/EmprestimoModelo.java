@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Emprestimo {
+public class EmprestimoModelo {
 	
 	private double multa = 0;
 	private int limiteLivro = 0;
@@ -18,7 +18,7 @@ public class Emprestimo {
 	
 	DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
-	public Emprestimo(long idLocal, String isbn, String cpf) {
+	public EmprestimoModelo(long idLocal, String isbn, String cpf) {
 		this.idLocal = idLocal;
 		this.isbn = isbn;
 		this.cpf = cpf;

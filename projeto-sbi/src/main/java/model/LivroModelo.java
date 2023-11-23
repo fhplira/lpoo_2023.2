@@ -1,6 +1,6 @@
 package model;
 
-public class Livro {
+public class LivroModelo {
 	String titulo;
 	String autor;
 	String editora;
@@ -12,7 +12,7 @@ public class Livro {
 	int emprestados;
 	int disponivel;
 	
-	public Livro() {
+	public LivroModelo() {
 		
 	}
 

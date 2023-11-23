@@ -2,15 +2,15 @@ package controller;
 
 import java.util.ArrayList;
 
-import model.Leitor;
+import model.LeitorModelo;
 
-public class LeitorController {
-	private ArrayList<Leitor> leitores = new ArrayList<Leitor>();
+public class LeitorControlador {
+	private ArrayList<LeitorModelo> leitores = new ArrayList<LeitorModelo>();
 	
 	
-	public Leitor buscarLeitor(String cpf) {
+	public LeitorModelo buscarLeitor(String cpf) {
 		if(cpf != null && !cpf.equals("00000000000")) {
-			for(Leitor leitor : leitores) {
+			for(LeitorModelo leitor : leitores) {
 				if(leitor.getCpf().equals(cpf)){
 					return leitor;
 				}

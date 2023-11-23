@@ -1,11 +1,11 @@
 package model;
 
-public class Leitor {
+public class LeitorModelo {
 	private String nome;
 	private String email;
 	private String cpf;
 	
-	public Leitor() {
+	public LeitorModelo() {
 		}
 	
 	public String getNome() {
