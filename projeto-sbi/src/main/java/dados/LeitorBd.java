@@ -14,8 +14,8 @@ public class LeitorBd {
 		String cadastraLeitor = "INSERT INTO leitor (nome, cpf, email)  VALUES (?, ?, ?)";
 		
 		try {
-			ConexaoBD.getConnection();
-			PreparedStatement stmt = null;
+			Connection con = ConexaoBD.getConnection();
+			PreparedStatement stmt = con.prepareStatement(cadastraLeitor);
 			
 			stmt.setString(1, leitor.getNome());
 			stmt.setString(2, leitor.getCpf());
@@ -29,7 +29,7 @@ public class LeitorBd {
 	}
 	
 	public void atualizarLeitor(LeitorModelo leitor) {
-		String atualizaLeitor = "UPDATE "
+		String atualizaLeitor = "UPDATE ";
 	}
 	
 }

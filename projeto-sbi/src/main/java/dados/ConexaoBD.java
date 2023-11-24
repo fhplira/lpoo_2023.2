@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 public class ConexaoBD {
 	
-	public static void getConnection() {
-		
+	public static Connection getConnection() {
+		Connection con = null; 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.
+			con = DriverManager.
 					getConnection("jdbc:mysql://localhost:3306/sistema_bibliotecario_institucional",
 							"root",
 							"root");
@@ -22,6 +22,6 @@ public class ConexaoBD {
 		 catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		return con;
 	}
 }
