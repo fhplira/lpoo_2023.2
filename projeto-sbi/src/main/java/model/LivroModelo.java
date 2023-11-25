@@ -8,7 +8,6 @@ public class LivroModelo {
 	String dataPublicacao;
 	String descricao;
 	String img;	
-	
 	int quantidade;
 	int emprestados;
 	int disponivel;
@@ -17,19 +16,6 @@ public class LivroModelo {
 	public LivroModelo() {
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public String getTitulo() {
 		return titulo;
