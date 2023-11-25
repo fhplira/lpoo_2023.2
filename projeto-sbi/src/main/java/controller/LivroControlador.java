@@ -133,7 +133,7 @@ public class LivroControlador {
 				throw new ExcecaoController("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 			}
 			
-			LivroModelo livro = new LivroModelo(isbn, autor, titulo, dataPublicacao, descricao,editora, img, numeroExemplar);
+			//LivroModelo livro = new LivroModelo(isbn, autor, titulo, dataPublicacao, descricao,editora, img, numeroExemplar);
 			
 			//  try {
 			//		  repository.CadastrarLivro(livro);			
