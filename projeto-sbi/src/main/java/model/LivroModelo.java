@@ -8,13 +8,28 @@ public class LivroModelo {
 	String dataPublicacao;
 	String descricao;
 	String img;
+	String codigoExemplar;
 	int quantidade;
 	int emprestados;
 	int disponivel;
 	
+	
 	public LivroModelo() {
 		
 	}
+
+	
+
+	public String getCodigoExemplar() {
+		return codigoExemplar;
+	}
+
+
+
+	public void setCodigoExemplar(String codigoExemplar) {
+		this.codigoExemplar = codigoExemplar;
+	}
+
 
 	public String getTitulo() {
 		return titulo;
