@@ -2,6 +2,7 @@ package model;
 
 public class LivroModelo {
 	String isbn;
+	String codigoExemplar;
 	String titulo;
 	String autor;
 	String editora;
@@ -15,6 +16,26 @@ public class LivroModelo {
 	
 	public LivroModelo() {
 		
+	}
+	
+	public LivroModelo(String isbn, String codigoExemplar, String titulo, String autor, String editora,
+			String dataPublicacao, String descricao, String img) {
+		this.isbn = isbn;
+		this.codigoExemplar = codigoExemplar;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.editora = editora;
+		this.dataPublicacao = dataPublicacao;
+		this.descricao = descricao;
+		this.img = img;
+	}
+
+	public String getCodigoExemplar() {
+		return codigoExemplar;
+	}
+
+	public void setCodigoExemplar(String codigoExemplar) {
+		this.codigoExemplar = codigoExemplar;
 	}
 
 	public String getTitulo() {
