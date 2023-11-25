@@ -59,6 +59,20 @@ public class CadastrarLeitor {
 		JButton btnCadastrarLivro = new JButton("Cadastrar livro");
 		btnCadastrarLivro.setBounds(20, 179, 138, 43);
 		frame.getContentPane().add(btnCadastrarLivro);
+		btnCadastrarLivro.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CadastrarLivro frameCadastrarLivro = new CadastrarLivro();
+				frame.dispose();
+				frameCadastrarLivro.setVisible(true);
+				
+			}
+			
+		}
+				);
+		
+		
 		
 		JButton btnBuscarLivro = new JButton("Buscar livro");
 		btnBuscarLivro.setBounds(20, 233, 138, 39);

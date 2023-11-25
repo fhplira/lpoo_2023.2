@@ -6,13 +6,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
-import controller.ExcecaoController;
+import controller.ExcecaoControlador;
 import controller.LivroControlador;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,6 +37,7 @@ public class CadastrarLivro extends JFrame {
 	private JTextField txtCodigoExemplar;
 	private JFormattedTextField txtISBN;
 	private JFormattedTextField formattedtxtDataPublicacao;
+	private CadastrarLivro frameCadastrarLivro; 
 	
 	
 	
@@ -45,8 +48,8 @@ public class CadastrarLivro extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastrarLivro frame = new CadastrarLivro();
-					frame.setVisible(true);
+					CadastrarLivro frameCadastrarLivro = new CadastrarLivro();
+					frameCadastrarLivro.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -92,9 +95,9 @@ public class CadastrarLivro extends JFrame {
 		contentPane.add(panelCadastro);
 		GridBagLayout gbl_panelCadastro = new GridBagLayout();
 		gbl_panelCadastro.columnWidths = new int[]{0, 0, 0};
-		gbl_panelCadastro.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panelCadastro.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panelCadastro.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panelCadastro.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panelCadastro.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelCadastro.setLayout(gbl_panelCadastro);
 		
 		JLabel lblTitle = new JLabel("CADASTRAR LIVRO:");
@@ -106,7 +109,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_lblTitle.gridy = 0;
 		panelCadastro.add(lblTitle, gbc_lblTitle);
 		
-		JLabel lblISBN = new JLabel("ISBN:");
+		JLabel lblISBN = new JLabel("* ISBN:");
 		lblISBN.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblISBN = new GridBagConstraints();
 		gbc_lblISBN.insets = new Insets(0, 0, 5, 5);
@@ -116,6 +119,7 @@ public class CadastrarLivro extends JFrame {
 		panelCadastro.add(lblISBN, gbc_lblISBN);
 		
 		final JFormattedTextField txtISBN = new JFormattedTextField();
+		txtISBN.setToolTipText("");
 		txtISBN.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_txtISBN = new GridBagConstraints();
 		gbc_txtISBN.insets = new Insets(0, 0, 10, 200);
@@ -123,6 +127,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_txtISBN.gridx = 1;
 		gbc_txtISBN.gridy = 1;
 		panelCadastro.add(txtISBN, gbc_txtISBN);
+		
 		
 		JButton btnNewButton = new JButton("Cadastrar por ISBN.");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -132,7 +137,7 @@ public class CadastrarLivro extends JFrame {
 				try {
 					controlador.cadastrarLivroPorISBN(ISBN);
 					JOptionPane.showMessageDialog(null, "O livro foi cadastrado com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
-				} catch (ExcecaoController ex) {
+				} catch (ExcecaoControlador ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception exc){
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -148,7 +153,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_btnNewButton.gridy = 2;
 		panelCadastro.add(btnNewButton, gbc_btnNewButton);
 		
-		JLabel lblCodigoExemplar = new JLabel("Código do exemplar:");
+		JLabel lblCodigoExemplar = new JLabel("* Código do exemplar:");
 		lblCodigoExemplar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblCodigoExemplar = new GridBagConstraints();
 		gbc_lblCodigoExemplar.anchor = GridBagConstraints.EAST;
@@ -167,7 +172,7 @@ public class CadastrarLivro extends JFrame {
 		panelCadastro.add(txtCodigoExemplar, gbc_txtCodigoExemplar);
 		txtCodigoExemplar.setColumns(10);
 		
-		JLabel lblTitulo = new JLabel("Titulo:");
+		JLabel lblTitulo = new JLabel("* Titulo:");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblTitulo = new GridBagConstraints();
 		gbc_lblTitulo.anchor = GridBagConstraints.EAST;
@@ -186,7 +191,7 @@ public class CadastrarLivro extends JFrame {
 		panelCadastro.add(txtTitulo, gbc_txtTitulo);
 		txtTitulo.setColumns(10);
 		
-		JLabel lblAutor = new JLabel("Autor:");
+		JLabel lblAutor = new JLabel("*  Autor:");
 		GridBagConstraints gbc_lblAutor = new GridBagConstraints();
 		gbc_lblAutor.anchor = GridBagConstraints.EAST;
 		gbc_lblAutor.insets = new Insets(0, 0, 5, 5);
@@ -241,6 +246,13 @@ public class CadastrarLivro extends JFrame {
 		gbc_formattedtxtDataPublicacao.gridy = 7;
 		panelCadastro.add(formattedtxtDataPublicacao, gbc_formattedtxtDataPublicacao);
 		
+		try {
+			MaskFormatter maskDataPublicacao = new MaskFormatter("##/##/####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		JLabel lblNewLabel_6 = new JLabel("Imagem:");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
@@ -294,9 +306,9 @@ public class CadastrarLivro extends JFrame {
 				LivroControlador controlador = new LivroControlador();
 				
 				try {
-					controlador.cadastrarLivro(titulo, autor, editora, isbn, dataPublicacao, descricao, imagem);
+					controlador.cadastrarLivro(isbn, codigoExemplar, titulo, autor, editora, dataPublicacao, imagem, descricao);
 					JOptionPane.showMessageDialog(null, "O livro foi cadastrado com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
-				} catch (ExcecaoController e1) {
+				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -304,11 +316,20 @@ public class CadastrarLivro extends JFrame {
 				
 			}
 		});
+		
+		JLabel lblNewLabel = new JLabel("* campos obrigatórios");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 2;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 12;
+		panelCadastro.add(lblNewLabel, gbc_lblNewLabel);
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		GridBagConstraints gbc_btnCadastrar = new GridBagConstraints();
 		gbc_btnCadastrar.gridwidth = 2;
 		gbc_btnCadastrar.gridx = 0;
-		gbc_btnCadastrar.gridy = 12;
+		gbc_btnCadastrar.gridy = 13;
 		panelCadastro.add(btnCadastrar, gbc_btnCadastrar);
 		
 		JLabel lblNewLabel_7 = new JLabel("New label");
