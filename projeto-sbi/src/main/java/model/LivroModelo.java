@@ -7,13 +7,23 @@ public class LivroModelo {
 	String editora;
 	String dataPublicacao;
 	String descricao;
-	String img;
+	String img;					
 	int quantidade;
 	int emprestados;
 	int disponivel;
 	
 	public LivroModelo() {
 		
+	}
+	
+	public LivroModelo(String isbn, String titulo, String autor, String editora, String dataPublicacao, String descricao, String img, int numeroExemplar) {
+		this.isbn = isbn;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.editora = editora;
+		this.dataPublicacao = dataPublicacao;
+		this.descricao = descricao;
+		this.img = img;
 	}
 
 	public String getTitulo() {
@@ -94,5 +104,6 @@ public class LivroModelo {
 
 	public void setDisponivel(int disponivel) {
 		this.disponivel = disponivel;
-	}	
+	}
+	
 }

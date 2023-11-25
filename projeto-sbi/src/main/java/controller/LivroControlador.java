@@ -1,5 +1,4 @@
 package controller;
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -13,7 +12,7 @@ import model.LivroModelo;
 
 public class LivroControlador {
 		
-		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoController{	
+		public String cadastrarLivroPorISBN(String isbn) throws ExcecaoController{	
 			
 			if(isbn.isBlank()){
 				throw new ExcecaoController("O campo ISBN não pode ser vazio.");
@@ -39,10 +38,8 @@ public class LivroControlador {
 						
 			try {
 				response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
-			} catch (IOException e) {
-				e.getMessage();
-			} catch (InterruptedException e) {
-				e.getMessage();
+			} catch (Exception e) {
+				throw new ExcecaoController("O isbn não foi encontrado.");
 			} 
 			
 		  	Gson gson = new Gson();
@@ -51,15 +48,17 @@ public class LivroControlador {
 		  	int verificaSeTemObjeto = obj.get("totalItems").getAsInt();
 		  	
 		  	if(verificaSeTemObjeto == 0) {
-		  		throw new ExcecaoController("O isbn não foi encontrado.");
+		  		throw new ExcecaoController("O isbn não foi encontrado na base de dados.");
 		  	}
 		  	
 		  	Map map = gson.fromJson(obj.get("items").getAsJsonArray().get(0), Map.class);
+		  	
+		  	System.out.println(response.body());
 		  
 		  	LivroModelo livro = new LivroModelo();
 		  	
 		  	livro.setTitulo((String)((Map) map.get("volumeInfo")).get("title"));
-		  	livro.setAutor((String)((Map) map.get("volumeInfo")).get("authors").toString());
+		  	livro.setAutor((String) ((Map) map.get("volumeInfo")).get("authors").toString());
 		  	livro.setIsbn(isbn);
 		  	
 		 	if ((((Map) map.get("volumeInfo")).containsKey("imageLinks"))){	
@@ -79,6 +78,9 @@ public class LivroControlador {
 		 		livro.setDescricao((String) ((Map) map.get("volumeInfo")).get("description"));
 		 	}
 		 	
+		 	System.out.println(livro.getAutor());
+		 	return livro.toString();
+		 	
 		 	//  try {
 			//		  repository.CadastrarLivro(Livro);			
 		 	//	}catch (DadosExcecao e){
@@ -86,7 +88,7 @@ public class LivroControlador {
 		   //	} 
 	}
 		
-		public void cadastrarLivro(String titulo, String autor, String editora, String isbn, String dataPublicacao, String descricao, String img) throws ExcecaoController{
+		public void cadastrarLivro(String titulo, String autor, String editora, String isbn, String dataPublicacao, String descricao, String img, int numeroExemplar) throws ExcecaoController{
 			if(isbn.isBlank()){
 				throw new ExcecaoController("O campo ISBN não pode ser vazio.");
 			}
@@ -131,15 +133,7 @@ public class LivroControlador {
 				throw new ExcecaoController("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 			}
 			
-			LivroModelo livro = new LivroModelo();
-			
-			livro.setIsbn(isbn);
-			livro.setAutor(autor);
-			livro.setTitulo(titulo);
-			livro.setDataPublicacao(dataPublicacao);
-			livro.setDescricao(descricao);
-			livro.setEditora(editora);
-			livro.setImg(img);
+			LivroModelo livro = new LivroModelo(isbn, autor, titulo, dataPublicacao, descricao,editora, img, numeroExemplar);
 			
 			//  try {
 			//		  repository.CadastrarLivro(livro);			
