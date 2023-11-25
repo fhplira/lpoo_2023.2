@@ -8,22 +8,26 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import dados.ExcecaoDados;
+import dados.LivroDados;
 import model.LivroModelo;
 
 public class LivroControlador {
 		
-		public String cadastrarLivroPorISBN(String isbn) throws ExcecaoController{	
+		private LivroDados dados;
+		
+		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador{	
 			
 			if(isbn.isBlank()){
-				throw new ExcecaoController("O campo ISBN não pode ser vazio.");
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
 			
 			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoController("O campo ISBN não pode ter letras e nem espaços.");
+				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
 			}
 			
 			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoController("O campo ISBN deve ter 10 ou 13 números.");
+				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
 			}
 			
 			final String urlGet = "https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY";
@@ -39,7 +43,7 @@ public class LivroControlador {
 			try {
 				response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
 			} catch (Exception e) {
-				throw new ExcecaoController("O isbn não foi encontrado.");
+				throw new ExcecaoControlador("Houve uma inconsistência com a base de dados.");
 			} 
 			
 		  	Gson gson = new Gson();
@@ -48,7 +52,7 @@ public class LivroControlador {
 		  	int verificaSeTemObjeto = obj.get("totalItems").getAsInt();
 		  	
 		  	if(verificaSeTemObjeto == 0) {
-		  		throw new ExcecaoController("O isbn não foi encontrado na base de dados.");
+		  		throw new ExcecaoControlador("O isbn não foi encontrado na base de dados.");
 		  	}
 		  	
 		  	Map map = gson.fromJson(obj.get("items").getAsJsonArray().get(0), Map.class);
@@ -78,71 +82,62 @@ public class LivroControlador {
 		 		livro.setDescricao((String) ((Map) map.get("volumeInfo")).get("description"));
 		 	}
 		 	
-		 	System.out.println(livro.getAutor());
-		 	return livro.toString();
-		 	
-		 	//  try {
-			//		  repository.CadastrarLivro(Livro);			
-		 	//	}catch (DadosExcecao e){
-			// 		  throw new (RegraNegocioExcecao(e.getMessage(), e);
-		   //	} 
+		    try {
+				  dados.cadastrarLivro(livro);			
+		 	}catch (ExcecaoDados e){
+			 		  throw new ExcecaoControlador(e.getMessage(), e);
+		   	} 
 	}
 		
-		public void cadastrarLivro(String titulo, String autor, String editora, String isbn, String dataPublicacao, String descricao, String img, int numeroExemplar) throws ExcecaoController{
+		public void cadastrarLivro(String isbn, String codigoExemplar, String titulo, String autor, String editora, String dataPublicacao,  String img, String descricao) throws ExcecaoControlador{
 			if(isbn.isBlank()){
-				throw new ExcecaoController("O campo ISBN não pode ser vazio.");
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
 			
 			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoController("O campo ISBN não pode ter letras e nem espaços.");
+				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
 			}
 			
 			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoController("O campo ISBN deve ter 10 ou 13 números.");
+				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+			}
+			
+			if(codigoExemplar.isBlank()){
+				throw new ExcecaoControlador("O campo codigo exemplar não pode ser vazio.");
 			}
 			
 			if(titulo.isBlank()){
-				throw new ExcecaoController("O campo título não pode ser vazio.");
-			}
-			
-			if(descricao.isBlank()){
-				throw new ExcecaoController("O campo título não pode ser vazio.");
-			}
-			
-			if(img.isBlank()){
-				throw new ExcecaoController("O campo título não pode ser vazio.");
+				throw new ExcecaoControlador("O campo título não pode ser vazio.");
 			}
 		
 			if(autor.isBlank()){
-				throw new ExcecaoController("O campo autor não pode ser vazio.");
+				throw new ExcecaoControlador("O campo autor não pode ser vazio.");
 			}
 			
 			if(!autor.matches("^[a-zA-Z,\\s]+$")){
-				throw new ExcecaoController("O campo autor não pode ter números.");
-			}
-			
-			if(editora.isBlank()){
-				throw new ExcecaoController("O campo editora não pode ser vazio.");
-			}
-			
-			if(dataPublicacao.isBlank()) {
-				throw new ExcecaoController("O campo data da publicação não pode ser vazio.");
+				throw new ExcecaoControlador("O campo autor não pode ter números.");
 			}
 			
 			if(!dataPublicacao.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$") && (!dataPublicacao.matches("^(\\D*\\d\\D*){4}$"))){
-				throw new ExcecaoController("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
+				throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 			}
 			
-			//LivroModelo livro = new LivroModelo(isbn, autor, titulo, dataPublicacao, descricao,editora, img, numeroExemplar);
+			LivroModelo livro = new LivroModelo(isbn, codigoExemplar, titulo, autor, editora, dataPublicacao, descricao, img);
 			
-			//  try {
-			//		  repository.CadastrarLivro(livro);			
-		 	//	}catch (DadosExcecao e){
-			// 		  throw new (RegraNegocioExcecao(e.getMessage(), e);
-		   //	} 
+			 try {
+				  dados.cadastrarLivro(livro);			
+		 	}catch (ExcecaoDados e){
+			 		  throw new ExcecaoControlador(e.getMessage(), e);
+		   	} 
 		}
 		
-		public List<LivroModelo> BuscarTodosOsLivros(){
+		
+		public void atualizarLivro(String codigoExemplar, String titulo, String autor, String editora, String dataPublicacao, String descricao, String img) throws ExcecaoControlador {
+			
+		}
+	
+		
+		public List<LivroModelo> buscarTodosOsLivros(){
 			//try {
 					// repositorio.buscarTodosOsLivros;
 					// return List<LivroModelo>;
@@ -153,13 +148,13 @@ public class LivroControlador {
 			return null;
 		}
 		
-		public LivroModelo buscarLivroPorAutor(String autor) throws ExcecaoController {
+		public LivroModelo buscarLivroPorAutor(String autor) throws ExcecaoControlador {
 			if(autor.isBlank()){
-				throw new ExcecaoController("O campo autor não pode ser vazio.");
+				throw new ExcecaoControlador("O campo autor não pode ser vazio.");
 			}
 			
 			if(!autor.matches("^[a-zA-Z,\\s]+$")){
-				throw new ExcecaoController("O campo autor não pode ter números.");
+				throw new ExcecaoControlador("O campo autor não pode ter números.");
 			}
 			
 			LivroModelo livro = new LivroModelo();
@@ -174,17 +169,17 @@ public class LivroControlador {
 			return null;
 		}
 		
-		public LivroModelo buscarLivroPorISBN(String isbn) throws ExcecaoController {
+		public LivroModelo buscarLivroPorISBN(String isbn) throws ExcecaoControlador {
 			if(isbn.isBlank()){
-				throw new ExcecaoController("O campo ISBN não pode ser vazio.");
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
 			
 			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoController("O campo ISBN não pode ter letras e nem espaços.");
+				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
 			}
 			
 			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoController("O campo ISBN deve ter 10 ou 13 números.");
+				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
 			}
 			
 			LivroModelo livro = new LivroModelo();
@@ -200,9 +195,9 @@ public class LivroControlador {
 
 		}
 		
-		public LivroModelo buscarLivroPorTitulo(String titulo) throws ExcecaoController {
+		public LivroModelo buscarLivroPorTitulo(String titulo) throws ExcecaoControlador {
 			if(titulo.isBlank()){
-				throw new ExcecaoController("O campo título não pode ser vazio.");
+				throw new ExcecaoControlador("O campo título não pode ser vazio.");
 			}
 			
 			LivroModelo livro = new LivroModelo();
