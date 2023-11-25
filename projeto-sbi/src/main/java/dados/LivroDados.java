@@ -8,9 +8,8 @@ import java.sql.ResultSet;
 
 public class LivroDados {
 
-    Connection con = ConexaoDados.getConnection();
-
     public void cadastrarLivro(LivroModelo livro) throws ExcecaoDados {
+        Connection con = ConexaoDados.getConnection();
 
         try {
 
@@ -35,6 +34,7 @@ public class LivroDados {
     }
     
     public void atualizarLivro(LivroModelo livro) throws ExcecaoDados {
+        Connection con = ConexaoDados.getConnection();
 
         try {
 
