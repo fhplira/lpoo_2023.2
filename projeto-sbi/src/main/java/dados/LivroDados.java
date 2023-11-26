@@ -5,16 +5,21 @@ import model.LivroModelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LivroDados {
+	
+	PreparedStatement stmt;
+	Connection con;
+	ResultSet result;
 
     public void cadastrarLivro(LivroModelo livro) throws ExcecaoDados {
-        Connection con = ConexaoDados.getConnection();
-
         try {
+        	con = ConexaoDados.getConnection();
 
             String cadastraLivro = "INSERT INTO livro (isbn, titulo, autor, editora, data_publicacao, descricao, img, codigo_exemplar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = con.prepareStatement(cadastraLivro);
+            stmt = con.prepareStatement(cadastraLivro);
 
             stmt.setString(1, livro.getIsbn());
             stmt.setString(2, livro.getTitulo());
@@ -26,7 +31,7 @@ public class LivroDados {
             stmt.setString(8, livro.getCodigoExemplar());
             
             //verificar se o executeQuery é sem parâmetro
-            ResultSet result = stmt.executeQuery();
+            result = stmt.executeQuery();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao tentar cadastrar o livro");
         }
@@ -35,7 +40,7 @@ public class LivroDados {
     
     public void atualizarLivro(LivroModelo livro) throws ExcecaoDados {
         try {
-            Connection con = ConexaoDados.getConnection();
+            con = ConexaoDados.getConnection();
 
             String atualizaLivro = "UPDATE livro SET"
             		+ "titulo = ?, "
@@ -46,7 +51,7 @@ public class LivroDados {
             		+ "img = ? "
             		+ "WHERE isbn = ?";
             
-            PreparedStatement stmt = con.prepareStatement(atualizaLivro);
+            stmt = con.prepareStatement(atualizaLivro);
 
             stmt.setString(1, livro.getTitulo());
             stmt.setString(2, livro.getAutor());
@@ -56,14 +61,82 @@ public class LivroDados {
             stmt.setString(7, livro.getImg());
             stmt.setString(8, livro.getIsbn());
 
-            //verficar as alterações feitas no método cadastrar
-            ResultSet result;
+            //caso dê certo, atualizar para deixar sem parâmetro
             result = stmt.executeQuery(atualizaLivro);
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao tentar atualizar as informações do livro");
         }
 
     }
+    
+    public LivroModelo buscarLivroPorIsbn(String isbn) throws ExcecaoDados {    	
+    	try {
+    		con = ConexaoDados.getConnection();
+    		
+        	String buscarIsbn = "SELECT * FROM livro WHERE isbn = ?";
+
+        	stmt = con.prepareStatement(buscarIsbn);
+        	stmt.setString(1, isbn);
+        	
+        	result = stmt.executeQuery();
+        	LivroModelo livro = new LivroModelo();
+        	
+        	//resul.first;
+        	
+        	livro.setIsbn(result.getString("isbn"));
+        	livro.setTitulo(result.getString("titulo_livro"));
+        	livro.setAutor(result.getString("autor"));
+        	livro.setEditora(result.getString("editora"));
+        	livro.setDataPublicacao(result.getString("data_publicacao"));
+        	livro.setDescricao(result.getString("descricao"));
+        	livro.setImg(result.getString("img"));
+        	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
+   
+        	return livro;
+        	
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Livro não encontrado");
+    	}
+    }
+    
+    public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoDados {
+    	try {
+    		con = ConexaoDados.getConnection();
+    		
+    		String buscarTitulo = "SELECT * FROM livro WHERE titulo = ?";
+    		stmt = con.prepareStatement(buscarTitulo);
+        	stmt.setString(1, titulo);
+        	result = stmt.executeQuery();
+        	
+        	List<LivroModelo> listaLivros = new ArrayList<>();
+        	
+        	//estrutura de repeticao que adiciona os dados na variavel curso e depois passa pra o ArrayList
+        	while (result.next()) {
+        		LivroModelo livro = new LivroModelo();
+        		livro.setTitulo(result.getString("titulo_livro"));
+        		livro.setIsbn(result.getString("isbn"));
+            	livro.setAutor(result.getString("autor"));
+            	livro.setEditora(result.getString("editora"));
+            	livro.setDataPublicacao(result.getString("data_publicacao"));
+            	livro.setDescricao(result.getString("descricao"));
+            	livro.setImg(result.getString("img"));
+            	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
+            	
+            	listaLivros.add(livro);
+        	}
+        	
+        	return listaLivros;
+        	
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Livro não encontrado");
+    	}
+    }
+    
+    /*public ResultSet pesquisarLivro(LivroModelo Livro) throws ExcecaoDados{
+    	  con = ConexaoDados.getConnection();
+    	  
+    	  //String pesquisarLivro = 
+    }*/
     
     
 }
