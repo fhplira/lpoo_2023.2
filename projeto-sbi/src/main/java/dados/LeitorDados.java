@@ -14,7 +14,7 @@ public class LeitorDados {
 		String cadastraLeitor = "INSERT INTO leitor (nome, cpf, email)  VALUES (?, ?, ?)";
 		
 		try {
-			Connection con = ConexaoDados.getConnection();
+			Connection con = new ConexaoDados().getConnection();
 			PreparedStatement stmt = con.prepareStatement(cadastraLeitor);
 			
 			stmt.setString(1, leitor.getNome());

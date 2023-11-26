@@ -56,6 +56,8 @@ public class LivroControlador {
 		  	}
 		  	
 		  	Map map = gson.fromJson(obj.get("items").getAsJsonArray().get(0), Map.class);
+		  	
+		  	System.out.println(response.body());
 		  
 		  	LivroModelo livro = new LivroModelo();
 		  	
@@ -87,7 +89,7 @@ public class LivroControlador {
 		   	} 
 	}
 		
-		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao,  String img, String descricao) throws ExcecaoControlador{
+		public void cadastrarLivro(String isbn, String codigoExemplar, String titulo, String autor, String editora, String dataPublicacao,  String img, String descricao) throws ExcecaoControlador{
 			if(isbn.isBlank()){
 				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
@@ -98,6 +100,10 @@ public class LivroControlador {
 			
 			if((isbn.length() != 10) && (isbn.length() != 13)) {
 				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+			}
+			
+			if(codigoExemplar.isBlank()){
+				throw new ExcecaoControlador("O campo codigo exemplar não pode ser vazio.");
 			}
 			
 			if(titulo.isBlank()){
@@ -116,7 +122,7 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 			}
 			
-			LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, descricao, img);
+			LivroModelo livro = new LivroModelo(isbn, codigoExemplar, titulo, autor, editora, dataPublicacao, descricao, img);
 			
 			 try {
 				  dados.cadastrarLivro(livro);			
