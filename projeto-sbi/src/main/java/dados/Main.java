@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import dados.LivroDados;
-import model.LivroModelo;
+import modelos.LivroModelo;
 
 
 public class Main {

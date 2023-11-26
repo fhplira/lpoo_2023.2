@@ -8,8 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import controller.ExcecaoControlador;
-import controller.LivroControlador;
+import controladores.ExcecaoControlador;
+import controladores.LivroControlador;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

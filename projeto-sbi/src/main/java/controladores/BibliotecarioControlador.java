@@ -1,4 +1,4 @@
-package controller;
+package controladores;
 
 public class BibliotecarioControlador {
 

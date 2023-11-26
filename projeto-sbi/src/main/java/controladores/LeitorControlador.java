@@ -1,8 +1,8 @@
-package controller;
+package controladores;
 
 import dados.ExcecaoDados;
 import dados.LeitorDados;
-import model.LeitorModelo;
+import modelos.LeitorModelo;
 
 public class LeitorControlador {
 	

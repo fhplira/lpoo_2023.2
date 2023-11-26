@@ -1,4 +1,4 @@
-package controller;
+package controladores;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 
 import dados.ExcecaoDados;
 import dados.LivroDados;
-import model.LivroModelo;
+import modelos.LivroModelo;
 
 public class LivroControlador {
 		

@@ -1,12 +1,12 @@
 package dados;
 
-import model.LivroModelo;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import modelos.LivroModelo;
 
 public class LivroDados {
 	

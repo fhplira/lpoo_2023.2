@@ -1,7 +1,7 @@
-package controller;
+package controladores;
 
 import dados.ExcecaoDados;
-import model.EmprestimoModelo;
+import modelos.EmprestimoModelo;
 
 //Remover todos os comentarios apos a criação da classe EmprestimoDados e seus Métodos.
 //Próximas Adições Metodos: 1° Fazer Devolução;
