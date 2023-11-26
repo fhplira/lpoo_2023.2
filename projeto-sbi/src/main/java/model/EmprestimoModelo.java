@@ -6,20 +6,19 @@ import java.time.format.DateTimeFormatter;
 public class EmprestimoModelo {
 	
 	private double multa = 0;
-	private int limiteLivro = 0;
 	private int diasAtrasados = 0; 
-	private long idLocal;
+	private int idLocal;
 	private String isbn;
 	private String cpf;
 	private LocalDateTime dataEmprestimo;
+	private LocalDateTime dataAtual = LocalDateTime.now();
 	private LocalDateTime dataDevolucao;
 	private String dataEmprestimoFormatada;
 	private String dataDevolucaoFormatada;
+	private String dataAtualFormatada = getDataAtual().format(padraoHora);
+	private static DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
-	DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-	
-	public EmprestimoModelo(long idLocal, String isbn, String cpf) {
-		this.idLocal = idLocal;
+	public EmprestimoModelo(String isbn, String cpf) {
 		this.isbn = isbn;
 		this.cpf = cpf;
 		this.dataEmprestimo = LocalDateTime.now();
@@ -28,20 +27,16 @@ public class EmprestimoModelo {
 		this.dataDevolucaoFormatada = getDataDevolucao().format(padraoHora);
 	}
 
+	public EmprestimoModelo() {
+		
+	}
+	
 	public double getMulta() {
 		return multa;
 	}
 
 	public void setMulta(double multa) {
 		this.multa = multa;
-	}
-
-	public int getLimiteLivro() {
-		return limiteLivro;
-	}
-
-	public void setLimiteLivro(int limiteLivro) {
-		this.limiteLivro = limiteLivro;
 	}
 
 	public int getDiasAtrasados() {
@@ -60,11 +55,11 @@ public class EmprestimoModelo {
 		this.cpf = cpf;
 	}
 
-	public long getIdLocal() {
+	public int getIdLocal() {
 		return idLocal;
 	}
 
-	public void setIdLocal(long idLocal) {
+	public void setIdLocal(int idLocal) {
 		this.idLocal = idLocal;
 	}
 
@@ -107,4 +102,21 @@ public class EmprestimoModelo {
 	public String getDataDevolucaoFormatada() {
 		return dataDevolucaoFormatada;
 	}
+
+	public LocalDateTime getDataAtual() {
+		return dataAtual;
+	}
+
+	public void setDataAtual(LocalDateTime dataAtual) {
+		this.dataAtual = dataAtual;
+	}
+
+	public String getDataAtualFormatada() {
+		return dataAtualFormatada;
+	}
+
+	public void setDataAtualFormatada(String dataAtualFormatada) {
+		this.dataAtualFormatada = dataAtualFormatada;
+	}
+	
 }
