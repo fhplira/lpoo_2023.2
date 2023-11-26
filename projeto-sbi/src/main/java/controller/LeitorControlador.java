@@ -43,7 +43,7 @@ public class LeitorControlador {
 		
 		LeitorModelo LeitorModelo = new LeitorModelo(nome, cpf, email);
 		try{
-			repositorio.criarLeitor(LeitorModelo); //Criar metodo criarLeitor na camada de dados.
+			repositorio.criarLeitor(LeitorModelo); //Criar metodo criarLeitor na camada de dados
 		}catch(ExcecaoDados e){
 			throw new ExcecaoControlador(e.getMessage(), e); //o e.getMessage retornaria um "LeitorModelo já existente".
 		}
@@ -69,7 +69,7 @@ public class LeitorControlador {
 		
 		LeitorModelo LeitorModelo = new LeitorModelo();
 		try {
-			LeitorModelo = repositorio.buscarLeitorPorCpf(cpf); //Criar metodo buscarLeitorPorCpf na camada de dados.
+			LeitorModelo = repositorio.buscarLeitorPorCpf(cpf); //Criar metodo buscarLeitorPorCpf na camada de dados
 			return LeitorModelo;
 		}catch(ExcecaoDados e){
 			throw new ExcecaoControlador(e.getMessage(), e); // o e.getMessage retornaria um "LeitorModelo não encontrado".
