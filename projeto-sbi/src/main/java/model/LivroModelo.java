@@ -18,16 +18,15 @@ public class LivroModelo {
 		
 	}
 	
-	public LivroModelo(String isbn, String codigoExemplar, String titulo, String autor, String editora,
-			String dataPublicacao, String descricao, String img) {
+	public LivroModelo(String isbn, String titulo, String autor, String editora,String data_publicacao, String descricao, String img,String codigo_exemplar) {
 		this.isbn = isbn;
-		this.codigoExemplar = codigoExemplar;
 		this.titulo = titulo;
 		this.autor = autor;
 		this.editora = editora;
 		this.dataPublicacao = dataPublicacao;
 		this.descricao = descricao;
 		this.img = img;
+		this.codigoExemplar = codigoExemplar;
 	}
 
 	public String getCodigoExemplar() {
