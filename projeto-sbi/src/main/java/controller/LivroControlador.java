@@ -14,7 +14,7 @@ import model.LivroModelo;
 
 public class LivroControlador {
 		
-		private LivroDados dados;
+		private LivroDados dados = new LivroDados() ;
 		
 		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador{	
 			
@@ -51,19 +51,15 @@ public class LivroControlador {
 		 
 		  	int verificaSeTemObjeto = obj.get("totalItems").getAsInt();
 		  	
+		  	
 		  	if(verificaSeTemObjeto == 0) {
 		  		throw new ExcecaoControlador("O isbn não foi encontrado na base de dados.");
 		  	}
 		  	
-		  	Map map = gson.fromJson(obj.get("items").getAsJsonArray().get(0), Map.class);
 		  	
-		  	System.out.println(response.body());
+		  	Map map = gson.fromJson(obj.get("items").getAsJsonArray().get(0), Map.class);
 		  
 		  	LivroModelo livro = new LivroModelo();
-		  	
-		  	livro.setTitulo((String)((Map) map.get("volumeInfo")).get("title"));
-		  	livro.setAutor((String) ((Map) map.get("volumeInfo")).get("authors").toString());
-		  	livro.setIsbn(isbn);
 		  	
 		 	if ((((Map) map.get("volumeInfo")).containsKey("imageLinks"))){	
 		 		Map<String, String> img = (Map<String, String>)((Map) map.get("volumeInfo")).get("imageLinks");
@@ -82,14 +78,22 @@ public class LivroControlador {
 		 		livro.setDescricao((String) ((Map) map.get("volumeInfo")).get("description"));
 		 	}
 		 	
+		 	livro.setTitulo((String)((Map) map.get("volumeInfo")).get("title"));
+		 	livro.setAutor((String) ((Map) map.get("volumeInfo")).get("authors").toString());
+		 	livro.setIsbn(isbn);
+		 	
+		 	
 		    try {
 				  dados.cadastrarLivro(livro);			
 		 	}catch (ExcecaoDados e){
 			 		  throw new ExcecaoControlador(e.getMessage(), e);
 		   	} 
+		    
 	}
 		
-		public void cadastrarLivro(String isbn, String codigoExemplar, String titulo, String autor, String editora, String dataPublicacao,  String img, String descricao) throws ExcecaoControlador{
+		
+		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao) throws ExcecaoControlador{
+			
 			if(isbn.isBlank()){
 				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
@@ -102,9 +106,6 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
 			}
 			
-			if(codigoExemplar.isBlank()){
-				throw new ExcecaoControlador("O campo codigo exemplar não pode ser vazio.");
-			}
 			
 			if(titulo.isBlank()){
 				throw new ExcecaoControlador("O campo título não pode ser vazio.");
@@ -122,18 +123,19 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 			}
 			
-			LivroModelo livro = new LivroModelo(isbn, codigoExemplar, titulo, autor, editora, dataPublicacao, descricao, img);
+			LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, descricao, img);
 			
 			 try {
 				  dados.cadastrarLivro(livro);			
 		 	}catch (ExcecaoDados e){
 			 		  throw new ExcecaoControlador(e.getMessage(), e);
 		   	} 
+			 
 		}
 		
 		
-		public void atualizarLivro(String codigoExemplar, String titulo, String autor, String editora, String dataPublicacao, String descricao, String img) throws ExcecaoControlador {
-			
+		public void atualizarLivro(String titulo, String autor, String editora, String dataPublicacao, String descricao, String img) throws ExcecaoControlador {
+			// a fazer
 		}
 	
 		

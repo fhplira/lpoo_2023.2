@@ -5,9 +5,8 @@ public class BibliotecarioModelo {
 	private String email;
 	private String senha;
 	
-	public BibliotecarioModelo(String email, String senha) {
-		this.email = email;
-		this.senha = senha;
+	public BibliotecarioModelo() {
+
 	}
 
 	public String getEmail() {
