@@ -41,12 +41,12 @@ public class LeitorControlador {
 			throw new ExcecaoControlador("O campo Cpf não pode ter espaço em branco");
 		}
 		
-		LeitorModelo LeitorModelo = new LeitorModelo(nome, cpf, email);
-		try{
-			repositorio.criarLeitor(LeitorModelo); //Criar metodo criarLeitor na camada de dados.
-		}catch(ExcecaoDados e){
-			throw new ExcecaoControlador(e.getMessage(), e); //o e.getMessage retornaria um "LeitorModelo já existente".
-		}
+		//LeitorModelo LeitorModelo = new LeitorModelo(nome, cpf, email);
+		//try{
+			//repositorio.criarLeitor(LeitorModelo); //Criar metodo criarLeitor na camada de dados.
+		//}catch(ExcecaoDados e){
+			//throw new ExcecaoControlador(e.getMessage(), e); //o e.getMessage retornaria um "LeitorModelo já existente".
+		//}
 	}
 	
 	public LeitorModelo buscarLeitorModeloPorCpf(String cpf) throws ExcecaoControlador {
@@ -67,13 +67,13 @@ public class LeitorControlador {
 			throw new ExcecaoControlador("O campo Cpf não pode ter espaço em branco");
 		}
 		
-		LeitorModelo LeitorModelo = new LeitorModelo();
-		try {
-			LeitorModelo = repositorio.buscarLeitorPorCpf(cpf); //Criar metodo buscarLeitorPorCpf na camada de dados.
-			return LeitorModelo;
-		}catch(ExcecaoDados e){
-			throw new ExcecaoControlador(e.getMessage(), e); // o e.getMessage retornaria um "LeitorModelo não encontrado".
-		}
-		
+		//LeitorModelo LeitorModelo = new LeitorModelo();
+		//try {
+			//LeitorModelo = repositorio.buscarLeitorPorCpf(cpf); //Criar metodo buscarLeitorPorCpf na camada de dados.
+			//return LeitorModelo;
+		//}catch(ExcecaoDados e){
+			//throw new ExcecaoControlador(e.getMessage(), e); // o e.getMessage retornaria um "LeitorModelo não encontrado".
+		//}
+		return null; //remover apos criação dos metodos acima.
 	}
 }
