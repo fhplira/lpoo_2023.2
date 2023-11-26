@@ -24,9 +24,9 @@ public class LivroDados {
             stmt.setString(6, livro.getDescricao());
             stmt.setString(7, livro.getImg());
             stmt.setString(8, livro.getCodigoExemplar());
-
-            ResultSet result;
-            result = stmt.executeQuery(cadastraLivro);
+            
+            //verificar se o executeQuery é sem parâmetro
+            ResultSet result = stmt.executeQuery();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao tentar cadastrar o livro");
         }
@@ -34,9 +34,8 @@ public class LivroDados {
     }
     
     public void atualizarLivro(LivroModelo livro) throws ExcecaoDados {
-        Connection con = ConexaoDados.getConnection();
-
         try {
+            Connection con = ConexaoDados.getConnection();
 
             String atualizaLivro = "UPDATE livro SET"
             		+ "titulo = ?, "
@@ -57,6 +56,7 @@ public class LivroDados {
             stmt.setString(7, livro.getImg());
             stmt.setString(8, livro.getIsbn());
 
+            //verficar as alterações feitas no método cadastrar
             ResultSet result;
             result = stmt.executeQuery(atualizaLivro);
         } catch (Exception e) {
