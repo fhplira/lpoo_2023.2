@@ -1,24 +1,22 @@
 package model;
 
 public class LivroModelo {
+	int id;
 	String isbn;
-	String codigoExemplar;
 	String titulo;
 	String autor;
 	String editora;
 	String dataPublicacao;
 	String descricao;
 	String img;	
-	int quantidade;
-	int emprestados;
-	int disponivel;
+	boolean disponivel;
 	
 	
 	public LivroModelo() {
 		
 	}
 	
-	public LivroModelo(String isbn, String titulo, String autor, String editora,String data_publicacao, String descricao, String img,String codigo_exemplar) {
+	public LivroModelo(String isbn, String titulo, String autor, String editora,String dataPublicacao, String descricao, String img) {
 		this.isbn = isbn;
 		this.titulo = titulo;
 		this.autor = autor;
@@ -26,15 +24,19 @@ public class LivroModelo {
 		this.dataPublicacao = dataPublicacao;
 		this.descricao = descricao;
 		this.img = img;
-		this.codigoExemplar = codigoExemplar;
 	}
 
-	public String getCodigoExemplar() {
-		return codigoExemplar;
+
+	public int getId() {
+		return id;
 	}
 
-	public void setCodigoExemplar(String codigoExemplar) {
-		this.codigoExemplar = codigoExemplar;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 
 	public String getTitulo() {
@@ -91,30 +93,6 @@ public class LivroModelo {
 
 	public void setImg(String img) {
 		this.img = img;
-	}
-
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public int getEmprestados() {
-		return emprestados;
-	}
-
-	public void setEmprestados(int emprestados) {
-		this.emprestados = emprestados;
-	}
-
-	public int getDisponivel() {
-		return disponivel;
-	}
-
-	public void setDisponivel(int disponivel) {
-		this.disponivel = disponivel;
 	}
 	
 }
