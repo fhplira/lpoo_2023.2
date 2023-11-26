@@ -4,6 +4,7 @@ public class LeitorModelo {
 	private String nome;
 	private String email;
 	private String cpf;
+	private int LivrosEmprestados = 0;
 	
 	public LeitorModelo(String nome, String email, String cpf) {
 		this.nome = nome;
@@ -37,4 +38,13 @@ public class LeitorModelo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public int getLivrosEmprestados() {
+		return LivrosEmprestados;
+	}
+
+	public void setLivrosEmprestados(int livrosEmprestados) {
+		LivrosEmprestados = livrosEmprestados;
+	}
+	
 }
