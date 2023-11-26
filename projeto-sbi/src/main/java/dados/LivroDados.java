@@ -11,14 +11,14 @@ import java.util.List;
 public class LivroDados {
 	
 	PreparedStatement stmt;
-	Connection con;
+	Connection con = null;
 	ResultSet result;
 
     public void cadastrarLivro(LivroModelo livro) throws ExcecaoDados {
         try {
-        	con = ConexaoDados.getConnection();
+        	con = new ConexaoDados().getConnection();
 
-            String cadastraLivro = "INSERT INTO livro (isbn, titulo, autor, editora, data_publicacao, descricao, img, codigo_exemplar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, codigo_exemplar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(cadastraLivro);
 
             stmt.setString(1, livro.getIsbn());
@@ -28,10 +28,9 @@ public class LivroDados {
             stmt.setString(5, livro.getDataPublicacao());
             stmt.setString(6, livro.getDescricao());
             stmt.setString(7, livro.getImg());
-            stmt.setString(8, livro.getCodigoExemplar());
             
             //verificar se o executeQuery é sem parâmetro
-            result = stmt.executeQuery();
+            stmt.execute();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao tentar cadastrar o livro");
         }
@@ -40,7 +39,7 @@ public class LivroDados {
     
     public void atualizarLivro(LivroModelo livro) throws ExcecaoDados {
         try {
-            con = ConexaoDados.getConnection();
+            con = new ConexaoDados().getConnection();
 
             String atualizaLivro = "UPDATE livro SET"
             		+ "titulo = ?, "
@@ -71,7 +70,7 @@ public class LivroDados {
     
     public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoDados {
     	try {
-    		con = ConexaoDados.getConnection();
+    		con = new ConexaoDados().getConnection();
     		
     		String buscarAutor = "SELECT * FROM livro";
     		stmt = con.prepareStatement(buscarAutor);
@@ -104,7 +103,7 @@ public class LivroDados {
     
     public LivroModelo buscarLivroPorIsbn(String isbn) throws ExcecaoDados {    	
     	try {
-    		con = ConexaoDados.getConnection();
+    		con = new ConexaoDados().getConnection();
     		
         	String buscarIsbn = "SELECT * FROM livro WHERE isbn = ?";
 
@@ -133,7 +132,7 @@ public class LivroDados {
     
     public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoDados {
     	try {
-    		con = ConexaoDados.getConnection();
+    		con = new ConexaoDados().getConnection();
     		
     		String buscarTitulo = "SELECT * FROM livro WHERE titulo_livro = ?";
     		stmt = con.prepareStatement(buscarTitulo);
@@ -165,7 +164,7 @@ public class LivroDados {
     
     public List<LivroModelo> buscarLivroPorAutor(String autor) throws ExcecaoDados {
     	try {
-    		con = ConexaoDados.getConnection();
+    		con = new ConexaoDados().getConnection();
     		
     		String buscarAutor = "SELECT * FROM livro WHERE autor = ?";
     		stmt = con.prepareStatement(buscarAutor);

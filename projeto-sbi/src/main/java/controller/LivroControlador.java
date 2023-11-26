@@ -8,13 +8,14 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import controller.ExcecaoControlador;
 import dados.ExcecaoDados;
 import dados.LivroDados;
 import model.LivroModelo;
 
 public class LivroControlador {
 		
-		private LivroDados dados;
+		private LivroDados dados = new LivroDados();
 		
 		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador{	
 			
@@ -122,7 +123,8 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 			}
 			
-			LivroModelo livro = new LivroModelo(isbn, codigoExemplar, titulo, autor, editora, dataPublicacao, descricao, img);
+			//LivroModelo livro = new LivroModelo(isbn, codigoExemplar, titulo, autor, editora, dataPublicacao, descricao, img);
+			LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, descricao, img, codigoExemplar);
 			
 			 try {
 				  dados.cadastrarLivro(livro);			
