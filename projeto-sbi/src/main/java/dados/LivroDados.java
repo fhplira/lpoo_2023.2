@@ -69,48 +69,17 @@ public class LivroDados {
 
     }
     
-    public LivroModelo buscarLivroPorIsbn(String isbn) throws ExcecaoDados {    	
+    public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoDados {
     	try {
     		con = ConexaoDados.getConnection();
     		
-        	String buscarIsbn = "SELECT * FROM livro WHERE isbn = ?";
-
-        	stmt = con.prepareStatement(buscarIsbn);
-        	stmt.setString(1, isbn);
-        	
-        	result = stmt.executeQuery();
-        	LivroModelo livro = new LivroModelo();
-        	
-        	//resul.first;
-        	
-        	livro.setIsbn(result.getString("isbn"));
-        	livro.setTitulo(result.getString("titulo_livro"));
-        	livro.setAutor(result.getString("autor"));
-        	livro.setEditora(result.getString("editora"));
-        	livro.setDataPublicacao(result.getString("data_publicacao"));
-        	livro.setDescricao(result.getString("descricao"));
-        	livro.setImg(result.getString("img"));
-        	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
-   
-        	return livro;
-        	
-    	} catch (Exception e) {
-        	throw new ExcecaoDados("Livro não encontrado");
-    	}
-    }
-    
-    public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoDados {
-    	try {
-    		con = ConexaoDados.getConnection();
-    		
-    		String buscarTitulo = "SELECT * FROM livro WHERE titulo = ?";
-    		stmt = con.prepareStatement(buscarTitulo);
-        	stmt.setString(1, titulo);
+    		String buscarAutor = "SELECT * FROM livro";
+    		stmt = con.prepareStatement(buscarAutor);
         	result = stmt.executeQuery();
         	
         	List<LivroModelo> listaLivros = new ArrayList<>();
         	
-        	//estrutura de repeticao que adiciona os dados na variavel curso e depois passa pra o ArrayList
+        	//estrutura de repeticao que adiciona os dados na variavel livro e depois passa pra o ArrayList
         	while (result.next()) {
         		LivroModelo livro = new LivroModelo();
         		livro.setTitulo(result.getString("titulo_livro"));
@@ -132,11 +101,99 @@ public class LivroDados {
     	}
     }
     
-    /*public ResultSet pesquisarLivro(LivroModelo Livro) throws ExcecaoDados{
-    	  con = ConexaoDados.getConnection();
-    	  
-    	  //String pesquisarLivro = 
-    }*/
+    
+    public LivroModelo buscarLivroPorIsbn(String isbn) throws ExcecaoDados {    	
+    	try {
+    		con = ConexaoDados.getConnection();
+    		
+        	String buscarIsbn = "SELECT * FROM livro WHERE isbn = ?";
+
+        	stmt = con.prepareStatement(buscarIsbn);
+        	stmt.setString(1, isbn);
+        	
+        	result = stmt.executeQuery();
+        	LivroModelo livro = new LivroModelo();
+        	
+        	//resul.first;
+        	livro.setIsbn(result.getString("isbn"));
+        	livro.setTitulo(result.getString("titulo_livro"));
+        	livro.setAutor(result.getString("autor"));
+        	livro.setEditora(result.getString("editora"));
+        	livro.setDataPublicacao(result.getString("data_publicacao"));
+        	livro.setDescricao(result.getString("descricao"));
+        	livro.setImg(result.getString("img"));
+        	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
+   
+        	return livro;
+        	
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Livro não encontrado");
+    	}
+    }
+    
+    public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoDados {
+    	try {
+    		con = ConexaoDados.getConnection();
+    		
+    		String buscarTitulo = "SELECT * FROM livro WHERE titulo_livro = ?";
+    		stmt = con.prepareStatement(buscarTitulo);
+        	stmt.setString(1, titulo);
+        	result = stmt.executeQuery();
+        	
+        	List<LivroModelo> listaLivros = new ArrayList<>();
+        	
+        	while (result.next()) {
+        		LivroModelo livro = new LivroModelo();
+        		livro.setTitulo(result.getString("titulo_livro"));
+        		livro.setIsbn(result.getString("isbn"));
+            	livro.setAutor(result.getString("autor"));
+            	livro.setEditora(result.getString("editora"));
+            	livro.setDataPublicacao(result.getString("data_publicacao"));
+            	livro.setDescricao(result.getString("descricao"));
+            	livro.setImg(result.getString("img"));
+            	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
+            	
+            	listaLivros.add(livro);
+        	}
+        	
+        	return listaLivros;
+        	
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Livro não encontrado");
+    	}
+    }
+    
+    public List<LivroModelo> buscarLivroPorAutor(String autor) throws ExcecaoDados {
+    	try {
+    		con = ConexaoDados.getConnection();
+    		
+    		String buscarAutor = "SELECT * FROM livro WHERE autor = ?";
+    		stmt = con.prepareStatement(buscarAutor);
+        	stmt.setString(1, autor);
+        	result = stmt.executeQuery();
+        	
+        	List<LivroModelo> listaLivros = new ArrayList<>();
+        	
+        	while (result.next()) {
+        		LivroModelo livro = new LivroModelo();
+        		livro.setTitulo(result.getString("titulo_livro"));
+        		livro.setIsbn(result.getString("isbn"));
+            	livro.setAutor(result.getString("autor"));
+            	livro.setEditora(result.getString("editora"));
+            	livro.setDataPublicacao(result.getString("data_publicacao"));
+            	livro.setDescricao(result.getString("descricao"));
+            	livro.setImg(result.getString("img"));
+            	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
+            	
+            	listaLivros.add(livro);
+        	}
+        	
+        	return listaLivros;
+        	
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Livro não encontrado");
+    	}
+    }
     
     
 }
