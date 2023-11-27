@@ -34,10 +34,10 @@ public class CadastrarLivro extends JFrame {
 	private JTextField txtAutor;
 	private JTextField txtEditora;
 	private JTextField txtImagem;
-	private JTextField txtCodigoExemplar;
 	private JFormattedTextField txtISBN;
 	private JFormattedTextField formattedtxtDataPublicacao;
 	private CadastrarLivro frameCadastrarLivro; 
+	private JTextArea txtDescricao;
 	
 	
 	
@@ -153,32 +153,13 @@ public class CadastrarLivro extends JFrame {
 		gbc_btnNewButton.gridy = 2;
 		panelCadastro.add(btnNewButton, gbc_btnNewButton);
 		
-		JLabel lblCodigoExemplar = new JLabel("* Código do exemplar:");
-		lblCodigoExemplar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_lblCodigoExemplar = new GridBagConstraints();
-		gbc_lblCodigoExemplar.anchor = GridBagConstraints.EAST;
-		gbc_lblCodigoExemplar.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCodigoExemplar.gridx = 0;
-		gbc_lblCodigoExemplar.gridy = 3;
-		panelCadastro.add(lblCodigoExemplar, gbc_lblCodigoExemplar);
-		
-		txtCodigoExemplar = new JTextField();
-		txtCodigoExemplar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_txtCodigoExemplar = new GridBagConstraints();
-		gbc_txtCodigoExemplar.insets = new Insets(0, 0, 10, 200);
-		gbc_txtCodigoExemplar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtCodigoExemplar.gridx = 1;
-		gbc_txtCodigoExemplar.gridy = 3;
-		panelCadastro.add(txtCodigoExemplar, gbc_txtCodigoExemplar);
-		txtCodigoExemplar.setColumns(10);
-		
 		JLabel lblTitulo = new JLabel("* Titulo:");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblTitulo = new GridBagConstraints();
 		gbc_lblTitulo.anchor = GridBagConstraints.EAST;
 		gbc_lblTitulo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTitulo.gridx = 0;
-		gbc_lblTitulo.gridy = 4;
+		gbc_lblTitulo.gridy = 3;
 		panelCadastro.add(lblTitulo, gbc_lblTitulo);
 		
 		txtTitulo = new JTextField();
@@ -187,7 +168,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_txtTitulo.insets = new Insets(0, 0, 10, 200);
 		gbc_txtTitulo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtTitulo.gridx = 1;
-		gbc_txtTitulo.gridy = 4;
+		gbc_txtTitulo.gridy = 3;
 		panelCadastro.add(txtTitulo, gbc_txtTitulo);
 		txtTitulo.setColumns(10);
 		
@@ -196,7 +177,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_lblAutor.anchor = GridBagConstraints.EAST;
 		gbc_lblAutor.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAutor.gridx = 0;
-		gbc_lblAutor.gridy = 5;
+		gbc_lblAutor.gridy = 4;
 		panelCadastro.add(lblAutor, gbc_lblAutor);
 		
 		txtAutor = new JTextField();
@@ -205,7 +186,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_txtAutor.insets = new Insets(0, 0, 10, 200);
 		gbc_txtAutor.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtAutor.gridx = 1;
-		gbc_txtAutor.gridy = 5;
+		gbc_txtAutor.gridy = 4;
 		panelCadastro.add(txtAutor, gbc_txtAutor);
 		txtAutor.setColumns(10);
 		
@@ -215,7 +196,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_4.gridx = 0;
-		gbc_lblNewLabel_4.gridy = 6;
+		gbc_lblNewLabel_4.gridy = 5;
 		panelCadastro.add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
 		txtEditora = new JTextField();
@@ -224,7 +205,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_txtEditora.insets = new Insets(0, 0, 10, 200);
 		gbc_txtEditora.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEditora.gridx = 1;
-		gbc_txtEditora.gridy = 6;
+		gbc_txtEditora.gridy = 5;
 		panelCadastro.add(txtEditora, gbc_txtEditora);
 		txtEditora.setColumns(10);
 		
@@ -234,24 +215,17 @@ public class CadastrarLivro extends JFrame {
 		gbc_lblNewLabel_5.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_5.gridx = 0;
-		gbc_lblNewLabel_5.gridy = 7;
+		gbc_lblNewLabel_5.gridy = 6;
 		panelCadastro.add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
-		final JFormattedTextField formattedtxtDataPublicacao = new JFormattedTextField();
-		formattedtxtDataPublicacao.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_formattedtxtDataPublicacao = new GridBagConstraints();
-		gbc_formattedtxtDataPublicacao.insets = new Insets(0, 0, 10, 200);
-		gbc_formattedtxtDataPublicacao.fill = GridBagConstraints.HORIZONTAL;
-		gbc_formattedtxtDataPublicacao.gridx = 1;
-		gbc_formattedtxtDataPublicacao.gridy = 7;
-		panelCadastro.add(formattedtxtDataPublicacao, gbc_formattedtxtDataPublicacao);
-		
-		try {
-			MaskFormatter maskDataPublicacao = new MaskFormatter("##/##/####");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		final JFormattedTextField formattedtxtDataPublicacao_1 = new JFormattedTextField();
+		formattedtxtDataPublicacao_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_formattedtxtDataPublicacao_1 = new GridBagConstraints();
+		gbc_formattedtxtDataPublicacao_1.insets = new Insets(0, 0, 10, 200);
+		gbc_formattedtxtDataPublicacao_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_formattedtxtDataPublicacao_1.gridx = 1;
+		gbc_formattedtxtDataPublicacao_1.gridy = 6;
+		panelCadastro.add(formattedtxtDataPublicacao_1, gbc_formattedtxtDataPublicacao_1);
 		
 		JLabel lblNewLabel_6 = new JLabel("Imagem:");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -259,7 +233,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_lblNewLabel_6.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_6.gridx = 0;
-		gbc_lblNewLabel_6.gridy = 8;
+		gbc_lblNewLabel_6.gridy = 7;
 		panelCadastro.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
 		txtImagem = new JTextField();
@@ -268,7 +242,7 @@ public class CadastrarLivro extends JFrame {
 		gbc_txtImagem.insets = new Insets(0, 0, 10, 200);
 		gbc_txtImagem.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtImagem.gridx = 1;
-		gbc_txtImagem.gridy = 8;
+		gbc_txtImagem.gridy = 7;
 		panelCadastro.add(txtImagem, gbc_txtImagem);
 		txtImagem.setColumns(10);
 		
@@ -278,35 +252,25 @@ public class CadastrarLivro extends JFrame {
 		gbc_lblNewLabel_8.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_8.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_8.gridx = 0;
-		gbc_lblNewLabel_8.gridy = 9;
+		gbc_lblNewLabel_8.gridy = 8;
 		panelCadastro.add(lblNewLabel_8, gbc_lblNewLabel_8);
-		
-		final JTextArea txtDescricao = new JTextArea();
-		GridBagConstraints gbc_txtDescricao = new GridBagConstraints();
-		gbc_txtDescricao.gridheight = 2;
-		gbc_txtDescricao.insets = new Insets(0, 0, 10, 100);
-		gbc_txtDescricao.fill = GridBagConstraints.BOTH;
-		gbc_txtDescricao.gridx = 1;
-		gbc_txtDescricao.gridy = 10;
-		panelCadastro.add(txtDescricao, gbc_txtDescricao);
 		
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				String isbn = txtISBN.getText();
-				String codigoExemplar = txtCodigoExemplar.getText();
 				String titulo = txtTitulo.getText();
 				String autor = txtAutor.getText();
 				String editora = txtEditora.getText();
-				String dataPublicacao = formattedtxtDataPublicacao.getText();
+				String dataPublicacao = formattedtxtDataPublicacao_1.getText();
 				String imagem = txtImagem.getText();
 				String descricao = txtDescricao.getText();
 				
 				LivroControlador controlador = new LivroControlador();
 				
 				try {
-					controlador.cadastrarLivro(isbn, codigoExemplar, titulo, autor, editora, dataPublicacao, imagem, descricao);
+					controlador.cadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, imagem, descricao);
 					JOptionPane.showMessageDialog(null, "O livro foi cadastrado com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -316,6 +280,15 @@ public class CadastrarLivro extends JFrame {
 				
 			}
 		});
+		
+		final JTextArea txtDescricao = new JTextArea();
+		GridBagConstraints gbc_txtDescricao = new GridBagConstraints();
+		gbc_txtDescricao.gridheight = 3;
+		gbc_txtDescricao.insets = new Insets(0, 0, 10, 100);
+		gbc_txtDescricao.fill = GridBagConstraints.BOTH;
+		gbc_txtDescricao.gridx = 1;
+		gbc_txtDescricao.gridy = 9;
+		panelCadastro.add(txtDescricao, gbc_txtDescricao);
 		
 		JLabel lblNewLabel = new JLabel("* campos obrigatórios");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
