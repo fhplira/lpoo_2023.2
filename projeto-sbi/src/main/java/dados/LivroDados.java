@@ -18,7 +18,7 @@ public class LivroDados {
         try {
         	con = new ConexaoDados().getConnection();
 
-            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, codigo_exemplar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img) VALUES (?, ?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(cadastraLivro);
 
             stmt.setString(1, livro.getIsbn());
@@ -68,6 +68,21 @@ public class LivroDados {
 
     }
     
+    public void deletarLivroPorIsbn(LivroModelo livro) throws ExcecaoDados {
+    	try {
+    		con = new ConexaoDados().getConnection();
+    		
+    		String deletaLivroPorIsbn = "DELETE * FROM LIVRO WHERE isbn = ?";
+    		stmt = con.prepareStatement(deletaLivroPorIsbn);
+    		
+    		stmt.setString(1, livro.getIsbn());
+    		
+    		stmt.execute();
+    	} catch (Exception e) {
+    		throw new ExcecaoDados("Erro ao tentar deletar o livro do sistema");
+    	}
+    }
+    
     public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
@@ -88,7 +103,6 @@ public class LivroDados {
             	livro.setDataPublicacao(result.getString("data_publicacao"));
             	livro.setDescricao(result.getString("descricao"));
             	livro.setImg(result.getString("img"));
-            	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
             	
             	listaLivros.add(livro);
         	}
@@ -121,7 +135,6 @@ public class LivroDados {
         	livro.setDataPublicacao(result.getString("data_publicacao"));
         	livro.setDescricao(result.getString("descricao"));
         	livro.setImg(result.getString("img"));
-        	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
    
         	return livro;
         	
@@ -150,7 +163,6 @@ public class LivroDados {
             	livro.setDataPublicacao(result.getString("data_publicacao"));
             	livro.setDescricao(result.getString("descricao"));
             	livro.setImg(result.getString("img"));
-            	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
             	
             	listaLivros.add(livro);
         	}
@@ -182,7 +194,6 @@ public class LivroDados {
             	livro.setDataPublicacao(result.getString("data_publicacao"));
             	livro.setDescricao(result.getString("descricao"));
             	livro.setImg(result.getString("img"));
-            	livro.setCodigoExemplar(result.getString("codigo_exemplar"));
             	
             	listaLivros.add(livro);
         	}

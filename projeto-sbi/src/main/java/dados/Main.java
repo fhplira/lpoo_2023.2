@@ -18,7 +18,6 @@ public class Main {
 		ResultSet result;
 		Connection con;
 		
-		//ConexaoDados con = new ConexaoDados();
 		try {
 			con = new ConexaoDados().getConnection();
 
@@ -31,9 +30,9 @@ public class Main {
 					"Little, Brown & Company", 
 					"2008", 
 					"About three things I was absolutely positive. First, Edward was a vampire. Second, there was a part of him—and I didn't know how dominant that part might be—that thirsted for my blood. And third, I was unconditionally and irrevocably in love with him.", 
-					"https://m.media-amazon.com/images/I/61y8sriKWhL._SX679_.jpg", 
-					"0001");
-			String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, codigo_exemplar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+					"https://m.media-amazon.com/images/I/61y8sriKWhL._SX679_.jpg" 
+					);
+			String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img) VALUES (?, ?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(cadastraLivro);
 
             stmt.setString(1, livro.getIsbn());
@@ -43,7 +42,6 @@ public class Main {
             stmt.setString(5, livro.getDataPublicacao());
             stmt.setString(6, livro.getDescricao());
             stmt.setString(7, livro.getImg());
-            stmt.setString(8, livro.getCodigoExemplar());
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
