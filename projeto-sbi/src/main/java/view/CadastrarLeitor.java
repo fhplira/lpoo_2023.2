@@ -2,23 +2,34 @@ package view;
 
 import java.awt.EventQueue;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import controladores.ExcecaoControlador;
+import controladores.LeitorControlador;
+
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
 
-public class CadastrarLeitor {
+public class CadastrarLeitor extends JFrame {
 
-	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtNome;
+	private JTextField txtEmail;
+	private JTextField txtCpf;
+	private CadastrarLeitor frameCadastrarLeitor;
 
 	/**
 	 * Launch the application.
@@ -27,8 +38,8 @@ public class CadastrarLeitor {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastrarLeitor window = new CadastrarLeitor();
-					window.frame.setVisible(true);
+					CadastrarLeitor frameCadastrarLeitor = new CadastrarLeitor();
+					frameCadastrarLeitor.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,97 +48,119 @@ public class CadastrarLeitor {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
 	public CadastrarLeitor() {
-		initialize();
-	}
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 824, 510);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 824, 510);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		JButton btnTodosLivros = new JButton("Todos os livros ");
-		btnTodosLivros.setBounds(20, 129, 138, 39);
-		frame.getContentPane().add(btnTodosLivros);
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 11, 788, 449);
+		contentPane.add(panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
 		
-		JButton btnCadastrarLivro = new JButton("Cadastrar livro");
-		btnCadastrarLivro.setBounds(20, 179, 138, 43);
-		frame.getContentPane().add(btnCadastrarLivro);
-		btnCadastrarLivro.addActionListener(new ActionListener() {
-
-			@Override
+		JLabel lblTitulo = new JLabel("CADASTRAR LEITOR");
+		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 30));
+		GridBagConstraints gbc_lblTitulo = new GridBagConstraints();
+		gbc_lblTitulo.gridwidth = 4;
+		gbc_lblTitulo.insets = new Insets(0, 0, 30, 0);
+		gbc_lblTitulo.gridx = 0;
+		gbc_lblTitulo.gridy = 1;
+		panel.add(lblTitulo, gbc_lblTitulo);
+		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblNome = new GridBagConstraints();
+		gbc_lblNome.insets = new Insets(0, 200, 20, 5);
+		gbc_lblNome.anchor = GridBagConstraints.EAST;
+		gbc_lblNome.gridx = 0;
+		gbc_lblNome.gridy = 2;
+		panel.add(lblNome, gbc_lblNome);
+		
+		txtNome = new JTextField();
+		GridBagConstraints gbc_txtNome = new GridBagConstraints();
+		gbc_txtNome.insets = new Insets(0, 0, 20, 200);
+		gbc_txtNome.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNome.gridx = 1;
+		gbc_txtNome.gridy = 2;
+		panel.add(txtNome, gbc_txtNome);
+		txtNome.setColumns(10);
+		
+		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+		gbc_lblEmail.anchor = GridBagConstraints.EAST;
+		gbc_lblEmail.insets = new Insets(0, 0, 20, 5);
+		gbc_lblEmail.gridx = 0;
+		gbc_lblEmail.gridy = 3;
+		panel.add(lblEmail, gbc_lblEmail);
+		
+		txtEmail = new JTextField();
+		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
+		gbc_txtEmail.insets = new Insets(0, 0, 20, 200);
+		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtEmail.gridx = 1;
+		gbc_txtEmail.gridy = 3;
+		panel.add(txtEmail, gbc_txtEmail);
+		txtEmail.setColumns(10);
+		
+		JLabel lblCPF = new JLabel("CPF:");
+		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblCPF = new GridBagConstraints();
+		gbc_lblCPF.anchor = GridBagConstraints.EAST;
+		gbc_lblCPF.insets = new Insets(0, 0, 100, 5);
+		gbc_lblCPF.gridx = 0;
+		gbc_lblCPF.gridy = 4;
+		panel.add(lblCPF, gbc_lblCPF);
+		
+		txtCpf = new JTextField();
+		GridBagConstraints gbc_txtCpf = new GridBagConstraints();
+		gbc_txtCpf.insets = new Insets(0, 0, 100, 200);
+		gbc_txtCpf.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCpf.gridx = 1;
+		gbc_txtCpf.gridy = 4;
+		panel.add(txtCpf, gbc_txtCpf);
+		txtCpf.setColumns(10);
+		
+		JButton btnCadastrar = new JButton("CADASTRAR");
+		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastrarLivro frameCadastrarLivro = new CadastrarLivro();
-				frame.dispose();
-				frameCadastrarLivro.setVisible(true);
 				
-			}
-			
-		}
-				);
-		
-		
-		
-		JButton btnBuscarLivro = new JButton("Buscar livro");
-		btnBuscarLivro.setBounds(20, 233, 138, 39);
-		frame.getContentPane().add(btnBuscarLivro);
-		
-		JButton btnLeito = new JButton("Leitor");
-		btnLeito.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+				String nome = txtNome.getText();
+				String email = txtEmail.getText();
+				String cpf = txtCpf.getText();
+				
+				LeitorControlador controlador = new LeitorControlador();
+				
+				try {
+					controlador.criarLeitorModelo(nome, cpf, email);
+					JOptionPane.showMessageDialog(null, "O leitor foi cadastrado com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
+				} catch (ExcecaoControlador e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				frameCadastrarLeitor.dispose();
+				// telaTodosOsBotoes.setVisible(true);
 			}
 		});
-		btnLeito.setBounds(20, 290, 138, 39);
-		frame.getContentPane().add(btnLeito);
-		
-		JLabel lblNewLabel = new JLabel("Cadastrar leitor");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setBounds(356, 67, 258, 39);
-		frame.getContentPane().add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Nome:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(277, 154, 98, 14);
-		frame.getContentPane().add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("E-mail:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(276, 192, 115, 14);
-		frame.getContentPane().add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("CPF:");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_3.setBounds(277, 229, 127, 14);
-		frame.getContentPane().add(lblNewLabel_3);
-		
-		textField = new JTextField();
-		textField.setBounds(342, 152, 247, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(342, 190, 247, 20);
-		frame.getContentPane().add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(342, 227, 247, 20);
-		frame.getContentPane().add(textField_2);
-		
-		JButton btnNewButton_2 = new JButton("Cadastrar");
-		btnNewButton_2.setBounds(397, 288, 138, 43);
-		frame.getContentPane().add(btnNewButton_2);
-		
-		JButton btnCadastrarLeitor = new JButton("Cadastrar Leitor");
-		btnCadastrarLeitor.setBounds(20, 340, 138, 39);
-		frame.getContentPane().add(btnCadastrarLeitor);
-		
+		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 25));
+		GridBagConstraints gbc_btnCadastrar = new GridBagConstraints();
+		gbc_btnCadastrar.gridwidth = 4;
+		gbc_btnCadastrar.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCadastrar.gridx = 0;
+		gbc_btnCadastrar.gridy = 7;
+		panel.add(btnCadastrar, gbc_btnCadastrar);
 	}
 }

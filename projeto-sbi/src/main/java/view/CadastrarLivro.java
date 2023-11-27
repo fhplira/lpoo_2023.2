@@ -70,28 +70,8 @@ public class CadastrarLivro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnVisualizarLivros = new JButton("Visualizar Livros:");
-		btnVisualizarLivros.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnVisualizarLivros.setBounds(10, 103, 156, 39);
-		contentPane.add(btnVisualizarLivros);
-		
-		JButton btnLeitor = new JButton("Leitor");
-		btnLeitor.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnLeitor.setBounds(10, 167, 156, 39);
-		contentPane.add(btnLeitor);
-		
-		JButton btnBuscarLivro = new JButton("Buscar Livro");
-		btnBuscarLivro.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnBuscarLivro.setBounds(10, 228, 156, 39);
-		contentPane.add(btnBuscarLivro);
-		
-		JButton btnCadastrarLeitor = new JButton("Cadastrar Leitor");
-		btnCadastrarLeitor.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnCadastrarLeitor.setBounds(10, 293, 156, 39);
-		contentPane.add(btnCadastrarLeitor);
-		
 		JPanel panelCadastro = new JPanel();
-		panelCadastro.setBounds(191, 11, 607, 449);
+		panelCadastro.setBounds(10, 11, 788, 449);
 		contentPane.add(panelCadastro);
 		GridBagLayout gbl_panelCadastro = new GridBagLayout();
 		gbl_panelCadastro.columnWidths = new int[]{0, 0, 0};
@@ -129,8 +109,8 @@ public class CadastrarLivro extends JFrame {
 		panelCadastro.add(txtISBN, gbc_txtISBN);
 		
 		
-		JButton btnNewButton = new JButton("Cadastrar por ISBN.");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnCadastrarPorIsbn = new JButton("Cadastrar por ISBN.");
+		btnCadastrarPorIsbn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ISBN = txtISBN.getText();
 				LivroControlador controlador = new LivroControlador(); 
@@ -143,15 +123,16 @@ public class CadastrarLivro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
+				
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.anchor = GridBagConstraints.WEST;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 2;
-		panelCadastro.add(btnNewButton, gbc_btnNewButton);
+		btnCadastrarPorIsbn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_btnCadastrarPorIsbn = new GridBagConstraints();
+		gbc_btnCadastrarPorIsbn.anchor = GridBagConstraints.WEST;
+		gbc_btnCadastrarPorIsbn.insets = new Insets(0, 0, 5, 0);
+		gbc_btnCadastrarPorIsbn.gridx = 1;
+		gbc_btnCadastrarPorIsbn.gridy = 2;
+		panelCadastro.add(btnCadastrarPorIsbn, gbc_btnCadastrarPorIsbn);
 		
 		JLabel lblTitulo = new JLabel("* Titulo:");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -277,6 +258,9 @@ public class CadastrarLivro extends JFrame {
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
+				
+				frameCadastrarLivro.dispose();
+				// telacomtodososbotões.setVisible(true);
 				
 			}
 		});
