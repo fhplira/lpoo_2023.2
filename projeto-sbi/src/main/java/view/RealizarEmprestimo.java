@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import controladores.EmprestimoControlador;
+import controladores.ExcecaoControlador;
+import modelos.EmprestimoModelo;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,6 +18,7 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.text.ParseException;
 
 import javax.swing.JTextField;
@@ -21,12 +26,13 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
 
 public class RealizarEmprestimo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JFormattedTextField formattedTextField1ISBNExemplar;
+	private JTextField TextField1ISBNExemplar;
 
 	/**
 	 * Launch the application.
@@ -87,17 +93,17 @@ public class RealizarEmprestimo extends JFrame {
 		
 		
 		
-		formattedTextField1ISBNExemplar = new JFormattedTextField();
-		formattedTextField1ISBNExemplar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_formattedTextField1ISBNExemplar = new GridBagConstraints();
-		gbc_formattedTextField1ISBNExemplar.ipady = 10;
-		gbc_formattedTextField1ISBNExemplar.gridwidth = 5;
-		gbc_formattedTextField1ISBNExemplar.insets = new Insets(100, 5, 30, 30);
-		gbc_formattedTextField1ISBNExemplar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_formattedTextField1ISBNExemplar.gridx = 3;
-		gbc_formattedTextField1ISBNExemplar.gridy = 5;
-		panel.add(formattedTextField1ISBNExemplar, gbc_formattedTextField1ISBNExemplar);
-		formattedTextField1ISBNExemplar.setColumns(10);
+		TextField1ISBNExemplar = new JTextField();
+		TextField1ISBNExemplar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_TextField1ISBNExemplar = new GridBagConstraints();
+		gbc_TextField1ISBNExemplar.ipady = 10;
+		gbc_TextField1ISBNExemplar.gridwidth = 5;
+		gbc_TextField1ISBNExemplar.insets = new Insets(100, 5, 30, 30);
+		gbc_TextField1ISBNExemplar.fill = GridBagConstraints.HORIZONTAL;
+		gbc_TextField1ISBNExemplar.gridx = 3;
+		gbc_TextField1ISBNExemplar.gridy = 5;
+		panel.add(TextField1ISBNExemplar, gbc_TextField1ISBNExemplar);
+		TextField1ISBNExemplar.setColumns(10);
 		
 		JLabel lblNewLabelCPF = new JLabel("CPF DO LEITOR:");
 		lblNewLabelCPF.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -108,25 +114,45 @@ public class RealizarEmprestimo extends JFrame {
 		gbc_lblNewLabelCPF.gridy = 8;
 		panel.add(lblNewLabelCPF, gbc_lblNewLabelCPF);
 		
-		JFormattedTextField formattedTextFieldCPFDoLeitor = new JFormattedTextField();
-		try {
-			MaskFormatter mask = new MaskFormatter("###.###.###-##");
-			mask.install(formattedTextFieldCPFDoLeitor);
-		} catch (ParseException e) {
-			JOptionPane.showMessageDialog(null, "Informe o CPF com apenas números", "Error", JOptionPane.ERROR_MESSAGE);
-			
-		}		
-		formattedTextFieldCPFDoLeitor.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_formattedTextFieldCPFDoLeitor = new GridBagConstraints();
-		gbc_formattedTextFieldCPFDoLeitor.ipady = 10;
-		gbc_formattedTextFieldCPFDoLeitor.gridwidth = 5;
-		gbc_formattedTextFieldCPFDoLeitor.insets = new Insets(30, 5, 100, 30);
-		gbc_formattedTextFieldCPFDoLeitor.fill = GridBagConstraints.HORIZONTAL;
-		gbc_formattedTextFieldCPFDoLeitor.gridx = 3;
-		gbc_formattedTextFieldCPFDoLeitor.gridy = 8;
-		panel.add(formattedTextFieldCPFDoLeitor, gbc_formattedTextFieldCPFDoLeitor);
+		JTextField TextFieldCPFDoLeitor = new JTextField();
+		/*
+		 * try { MaskFormatter mask = new MaskFormatter("###.###.###-##");
+		 * mask.install(formattedTextFieldCPFDoLeitor); } catch (ParseException e) {
+		 * JOptionPane.showMessageDialog(null, "Informe o CPF com apenas números",
+		 * "Error", JOptionPane.ERROR_MESSAGE);
+		 * 
+		 * }
+		 */		
+		TextFieldCPFDoLeitor.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_TextFieldCPFDoLeitor = new GridBagConstraints();
+		gbc_TextFieldCPFDoLeitor.ipady = 10;
+		gbc_TextFieldCPFDoLeitor.gridwidth = 5;
+		gbc_TextFieldCPFDoLeitor.insets = new Insets(30, 5, 100, 30);
+		gbc_TextFieldCPFDoLeitor.fill = GridBagConstraints.HORIZONTAL;
+		gbc_TextFieldCPFDoLeitor.gridx = 3;
+		gbc_TextFieldCPFDoLeitor.gridy = 8;
+		panel.add(TextFieldCPFDoLeitor, gbc_TextFieldCPFDoLeitor);
 		
 		JButton btnNewButtonRealizarEmprestimo = new JButton("REALIZAR EMPRÉSTIMO");
+		btnNewButtonRealizarEmprestimo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String isbn = TextField1ISBNExemplar.getText();
+				String cpf = TextFieldCPFDoLeitor.getText();
+				
+				EmprestimoControlador realizarEmprestimo = new EmprestimoControlador();
+				
+				try {
+					realizarEmprestimo.fazerEmprestimo(isbn, cpf);
+					JOptionPane.showMessageDialog(null,  "Empréstimo realizado com sucesso. \nVerifique a data de devolução na aba 'empréstimos'.", "Success", JOptionPane.INFORMATION_MESSAGE);
+				} catch (ExcecaoControlador ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex2) {
+					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
 		btnNewButtonRealizarEmprestimo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_btnNewButtonRealizarEmprestimo = new GridBagConstraints();
 		gbc_btnNewButtonRealizarEmprestimo.anchor = GridBagConstraints.EAST;
@@ -134,5 +160,6 @@ public class RealizarEmprestimo extends JFrame {
 		gbc_btnNewButtonRealizarEmprestimo.gridx = 7;
 		gbc_btnNewButtonRealizarEmprestimo.gridy = 9;
 		panel.add(btnNewButtonRealizarEmprestimo, gbc_btnNewButtonRealizarEmprestimo);
+		
 	}
 }

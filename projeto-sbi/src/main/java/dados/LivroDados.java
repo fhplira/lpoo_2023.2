@@ -3,6 +3,7 @@ package dados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,19 @@ public class LivroDados {
             stmt.execute();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao tentar cadastrar o livro");
-        }
+        } finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
 
     }
     
@@ -64,7 +77,19 @@ public class LivroDados {
             result = stmt.executeQuery(atualizaLivro);
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao tentar atualizar as informações do livro");
-        }
+        } finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
 
     }
     
@@ -80,7 +105,19 @@ public class LivroDados {
     		stmt.execute();
     	} catch (Exception e) {
     		throw new ExcecaoDados("Erro ao tentar deletar o livro do sistema");
-    	}
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
     }
     
     public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoDados {
@@ -111,7 +148,19 @@ public class LivroDados {
         	
     	} catch (Exception e) {
         	throw new ExcecaoDados("Livro não encontrado");
-    	}
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
     }
     
     
@@ -140,7 +189,19 @@ public class LivroDados {
         	
     	} catch (Exception e) {
         	throw new ExcecaoDados("Livro não encontrado");
-    	}
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
     }
     
     public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoDados {
@@ -171,7 +232,20 @@ public class LivroDados {
         	
     	} catch (Exception e) {
         	throw new ExcecaoDados("Livro não encontrado");
-    	}
+        	
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
     }
     
     public List<LivroModelo> buscarLivroPorAutor(String autor) throws ExcecaoDados {
@@ -202,7 +276,20 @@ public class LivroDados {
         	
     	} catch (Exception e) {
         	throw new ExcecaoDados("Livro não encontrado");
-    	}
+        	
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
     }
     
     
