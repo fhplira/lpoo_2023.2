@@ -6,9 +6,19 @@ import modelos.LeitorModelo;
 
 public class LeitorControlador {
 	
-	private LeitorDados repositorio;
+	private LeitorDados dados = new LeitorDados();
 	
-	public void criarLeitorModelo(String nome, String cpf, String email) throws ExcecaoControlador {
+	public void cadastrarLeitor(String nome, String cpf, String email) throws ExcecaoControlador {
+		
+		try {
+			if(dados.verificarLeitor(cpf)) {
+				throw new ExcecaoControlador("Leitor já existente");
+			}
+		}
+		catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+		
 		if(nome.matches("[0-9]+")) {
 			throw new ExcecaoControlador("O campo Nome não pode ter números");
 		}
@@ -23,6 +33,10 @@ public class LeitorControlador {
 		
 		if(email.matches(".*\\s+.*")) {
 			throw new ExcecaoControlador("O campo Email não pode ter espaço em branco");
+		}
+		
+		if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z.]+$")) {
+			throw new ExcecaoControlador("Caracteres Invalidos digitados no campo Email");
 		}
 		
 		if(!cpf.matches("[0-9]+")) {
@@ -41,12 +55,12 @@ public class LeitorControlador {
 			throw new ExcecaoControlador("O campo Cpf não pode ter espaço em branco");
 		}
 		
-		//LeitorModelo LeitorModelo = new LeitorModelo(nome, cpf, email);
-		//try{
-			//repositorio.criarLeitor(LeitorModelo); //Criar metodo criarLeitor na camada de dados.
-		//}catch(ExcecaoDados e){
-			//throw new ExcecaoControlador(e.getMessage(), e); //o e.getMessage retornaria um "LeitorModelo já existente".
-		//}
+		LeitorModelo leitor = new LeitorModelo(nome, cpf, email);
+		try{
+			dados.cadastrarLeitor(leitor);
+		}catch(ExcecaoDados e){
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
 	}
 	
 	public LeitorModelo buscarLeitorModeloPorCpf(String cpf) throws ExcecaoControlador {
@@ -67,12 +81,12 @@ public class LeitorControlador {
 			throw new ExcecaoControlador("O campo Cpf não pode ter espaço em branco");
 		}
 		
-		//LeitorModelo LeitorModelo = new LeitorModelo();
+		//LeitorModelo leitor = new LeitorModelo();
 		//try {
-			//LeitorModelo = repositorio.buscarLeitorPorCpf(cpf); //Criar metodo buscarLeitorPorCpf na camada de dados.
-			//return LeitorModelo;
+			//leitor = repositorio.buscarLeitorPorCpf(cpf); //Criar metodo buscarLeitorPorCpf na camada de dados.
+			//return leitor;
 		//}catch(ExcecaoDados e){
-			//throw new ExcecaoControlador(e.getMessage(), e); // o e.getMessage retornaria um "LeitorModelo não encontrado".
+			//throw new ExcecaoControlador(e.getMessage(), e);
 		//}
 		return null; //remover apos criação dos metodos acima.
 	}

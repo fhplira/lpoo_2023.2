@@ -6,10 +6,10 @@ public class LeitorModelo {
 	private String cpf;
 	private int LivrosEmprestados = 0;
 	
-	public LeitorModelo(String nome, String email, String cpf) {
+	public LeitorModelo(String nome, String cpf, String email) {
 		this.nome = nome;
-		this.email = email;
 		this.cpf = cpf;
+		this.email = email;
 	}
 	
 	public LeitorModelo() {

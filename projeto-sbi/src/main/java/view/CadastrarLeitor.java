@@ -143,7 +143,7 @@ public class CadastrarLeitor extends JFrame {
 				LeitorControlador controlador = new LeitorControlador();
 				
 				try {
-					controlador.criarLeitorModelo(nome, cpf, email);
+					controlador.cadastrarLeitor(nome, cpf, email);
 					JOptionPane.showMessageDialog(null, "O leitor foi cadastrado com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -151,8 +151,8 @@ public class CadastrarLeitor extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				frameCadastrarLeitor.dispose();
-				// telaTodosOsBotoes.setVisible(true);
+				//frameCadastrarLeitor.dispose();
+				//telaTodosOsBotoes.setVisible(true);
 			}
 		});
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 25));
