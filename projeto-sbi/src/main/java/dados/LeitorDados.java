@@ -113,4 +113,37 @@ public class LeitorDados {
             }
         }
 	}
+	
+	public LeitorModelo buscarLeitorPorCpf(String cpf) throws ExcecaoDados {
+		
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String buscarCpf = "SELECT * FROM leitor WHERE cpf_leitor = ?";
+			stmt = con.prepareStatement(buscarCpf);
+			stmt.setString(1, cpf);
+			result = stmt.executeQuery();
+			
+			LeitorModelo leitor = new LeitorModelo();
+			leitor.setNome(result.getString("nome_leitor"));
+			leitor.setCpf(result.getString("cpf_leitor"));
+			leitor.setEmail(result.getString("Email_leitor"));
+			return leitor;
+			 
+		} catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar buscar Leitor");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+        }
+	}
 }

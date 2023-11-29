@@ -63,7 +63,7 @@ public class LeitorControlador {
 		}
 	}
 	
-	public LeitorModelo buscarLeitorModeloPorCpf(String cpf) throws ExcecaoControlador {
+	public LeitorModelo buscarLeitorPorCpf(String cpf) throws ExcecaoControlador {
 		
 		try {
 			if(!dados.verificarLeitor(cpf)) {
@@ -90,13 +90,13 @@ public class LeitorControlador {
 			throw new ExcecaoControlador("O campo Cpf não pode ter espaço em branco");
 		}
 		
-		//LeitorModelo leitor = new LeitorModelo();
-		//try {
-			//leitor = repositorio.buscarLeitorPorCpf(cpf); //Criar metodo buscarLeitorPorCpf na camada de dados.
-			//return leitor;
-		//}catch(ExcecaoDados e){
-			//throw new ExcecaoControlador(e.getMessage(), e);
-		//}
-		return null; //remover apos criação dos metodos acima.
+		LeitorModelo leitor = new LeitorModelo();
+		try {
+			leitor = dados.buscarLeitorPorCpf(cpf);
+			return leitor;
+		}catch(ExcecaoDados e){
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+		
 	}
 }
