@@ -16,6 +16,7 @@ public class BotoesPrincipais extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	BotoesPrincipais frameBotoesPrincipais;
 
 	/**
 	 * Launch the application.
@@ -24,8 +25,8 @@ public class BotoesPrincipais extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BotoesPrincipais frame = new BotoesPrincipais();
-					frame.setVisible(true);
+					BotoesPrincipais frameBotoesPrincipais = new BotoesPrincipais();
+					frameBotoesPrincipais.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import java.awt.Insets;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
+import java.awt.Color;
 
 public class CadastrarLivro extends JFrame {
 
@@ -36,7 +37,7 @@ public class CadastrarLivro extends JFrame {
 	private JTextField txtImagem;
 	private JFormattedTextField txtISBN;
 	private JFormattedTextField formattedtxtDataPublicacao;
-	private CadastrarLivro frameCadastrarLivro; 
+	CadastrarLivro frameCadastrarLivro; 
 	private JTextArea txtDescricao;
 	
 	
@@ -65,12 +66,15 @@ public class CadastrarLivro extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 824, 510);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(141, 197, 62));
+		contentPane.setForeground(new Color(0, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 824, 510));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panelCadastro = new JPanel();
+		panelCadastro.setBackground(new Color(141, 197, 62));
 		panelCadastro.setBounds(10, 11, 788, 449);
 		contentPane.add(panelCadastro);
 		GridBagLayout gbl_panelCadastro = new GridBagLayout();
@@ -123,10 +127,14 @@ public class CadastrarLivro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
+				BotoesPrincipais frameBotoesPrincipais = new BotoesPrincipais();
+				dispose();
+				frameBotoesPrincipais.setVisible(true);
+				
 				
 			}
 		});
-		btnCadastrarPorIsbn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnCadastrarPorIsbn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_btnCadastrarPorIsbn = new GridBagConstraints();
 		gbc_btnCadastrarPorIsbn.anchor = GridBagConstraints.WEST;
 		gbc_btnCadastrarPorIsbn.insets = new Insets(0, 0, 5, 0);
@@ -259,8 +267,10 @@ public class CadastrarLivro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				frameCadastrarLivro.dispose();
-				// telacomtodososbotões.setVisible(true);
+				BotoesPrincipais frameBotoesPrincipais = new BotoesPrincipais();
+				dispose();
+				frameBotoesPrincipais.setVisible(true);
+				
 				
 			}
 		});

@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CadastrarLeitor extends JFrame {
 
@@ -29,7 +30,7 @@ public class CadastrarLeitor extends JFrame {
 	private JTextField txtNome;
 	private JTextField txtEmail;
 	private JTextField txtCpf;
-	private CadastrarLeitor frameCadastrarLeitor;
+	CadastrarLeitor frameCadastrarLeitor;
 
 	/**
 	 * Launch the application.
@@ -54,12 +55,14 @@ public class CadastrarLeitor extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 824, 510);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(141, 197, 62));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(141, 197, 62));
 		panel.setBounds(10, 11, 788, 449);
 		contentPane.add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
@@ -151,8 +154,11 @@ public class CadastrarLeitor extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				//frameCadastrarLeitor.dispose();
-				//telaTodosOsBotoes.setVisible(true);
+				
+				BotoesPrincipais frameBotoesPrincipais = new BotoesPrincipais();
+				dispose();
+				frameBotoesPrincipais.setVisible(true);
+				
 			}
 		});
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 25));
