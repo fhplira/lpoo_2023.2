@@ -1,20 +1,30 @@
 package modelos;
 
 public class LeitorModelo {
+	private int id;
 	private String nome;
 	private String email;
 	private String cpf;
-	private int LivrosEmprestados = 0;
+	private int livrosEmprestados;
 	
 	public LeitorModelo(String nome, String cpf, String email) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
+		livrosEmprestados = 0;
 	}
 	
 	public LeitorModelo() {
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getNome() {
 		return this.nome;
 	}
@@ -40,11 +50,11 @@ public class LeitorModelo {
 	}
 
 	public int getLivrosEmprestados() {
-		return LivrosEmprestados;
+		return livrosEmprestados;
 	}
 
-	public void setLivrosEmprestados(int livrosEmprestados) {
-		LivrosEmprestados = livrosEmprestados;
+	public void setLivrosEmprestados() {
+		this.livrosEmprestados++;
 	}
 	
 }

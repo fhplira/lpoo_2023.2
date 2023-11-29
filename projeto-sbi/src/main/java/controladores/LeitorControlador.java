@@ -65,6 +65,15 @@ public class LeitorControlador {
 	
 	public LeitorModelo buscarLeitorModeloPorCpf(String cpf) throws ExcecaoControlador {
 		
+		try {
+			if(!dados.verificarLeitor(cpf)) {
+				throw new ExcecaoControlador("Leitor não Existe");
+			}
+		}
+		catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+		
 		if(!cpf.matches("[0-9]+")) {
 			throw new ExcecaoControlador("O campo Cpf não pode ter letras");
 		}

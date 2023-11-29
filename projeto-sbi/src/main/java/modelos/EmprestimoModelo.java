@@ -7,16 +7,14 @@ public class EmprestimoModelo {
 	
 	private double multa = 0;
 	private int diasAtrasados = 0; 
-	private int idLocal;
+	private int id;
 	private String isbn;
 	private String cpf;
 	private LocalDateTime dataEmprestimo;
-	private LocalDateTime dataAtual = LocalDateTime.now();
 	private LocalDateTime dataDevolucao;
 	private String dataEmprestimoFormatada;
 	private String dataDevolucaoFormatada;
-	private String dataAtualFormatada = getDataAtual().format(padraoHora);
-	private static DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	private DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
 	public EmprestimoModelo(String isbn, String cpf) {
 		this.isbn = isbn;
@@ -55,12 +53,12 @@ public class EmprestimoModelo {
 		this.cpf = cpf;
 	}
 
-	public int getIdLocal() {
-		return idLocal;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdLocal(int idLocal) {
-		this.idLocal = idLocal;
+	public void setId(int idLocal) {
+		this.id = idLocal;
 	}
 
 	public String getIsbn() {
@@ -102,21 +100,4 @@ public class EmprestimoModelo {
 	public String getDataDevolucaoFormatada() {
 		return dataDevolucaoFormatada;
 	}
-
-	public LocalDateTime getDataAtual() {
-		return dataAtual;
-	}
-
-	public void setDataAtual(LocalDateTime dataAtual) {
-		this.dataAtual = dataAtual;
-	}
-
-	public String getDataAtualFormatada() {
-		return dataAtualFormatada;
-	}
-
-	public void setDataAtualFormatada(String dataAtualFormatada) {
-		this.dataAtualFormatada = dataAtualFormatada;
-	}
-	
 }
