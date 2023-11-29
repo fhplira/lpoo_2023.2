@@ -6,10 +6,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controladores.BibliotecarioControlador;
+import controladores.ExcecaoControlador;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -19,12 +27,8 @@ public class LoginBibliotecario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNome;
-	private JTextField txtEmail;
-	private JTextField txtCpf;
-	private CadastrarLeitor frameCadastrarLeitor;
-	private JTextField textFieldEmail;
 	private JPasswordField passwordField;
+	private JTextField textEmail;
 
 	/**
 	 * Launch the application.
@@ -65,13 +69,13 @@ public class LoginBibliotecario extends JFrame {
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JLabel lblNewLabelBemVindo = new JLabel("Bem-vindo!");
-		lblNewLabelBemVindo.setFont(new Font("Dialog", Font.BOLD, 30));
-		GridBagConstraints gbc_lblNewLabelBemVindo = new GridBagConstraints();
-		gbc_lblNewLabelBemVindo.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabelBemVindo.gridx = 1;
-		gbc_lblNewLabelBemVindo.gridy = 0;
-		panel.add(lblNewLabelBemVindo, gbc_lblNewLabelBemVindo);
+		JLabel lblBemVindo = new JLabel("Bem-vindo!");
+		lblBemVindo.setFont(new Font("Dialog", Font.BOLD, 30));
+		GridBagConstraints gbc_lblBemVindo = new GridBagConstraints();
+		gbc_lblBemVindo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBemVindo.gridx = 1;
+		gbc_lblBemVindo.gridy = 0;
+		panel.add(lblBemVindo, gbc_lblBemVindo);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Dialog", Font.BOLD, 13));
@@ -82,14 +86,14 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblEmail.gridy = 1;
 		panel.add(lblEmail, gbc_lblEmail);
 		
-		textFieldEmail = new JTextField();
-		GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
-		gbc_textFieldEmail.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldEmail.gridx = 1;
-		gbc_textFieldEmail.gridy = 2;
-		panel.add(textFieldEmail, gbc_textFieldEmail);
-		textFieldEmail.setColumns(10);
+		textEmail = new JTextField();
+		GridBagConstraints gbc_textEmail = new GridBagConstraints();
+		gbc_textEmail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_textEmail.gridx = 1;
+		gbc_textEmail.gridy = 2;
+		panel.add(textEmail, gbc_textEmail);
+		textEmail.setColumns(10);
 		
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
@@ -108,11 +112,33 @@ public class LoginBibliotecario extends JFrame {
 		gbc_passwordField.gridy = 4;
 		panel.add(passwordField, gbc_passwordField);
 		
-		JButton btnNewButtonEntrar = new JButton("Entrar");
-		GridBagConstraints gbc_btnNewButtonEntrar = new GridBagConstraints();
-		gbc_btnNewButtonEntrar.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButtonEntrar.gridx = 1;
-		gbc_btnNewButtonEntrar.gridy = 5;
-		panel.add(btnNewButtonEntrar, gbc_btnNewButtonEntrar);
+		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String emailBibliotecario = textEmail.getText();
+				char[] senhaBibliotecario = passwordField.getPassword();
+				
+				BibliotecarioControlador controlador = new BibliotecarioControlador();
+				
+				try {
+					controlador.cadastrarBibliotecario(emailBibliotecario, senhaBibliotecario);
+				} catch (ExcecaoControlador e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e2){
+					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				//frameCadastrarLeitor.dispose();
+				//telaTodosOsBotoes.setVisible(true);
+			}
+		});
+		
+		
+		GridBagConstraints gbc_btnEntrar = new GridBagConstraints();
+		gbc_btnEntrar.insets = new Insets(0, 0, 5, 5);
+		gbc_btnEntrar.gridx = 1;
+		gbc_btnEntrar.gridy = 5;
+		panel.add(btnEntrar, gbc_btnEntrar);
 	}
 }
