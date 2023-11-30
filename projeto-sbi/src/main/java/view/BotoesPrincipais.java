@@ -58,7 +58,7 @@ public class BotoesPrincipais extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		botaoTodosOsLivros.setBounds(68, 82, 224, 36);
+		botaoTodosOsLivros.setBounds(275, 95, 224, 36);
 		contentPane.add(botaoTodosOsLivros);
 		
 		JButton botaoCadastrarLivro = new JButton("Cadastrar Livro");
@@ -71,7 +71,7 @@ public class BotoesPrincipais extends JFrame {
 				new CadastrarLivro().setVisible(true);
 			}
 		});
-		botaoCadastrarLivro.setBounds(68, 129, 224, 36);
+		botaoCadastrarLivro.setBounds(275, 153, 224, 36);
 		contentPane.add(botaoCadastrarLivro);
 		
 		JButton botaoCadastrarLeitor = new JButton("Cadastrar Leitor");
@@ -81,7 +81,7 @@ public class BotoesPrincipais extends JFrame {
 				
 			}
 		});
-		botaoCadastrarLeitor.setBounds(68, 176, 224, 36);
+		botaoCadastrarLeitor.setBounds(275, 211, 224, 36);
 		contentPane.add(botaoCadastrarLeitor);
 		
 		JButton botaoRealizarEmprestimo = new JButton("Realizar Emprestimo");
@@ -94,7 +94,7 @@ public class BotoesPrincipais extends JFrame {
 				new RealizarEmprestimo().setVisible(true);
 			}
 		});
-		botaoRealizarEmprestimo.setBounds(68, 270, 224, 36);
+		botaoRealizarEmprestimo.setBounds(275, 328, 224, 36);
 		contentPane.add(botaoRealizarEmprestimo);
 
 		
@@ -108,12 +108,12 @@ public class BotoesPrincipais extends JFrame {
 				new ControleExemplares().setVisible(true);
 			}
 		});
-		botaoLivroExemplares.setBounds(68, 317, 224, 36);
+		botaoLivroExemplares.setBounds(275, 385, 224, 36);
 		contentPane.add(botaoLivroExemplares);
 		
 		JLabel tituloMenu = new JLabel("MENU");
 		tituloMenu.setFont(new Font("Tahoma", Font.BOLD, 30));
-		tituloMenu.setBounds(121, 23, 101, 48);
+		tituloMenu.setBounds(334, 22, 101, 48);
 		contentPane.add(tituloMenu);
 		
 		
@@ -123,11 +123,12 @@ public class BotoesPrincipais extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(68, 223, 224, 36);
+		btnNewButton.setBounds(275, 270, 224, 36);
 		contentPane.add(btnNewButton);
 		
 		
 	JButton botaoSair = new JButton("Sair");
+	botaoSair.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		botaoSair.setForeground(new Color(255, 0, 0));
 		botaoSair.addActionListener(new ActionListener() {
@@ -138,7 +139,7 @@ public class BotoesPrincipais extends JFrame {
 				new LoginBibliotecario().setVisible(true);
 			}
 		});
-		botaoSair.setBounds(131, 410, 67, 36);
+		botaoSair.setBounds(725, 11, 57, 36);
 		contentPane.add(botaoSair);
 		
 		
