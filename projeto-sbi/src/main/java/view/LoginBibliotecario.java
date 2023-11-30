@@ -53,7 +53,7 @@ public class LoginBibliotecario extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 824, 510);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(192, 192, 192));
+		contentPane.setBackground(new Color(141, 197, 62));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -116,7 +116,7 @@ public class LoginBibliotecario extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String emailBibliotecario = textEmail.getText();
+				/*String emailBibliotecario = textEmail.getText();
 				char[] senhaBibliotecario = passwordField.getPassword();
 				
 				BibliotecarioControlador controlador = new BibliotecarioControlador();
@@ -127,10 +127,12 @@ public class LoginBibliotecario extends JFrame {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2){
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
-				}
+				}*/
 				
-				//frameCadastrarLeitor.dispose();
-				//telaTodosOsBotoes.setVisible(true);
+				LoginBibliotecario loginBibliotecario = new LoginBibliotecario();
+				loginBibliotecario.dispose();
+				BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
+				botoesPrincipais.setVisible(true);
 			}
 		});
 		
