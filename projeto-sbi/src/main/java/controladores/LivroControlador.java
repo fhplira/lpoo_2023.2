@@ -12,23 +12,44 @@ import dados.ExcecaoDados;
 import dados.LivroDados;
 import modelos.LivroModelo;
 
+
 public class LivroControlador {
 		
 		private LivroDados dados = new LivroDados() ;
+		private MetodosUteis metodo = new MetodosUteis();
+		private String isbnSemPontos;
 		
 		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador{	
 			
 			if(isbn.isBlank()){
 				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
+		
 			
-			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+			if(isbn.matches(".*[.-].*")) {
+				
+					isbnSemPontos = metodo.removerPontos(isbn);
+					
+					if(!isbnSemPontos.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbnSemPontos.length() != 10) && (isbnSemPontos.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+				
+			 }else {
+				
+					if(!isbn.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbn.length() != 10) && (isbn.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+				
 			}
 			
-			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-			}
 			
 			final String urlGet = "https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY";
 			 HttpClient cliente = HttpClient.newHttpClient();
@@ -139,15 +160,12 @@ public class LivroControlador {
 		}
 	
 		
-		public List<LivroModelo> buscarTodosOsLivros(){
-			//try {
-					// repositorio.buscarTodosOsLivros;
-					// return List<LivroModelo>;
-			//}catch (DadosExcecao e){
-					// throw new (RegraNegocioExcecao(e.getMessage(), e);
-			//}
-			
-			return null;
+		public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoControlador{
+			try {
+				return dados.buscarTodosOsLivros();
+			}catch (ExcecaoDados e){
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
 		}
 		
 		public LivroModelo buscarLivroPorAutor(String autor) throws ExcecaoControlador {
