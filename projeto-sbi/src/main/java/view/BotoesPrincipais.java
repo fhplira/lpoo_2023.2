@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.ImageIcon;
 
 public class BotoesPrincipais extends JFrame {
 
@@ -55,34 +58,43 @@ public class BotoesPrincipais extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		botaoTodosOsLivros.setBounds(277, 120, 224, 36);
+		botaoTodosOsLivros.setBounds(68, 82, 224, 36);
 		contentPane.add(botaoTodosOsLivros);
 		
 		JButton botaoCadastrarLivro = new JButton("Cadastrar Livro");
 		botaoCadastrarLivro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		botaoCadastrarLivro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
+				botoesPrincipais.dispose();
+				botoesPrincipais.setVisible(false);
+				new CadastrarLivro().setVisible(true);
 			}
 		});
-		botaoCadastrarLivro.setBounds(277, 184, 224, 36);
+		botaoCadastrarLivro.setBounds(68, 129, 224, 36);
 		contentPane.add(botaoCadastrarLivro);
 		
 		JButton botaoCadastrarLeitor = new JButton("Cadastrar Leitor");
 		botaoCadastrarLeitor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		botaoCadastrarLeitor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
-		botaoCadastrarLeitor.setBounds(277, 252, 224, 36);
+		botaoCadastrarLeitor.setBounds(68, 176, 224, 36);
 		contentPane.add(botaoCadastrarLeitor);
 		
 		JButton botaoRealizarEmprestimo = new JButton("Realizar Emprestimo");
 		botaoRealizarEmprestimo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		botaoRealizarEmprestimo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
+				botoesPrincipais.dispose();
+				botoesPrincipais.setVisible(false);
+				new RealizarEmprestimo().setVisible(true);
 			}
 		});
-		botaoRealizarEmprestimo.setBounds(277, 317, 224, 36);
+		botaoRealizarEmprestimo.setBounds(68, 270, 224, 36);
 		contentPane.add(botaoRealizarEmprestimo);
 
 		
@@ -90,27 +102,46 @@ public class BotoesPrincipais extends JFrame {
 		botaoLivroExemplares.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		botaoLivroExemplares.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
+				botoesPrincipais.dispose();
+				botoesPrincipais.setVisible(false);
+				new ControleExemplares().setVisible(true);
 			}
 		});
-		botaoLivroExemplares.setBounds(277, 384, 224, 36);
+		botaoLivroExemplares.setBounds(68, 317, 224, 36);
 		contentPane.add(botaoLivroExemplares);
 		
 		JLabel tituloMenu = new JLabel("MENU");
 		tituloMenu.setFont(new Font("Tahoma", Font.BOLD, 30));
-		tituloMenu.setBounds(334, 44, 144, 48);
+		tituloMenu.setBounds(121, 23, 101, 48);
 		contentPane.add(tituloMenu);
 		
-		JButton botaoSair = new JButton("Sair");
-		botaoSair.setFont(new Font("Tahoma", Font.BOLD, 13));
-		botaoSair.setForeground(new Color(255, 0, 0));
-		botaoSair.addActionListener(new ActionListener() {
+		
+		JButton btnNewButton = new JButton("Visualizar Leitor");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		botaoSair.setBounds(714, 26, 70, 25);
+		btnNewButton.setBounds(68, 223, 224, 36);
+		contentPane.add(btnNewButton);
+		
+		
+	JButton botaoSair = new JButton("Sair");
+		
+		botaoSair.setForeground(new Color(255, 0, 0));
+		botaoSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
+				botoesPrincipais.dispose();
+				botoesPrincipais.setVisible(false);
+				new LoginBibliotecario().setVisible(true);
+			}
+		});
+		botaoSair.setBounds(131, 410, 67, 36);
 		contentPane.add(botaoSair);
 		
-	
 		
 	}
+
 }
