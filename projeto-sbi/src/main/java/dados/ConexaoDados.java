@@ -22,7 +22,7 @@ public class ConexaoDados {
                     "root");
         }
         catch (SQLException e) {
-            throw new ExcecaoDados("Erro ao cenectar.", e);
+            throw new ExcecaoDados("Erro ao conectar.", e);
         }
         return con;
     }

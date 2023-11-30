@@ -64,9 +64,9 @@ public class LoginBibliotecario extends JFrame {
 		contentPane.add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{50, 206, 50, 0};
-		gbl_panel.rowHeights = new int[]{108, 50, 50, 50, 50, 64, 64, 0};
+		gbl_panel.rowHeights = new int[]{108, 0, 50, 50, 50, 50, 64, 64, 0};
 		gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblBemVindo = new JLabel("Bem-vindo!");
@@ -77,13 +77,14 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblBemVindo.gridy = 0;
 		panel.add(lblBemVindo, gbc_lblBemVindo);
 		
+		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Dialog", Font.BOLD, 13));
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
 		gbc_lblEmail.anchor = GridBagConstraints.WEST;
 		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEmail.gridx = 1;
-		gbc_lblEmail.gridy = 1;
+		gbc_lblEmail.gridy = 2;
 		panel.add(lblEmail, gbc_lblEmail);
 		
 		textEmail = new JTextField();
@@ -91,7 +92,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_textEmail.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_textEmail.gridx = 1;
-		gbc_textEmail.gridy = 2;
+		gbc_textEmail.gridy = 3;
 		panel.add(textEmail, gbc_textEmail);
 		textEmail.setColumns(10);
 		
@@ -101,7 +102,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblSenha.anchor = GridBagConstraints.WEST;
 		gbc_lblSenha.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSenha.gridx = 1;
-		gbc_lblSenha.gridy = 3;
+		gbc_lblSenha.gridy = 4;
 		panel.add(lblSenha, gbc_lblSenha);
 		
 		passwordField = new JPasswordField();
@@ -109,25 +110,26 @@ public class LoginBibliotecario extends JFrame {
 		gbc_passwordField.insets = new Insets(0, 0, 5, 5);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 4;
+		gbc_passwordField.gridy = 5;
 		panel.add(passwordField, gbc_passwordField);
 		
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				/*String emailBibliotecario = textEmail.getText();
+				String emailBibliotecario = textEmail.getText();
 				char[] senhaBibliotecario = passwordField.getPassword();
+				String senha = String.valueOf(senhaBibliotecario);
 				
 				BibliotecarioControlador controlador = new BibliotecarioControlador();
 				
 				try {
-					controlador.cadastrarBibliotecario(emailBibliotecario, senhaBibliotecario);
+					controlador.login(emailBibliotecario, senha);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2){
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
-				}*/
+				}
 				
 				LoginBibliotecario loginBibliotecario = new LoginBibliotecario();
 				loginBibliotecario.dispose();
@@ -140,7 +142,7 @@ public class LoginBibliotecario extends JFrame {
 		GridBagConstraints gbc_btnEntrar = new GridBagConstraints();
 		gbc_btnEntrar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnEntrar.gridx = 1;
-		gbc_btnEntrar.gridy = 5;
+		gbc_btnEntrar.gridy = 6;
 		panel.add(btnEntrar, gbc_btnEntrar);
 	}
 }

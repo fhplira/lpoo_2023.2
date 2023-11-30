@@ -4,6 +4,7 @@ public class BibliotecarioModelo {
 	
 	private String email;
 	private String senha;
+	private String nome;
 	
 	public BibliotecarioModelo() {
 
@@ -24,5 +25,16 @@ public class BibliotecarioModelo {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	
 	
 }
+
