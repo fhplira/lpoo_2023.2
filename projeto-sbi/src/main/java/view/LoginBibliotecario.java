@@ -29,6 +29,8 @@ public class LoginBibliotecario extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textEmail;
+	private JTextField textNome;
+	private GridBagConstraints gbc_textNome;
 
 	/**
 	 * Launch the application.
@@ -50,6 +52,7 @@ public class LoginBibliotecario extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginBibliotecario() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 824, 510);
 		contentPane = new JPanel();
@@ -64,9 +67,9 @@ public class LoginBibliotecario extends JFrame {
 		contentPane.add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{50, 206, 50, 0};
-		gbl_panel.rowHeights = new int[]{108, 0, 50, 50, 50, 50, 64, 64, 0};
+		gbl_panel.rowHeights = new int[]{59, 44, 44, 44, 44, 44, 44, 59};
 		gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblBemVindo = new JLabel("Bem-vindo!");
@@ -77,6 +80,24 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblBemVindo.gridy = 0;
 		panel.add(lblBemVindo, gbc_lblBemVindo);
 		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Dialog", Font.BOLD, 13));
+		GridBagConstraints gbc_lblNome = new GridBagConstraints();
+		gbc_lblNome.anchor = GridBagConstraints.WEST;
+		gbc_lblNome.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNome.gridx = 1;
+		gbc_lblNome.gridy = 1;
+		panel.add(lblNome, gbc_lblNome);
+		
+		textNome = new JTextField();
+		GridBagConstraints gbc_textNome;
+		gbc_textNome = new GridBagConstraints();
+		gbc_textNome.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textNome.insets = new Insets(0, 0, 5, 5);
+		gbc_textNome.gridx = 1;
+		gbc_textNome.gridy = 2;
+		panel.add(textNome, gbc_textNome);
+		textNome.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Dialog", Font.BOLD, 13));
@@ -84,7 +105,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblEmail.anchor = GridBagConstraints.WEST;
 		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEmail.gridx = 1;
-		gbc_lblEmail.gridy = 2;
+		gbc_lblEmail.gridy = 3;
 		panel.add(lblEmail, gbc_lblEmail);
 		
 		textEmail = new JTextField();
@@ -92,7 +113,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_textEmail.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_textEmail.gridx = 1;
-		gbc_textEmail.gridy = 3;
+		gbc_textEmail.gridy = 4;
 		panel.add(textEmail, gbc_textEmail);
 		textEmail.setColumns(10);
 		
@@ -102,7 +123,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblSenha.anchor = GridBagConstraints.WEST;
 		gbc_lblSenha.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSenha.gridx = 1;
-		gbc_lblSenha.gridy = 4;
+		gbc_lblSenha.gridy = 5;
 		panel.add(lblSenha, gbc_lblSenha);
 		
 		passwordField = new JPasswordField();
@@ -110,21 +131,22 @@ public class LoginBibliotecario extends JFrame {
 		gbc_passwordField.insets = new Insets(0, 0, 5, 5);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 5;
+		gbc_passwordField.gridy = 6;
 		panel.add(passwordField, gbc_passwordField);
 		
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String emailBibliotecario = textEmail.getText();
+				String nome = textNome.getText();
+				String email = textEmail.getText();
 				char[] senhaBibliotecario = passwordField.getPassword();
 				String senha = String.valueOf(senhaBibliotecario);
 				
-				BibliotecarioControlador controlador = new BibliotecarioControlador();
+				BibliotecarioControlador bibliotecario = new BibliotecarioControlador();
 				
 				try {
-					controlador.login(emailBibliotecario, senha);
+					bibliotecario.login(nome, email, senha);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2){
@@ -142,7 +164,7 @@ public class LoginBibliotecario extends JFrame {
 		GridBagConstraints gbc_btnEntrar = new GridBagConstraints();
 		gbc_btnEntrar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnEntrar.gridx = 1;
-		gbc_btnEntrar.gridy = 6;
+		gbc_btnEntrar.gridy = 7;
 		panel.add(btnEntrar, gbc_btnEntrar);
 	}
 }
