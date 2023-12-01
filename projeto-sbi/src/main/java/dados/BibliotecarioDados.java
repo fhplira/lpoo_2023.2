@@ -11,6 +11,34 @@ public class BibliotecarioDados {
 	PreparedStatement stmt;
 	Connection con = null;
 	ResultSet result;
+	
+	public void verificarNomeBibliotecario(String nome) throws ExcecaoDados {
+		
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String verificaEmailBibliotecario = "SELECT * FROM bibliotecario WHERE nome_bibliotecario = ?";
+			stmt = con.prepareStatement(verificaEmailBibliotecario);
+			stmt.setString(1, nome);
+			result = stmt.executeQuery();
+			
+		} catch(Exception e) {
+			throw new ExcecaoDados("Usuário não encontrado");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+		
+	}
 
 	public void verificarEmailBibliotecario(String email) throws ExcecaoDados {
 		
@@ -39,6 +67,7 @@ public class BibliotecarioDados {
 		}
 		
 	}
+	
 	
 	public void verificarSenha(String senha) throws ExcecaoDados {
 		

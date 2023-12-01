@@ -30,8 +30,6 @@ public class LoginBibliotecario extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textEmail;
 	private JTextField textNome;
-	private GridBagConstraints gbc_textNome;
-
 	/**
 	 * Launch the application.
 	 */
@@ -147,16 +145,17 @@ public class LoginBibliotecario extends JFrame {
 				
 				try {
 					bibliotecario.login(nome, email, senha);
+					LoginBibliotecario loginBibliotecario = new LoginBibliotecario();
+					loginBibliotecario.dispose();
+					BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
+					botoesPrincipais.setVisible(true);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2){
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				LoginBibliotecario loginBibliotecario = new LoginBibliotecario();
-				loginBibliotecario.dispose();
-				BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
-				botoesPrincipais.setVisible(true);
+				
 			}
 		});
 		
