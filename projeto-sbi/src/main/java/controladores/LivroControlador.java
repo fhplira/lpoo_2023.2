@@ -28,28 +28,38 @@ public class LivroControlador {
 			
 			if(isbn.matches(".*[.-].*")) {
 				
-					isbnSemPontos = metodo.removerPontos(isbn);
-					
-					if(!isbnSemPontos.matches("^\\d+$")){
-						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
-					}
-					
-					if((isbnSemPontos.length() != 10) && (isbnSemPontos.length() != 13)) {
-						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-					}
+						isbnSemPontos = metodo.removerPontos(isbn);
+						
+						if(!isbnSemPontos.matches("^\\d+$")){
+							throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+						}
+						
+						if((isbnSemPontos.length() != 10) && (isbnSemPontos.length() != 13)) {
+							throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+						}
 				
 			 }else {
 				
-					if(!isbn.matches("^\\d+$")){
-						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
-					}
-					
-					if((isbn.length() != 10) && (isbn.length() != 13)) {
-						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-					}
-				
-			}
+						if(!isbn.matches("^\\d+$")){
+							throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+						}
+						
+						if((isbn.length() != 10) && (isbn.length() != 13)) {
+							throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+						}		
+			 }
 			
+			
+					 /*
+				     *    try{
+				     * 			if (dados.verificaSeExisteISBN(isbn)){
+				     * 					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
+				     * 			}
+				     *    }catch(ExcecaoDados e){
+				 		  			throw new ExcecaoControlador(e.getMessage(), e);
+			   				} 
+				     */  
+					
 			
 			final String urlGet = "https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY";
 			 HttpClient cliente = HttpClient.newHttpClient();
@@ -62,8 +72,11 @@ public class LivroControlador {
 			HttpResponse<String> response = null;
 						
 			try {
+				
 				response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
+				
 			} catch (Exception e) {
+				
 				throw new ExcecaoControlador("Houve uma inconsistência com a base de dados.");
 			} 
 			
@@ -144,6 +157,17 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 			}
 			
+			  /*
+			     *    try{
+			     * 			if (dados.verificaSeExisteISBN(isbn)){
+			     * 					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
+			     * 			}
+			     *    }catch(ExcecaoDados e){
+			 		  			throw new ExcecaoControlador(e.getMessage(), e);
+		   				} 
+			  */  
+		
+			    
 			LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, descricao, img);
 			
 			 try {
@@ -155,8 +179,129 @@ public class LivroControlador {
 		}
 		
 		
-		public void atualizarLivro(String titulo, String autor, String editora, String dataPublicacao, String descricao, String img) throws ExcecaoControlador {
-			// a fazer
+		public void controleDeExemplares(String isbn, int quantidade) throws ExcecaoControlador {
+			
+			if(isbn.isBlank()){
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
+			}
+			
+			if(isbn.matches(".*[.-].*")) {
+				
+					isbnSemPontos = metodo.removerPontos(isbn);
+					
+					if(!isbnSemPontos.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbnSemPontos.length() != 10) && (isbnSemPontos.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+			
+			 } else {
+			
+					if(!isbn.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbn.length() != 10) && (isbn.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+			 }
+			
+			
+			
+			      
+			    /*
+			     *    try{
+			     * 			if (dados.verificaSeExisteISBN(isbn)){
+			     * 					throw new ExcecaoControlador("ISBN já cadastrado na base de dado.");
+			     * 			}
+			     *    }catch(ExcecaoDados e){
+			 		  			throw new ExcecaoControlador(e.getMessage(), e);
+		   				} 	    
+			      
+			     
+					try {
+						
+						dados.controleDeExemplares(isbn, quantidade);
+						
+					}catch (ExcecaoDados e){
+						 throw new ExcecaoControlador(e.getMessage(), e);
+					}
+					
+				*/
+		}
+		
+		
+		public void atualizarLivro(String isbn,String titulo, String autor, String editora, String dataPublicacao, String descricao, String img) throws ExcecaoControlador {
+			
+			if(isbn.isBlank()){
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
+			}
+			
+			if(isbn.matches(".*[.-].*")) {
+				
+					isbnSemPontos = metodo.removerPontos(isbn);
+					
+					if(!isbnSemPontos.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbnSemPontos.length() != 10) && (isbnSemPontos.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+			
+			}else {
+			
+					if(!isbn.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbn.length() != 10) && (isbn.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+			
+			}
+				
+					if(titulo.isBlank()){
+						throw new ExcecaoControlador("O campo título não pode ser vazio.");
+					}
+				
+					if(autor.isBlank()){
+						throw new ExcecaoControlador("O campo autor não pode ser vazio.");
+					}
+					
+					if(!autor.matches("^[a-zA-Z,\\s]+$")){
+						throw new ExcecaoControlador("O campo autor não pode ter números.");
+					}
+					
+					if(editora.isBlank()){
+						throw new ExcecaoControlador("O campo título não pode ser vazio.");
+					}
+				
+					
+					if(descricao.isBlank()){
+						throw new ExcecaoControlador("O campo título não pode ser vazio.");
+					}
+					
+					if(img.isBlank()){
+						throw new ExcecaoControlador("O campo título não pode ser vazio.");
+					}
+					
+					if(!dataPublicacao.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$") && (!dataPublicacao.matches("^(\\D*\\d\\D*){4}$"))){
+						throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
+					}
+					
+				
+				LivroModelo livro = new LivroModelo();
+				
+				try {
+					 dados.atualizarLivro(livro);
+					
+				}catch (ExcecaoDados e){
+					 throw new ExcecaoControlador(e.getMessage(), e);
+				}
+
 		}
 	
 		
@@ -168,7 +313,9 @@ public class LivroControlador {
 			}
 		}
 		
-		public LivroModelo buscarLivroPorAutor(String autor) throws ExcecaoControlador {
+		
+		
+		public List<LivroModelo> buscarLivroPorAutor(String autor) throws ExcecaoControlador {
 			if(autor.isBlank()){
 				throw new ExcecaoControlador("O campo autor não pode ser vazio.");
 			}
@@ -177,59 +324,67 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo autor não pode ter números.");
 			}
 			
-			LivroModelo livro = new LivroModelo();
 			
-			//try {
-					// livro = repositorio.buscarLivroPorAutor(autor);
-					// return livro;
-			//}catch (DadosExcecao e){
-					// throw new (RegraNegocioExcecao(e.getMessage(), e);
-			//}
+			try {
+					return dados.buscarLivroPorAutor(autor);
+	
+			}catch (ExcecaoDados e){
+				    throw new ExcecaoControlador(e.getMessage(), e);
+			}
 			
-			return null;
 		}
 		
-		public LivroModelo buscarLivroPorISBN(String isbn) throws ExcecaoControlador {
+		
+		
+		public List<LivroModelo> buscarLivroPorISBN(String isbn) throws ExcecaoControlador {
 			if(isbn.isBlank()){
 				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
 			
-			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
-			}
-			
-			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-			}
-			
-			LivroModelo livro = new LivroModelo();
-			
-			//try {
-					// livro = repositorio.buscarLivroPorISBN(autor);
-					// return livro;
-			//}catch (DadosExcecao e){
-					// throw new (RegraNegocioExcecao(e.getMessage(), e);
-			//}
-			
-			return null;
-
-		}
+			if(isbn.matches(".*[.-].*")) {
+				
+					isbnSemPontos = metodo.removerPontos(isbn);
+					
+					if(!isbnSemPontos.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbnSemPontos.length() != 10) && (isbnSemPontos.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
 		
-		public LivroModelo buscarLivroPorTitulo(String titulo) throws ExcecaoControlador {
-			if(titulo.isBlank()){
-				throw new ExcecaoControlador("O campo título não pode ser vazio.");
+			}else {
+		
+					if(!isbn.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					}
+					
+					if((isbn.length() != 10) && (isbn.length() != 13)) {
+						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+			
 			}
+				
+					try {
+							return dados.buscarLivroPorAutor(isbn);		
+					}catch (ExcecaoDados e){
+							 throw new ExcecaoControlador(e.getMessage(), e);
+					}
+			}
+		
+		
+		
+		public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoControlador {
 			
-			LivroModelo livro = new LivroModelo();
-			
-			//try {
-					// livro = repositorio.buscarLivroPorTitulo(titulo);
-					// return livro;
-			//}catch (DadosExcecao e){
-					// throw new (RegraNegocioExcecao(e.getMessage(), e);
-			//}
-			
-			return null;
-		}	
+				if(titulo.isBlank()){
+					throw new ExcecaoControlador("O campo título não pode ser vazio.");
+				}
+				
+					try {
+							return dados.buscarLivroPorTitulo(titulo);			
+					}catch (ExcecaoDados e){
+							 throw new ExcecaoControlador(e.getMessage(), e);
+					}	
+			    }	
 }		
 
