@@ -22,6 +22,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.ComponentOrientation;
 
 public class LoginBibliotecario extends JFrame {
 
@@ -50,19 +52,39 @@ public class LoginBibliotecario extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginBibliotecario() {
-		setResizable(false);
+		setMaximumSize(new Dimension(2048, 2048));
+		setMinimumSize(new Dimension(824, 510));
+		//setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 824, 510);
 		contentPane = new JPanel();
+		contentPane.setMinimumSize(new Dimension(824, 510));
+		contentPane.setMaximumSize(new Dimension(2048, 2048));
 		contentPane.setBackground(new Color(141, 197, 62));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{202, 272, 202, 0};
+		gbl_contentPane.rowHeights = new int[]{448, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		GridBagConstraints gbc_textNome;
+		
+		
+		
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(202, 11, 404, 448);
-		contentPane.add(panel);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 0, 5);
+		gbc_panel.weighty = 1.0;
+		gbc_panel.weightx = 1.0;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 0;
+		
+		
+		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{50, 206, 50, 0};
 		gbl_panel.rowHeights = new int[]{59, 44, 44, 44, 44, 44, 44, 59};
@@ -88,7 +110,6 @@ public class LoginBibliotecario extends JFrame {
 		panel.add(lblNome, gbc_lblNome);
 		
 		textNome = new JTextField();
-		GridBagConstraints gbc_textNome;
 		gbc_textNome = new GridBagConstraints();
 		gbc_textNome.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textNome.insets = new Insets(0, 0, 5, 5);

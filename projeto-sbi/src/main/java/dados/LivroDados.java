@@ -124,8 +124,8 @@ public class LivroDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String buscarAutor = "SELECT * FROM livro";
-    		stmt = con.prepareStatement(buscarAutor);
+    		String buscarLivros = "SELECT * FROM livro";
+    		stmt = con.prepareStatement(buscarLivros);
         	result = stmt.executeQuery();
         	
         	List<LivroModelo> listaLivros = new ArrayList<>();

@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS leitor (
 	nome_leitor VARCHAR(50),
 	cpf_leitor CHARACTER(50),
 	email_leitor VARCHAR (100),
-	emprestimos INT;
+	emprestimos INT,
 	PRIMARY KEY (id_leitor)
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS livro (
 	autor VARCHAR (500),
 	editora VARCHAR (50),
 	data_publicacao VARCHAR (100),
-	descricao VARCHAR (1000),
+	descricao VARCHAR (5000),
 	img VARCHAR (2000),
 	PRIMARY KEY (id_livro)
 );
@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS emprestimo (
 	id_emprestimo INT AUTO_INCREMENT,
 	id_leitor_fk INT,
 	id_livro_fk INT,
+	isbn VARCHAR (50),
+	cpf_leitor INT,
 	data_emprestimo DATE,
 	data_devolucao DATE DEFAULT (CURRENT_DATE + INTERVAL 15 DAY),
 	multa DECIMAL,
