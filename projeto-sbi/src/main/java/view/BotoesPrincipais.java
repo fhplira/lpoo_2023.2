@@ -77,9 +77,7 @@ public class BotoesPrincipais extends JFrame {
 	botaoSair.setForeground(new Color(255, 0, 0));
 	botaoSair.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
-			botoesPrincipais.dispose();
-			botoesPrincipais.setVisible(false);
+			dispose();
 			new LoginBibliotecario().setVisible(true);
 		}
 	});
@@ -95,9 +93,7 @@ public class BotoesPrincipais extends JFrame {
 						botaoLivroExemplares.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						botaoLivroExemplares.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
-								botoesPrincipais.dispose();
-								botoesPrincipais.setVisible(false);
+								dispose();
 								new ControleExemplares().setVisible(true);
 							}
 						});
@@ -106,9 +102,7 @@ public class BotoesPrincipais extends JFrame {
 						botaoRealizarEmprestimo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						botaoRealizarEmprestimo.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
-								botoesPrincipais.dispose();
-								botoesPrincipais.setVisible(false);
+								dispose();
 								new RealizarEmprestimo().setVisible(true);
 							}
 						});
@@ -125,6 +119,8 @@ public class BotoesPrincipais extends JFrame {
 						botaoCadastrarLeitor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						botaoCadastrarLeitor.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								dispose();
+								new CadastrarLeitor().setVisible(true);
 								
 							}
 						});
@@ -133,9 +129,7 @@ public class BotoesPrincipais extends JFrame {
 						botaoCadastrarLivro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						botaoCadastrarLivro.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
-								botoesPrincipais.dispose();
-								botoesPrincipais.setVisible(false);
+								dispose();
 								new CadastrarLivro().setVisible(true);
 							}
 						});

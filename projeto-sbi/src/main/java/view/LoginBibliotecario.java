@@ -166,10 +166,9 @@ public class LoginBibliotecario extends JFrame {
 				
 				try {
 					bibliotecario.login(nome, email, senha);
-					LoginBibliotecario loginBibliotecario = new LoginBibliotecario();
-					loginBibliotecario.dispose();
-					BotoesPrincipais botoesPrincipais = new BotoesPrincipais();
-					botoesPrincipais.setVisible(true);
+					dispose();
+					new BotoesPrincipais().setVisible(true);
+					
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2){

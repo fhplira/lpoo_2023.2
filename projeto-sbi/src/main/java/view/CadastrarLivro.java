@@ -127,13 +127,11 @@ public class CadastrarLivro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				BotoesPrincipais frameBotoesPrincipais = new BotoesPrincipais();
 				dispose();
-				frameBotoesPrincipais.setVisible(true);
-				
-				
+				new BotoesPrincipais().setVisible(true);
 			}
 		});
+		
 		btnCadastrarPorIsbn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_btnCadastrarPorIsbn = new GridBagConstraints();
 		gbc_btnCadastrarPorIsbn.anchor = GridBagConstraints.WEST;
