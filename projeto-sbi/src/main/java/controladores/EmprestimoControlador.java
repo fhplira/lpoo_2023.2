@@ -1,5 +1,6 @@
 package controladores;
 
+import dados.EmprestimoDados;
 import dados.ExcecaoDados;
 import dados.LeitorDados;
 import dados.LivroDados;
@@ -13,32 +14,39 @@ import modelos.LivroModelo;
 // e 3° Avisar Leitor (sobre a proximidade do final do emprestimo).
 
 public class EmprestimoControlador {
-	//private EmprestimoDados dados = new EmprestimoDados();   
+	private EmprestimoDados dados = new EmprestimoDados();   
 	private LeitorDados leitorDados = new LeitorDados();
+	private LivroDados livroDados = new LivroDados();
 	
-	public EmprestimoModelo fazerEmprestimo(String cpf, String isbn) throws ExcecaoControlador {
-		
-		try {
-			if(!leitorDados.verificarLeitor(cpf)) {
-				throw new ExcecaoControlador("Leitor não Existe");
+	public void realizarEmprestimo(String isbn, String cpf) throws ExcecaoControlador {
+			
+			try {
+				if(!leitorDados.verificarLeitor(cpf)) {
+					throw new ExcecaoControlador("Leitor não Existe");
+				}
+			}catch(ExcecaoDados e) {
+				throw new ExcecaoControlador(e.getMessage(), e);
 			}
-		}catch(ExcecaoDados e) {
-			throw new ExcecaoControlador(e.getMessage(), e);
+			
+			try {
+				if(!livroDados.verificarLivro(isbn)) {
+					throw new ExcecaoControlador("Livro não Existe");
+				}
+			}catch(ExcecaoDados e) {
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
+			
+			EmprestimoModelo emprestimo = new EmprestimoModelo(isbn, cpf);
+			
+			try {
+				dados.realizarEmprestimo(emprestimo, emprestimo);
+			}
+			catch(ExcecaoDados e) {
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
+			
 		}
 		
-		//(fazer try catch de livros para verificar se exite; apenas quando metodo existir no controller de livro.)
-		
-		//EmprestimoModelo emprestimo = new EmprestimoModelo();
-		
-		//try {
-			//emprestimo = Dados.criarEmprestimo(isbn, cpf);
-			//return emprestimo;
-		//}
-		//catch(ExcecaoDados e) {
-			//throw new ExcecaoControlador(e.getMessage(), e);
-		//}
-		return null; //retornando null temporariamente.
-	}
 	
 	public EmprestimoModelo fazerDevolucao(LivroModelo livro, LeitorModelo leitor) throws ExcecaoControlador {
 		

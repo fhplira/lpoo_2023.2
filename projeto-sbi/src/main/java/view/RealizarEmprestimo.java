@@ -143,7 +143,7 @@ public class RealizarEmprestimo extends JFrame {
 				EmprestimoControlador realizarEmprestimo = new EmprestimoControlador();
 				
 				try {
-					realizarEmprestimo.fazerEmprestimo(isbn, cpf);
+					realizarEmprestimo.realizarEmprestimo(isbn, cpf);
 					JOptionPane.showMessageDialog(null,  "Empréstimo realizado com sucesso. \nVerifique a data de devolução na aba 'empréstimos'.", "Success", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ExcecaoControlador ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

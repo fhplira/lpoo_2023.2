@@ -50,6 +50,41 @@ public class LivroDados {
 
     }
     
+    public boolean verificarLivro(String isbn) throws ExcecaoDados {
+		
+		
+		
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String verificarLivro = "SELECT * FROM livro WHERE isbn = ?";
+			stmt = con.prepareStatement(verificarLivro);
+			
+			
+			stmt.setString(1, isbn);
+			result = stmt.executeQuery();
+			 if (result.next()) {    
+		            return true;
+		        } else {
+		            return false;
+		        }
+		} catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar buscar Livro");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+        }
+	}
+    
     public void atualizarLivro(LivroModelo livro) throws ExcecaoDados {
         try {
             con = new ConexaoDados().getConnection();
