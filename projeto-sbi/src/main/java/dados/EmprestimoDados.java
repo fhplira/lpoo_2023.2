@@ -91,17 +91,20 @@ public class EmprestimoDados {
 		}
 	}
 	
-	public void fazerDevolucao(EmprestimoModelo isbn, EmprestimoModelo cpf) throws ExcecaoDados {
+	public void fazerDevolucao(EmprestimoModelo isbn, EmprestimoModelo cpf, EmprestimoModelo id) throws ExcecaoDados {
 		try {
         	con = new ConexaoDados().getConnection();
         	
-        	//
+        	//precisa desenvolver mais, é so uma base
+        	//sugestao: colocar status do emprestimo
 
-            String realizaEmprestimo = "SELECT * FROM emprestimos WHERE isbn = ? AND  cpf_leitor = ?";
+            String realizaEmprestimo = "DELETE * FROM emprestimos WHERE isbn = ? AND  cpf_leitor = ? AND id_emprestimo = ?";
             stmt = con.prepareStatement(realizaEmprestimo);
 
             stmt.setString(1, isbn.getIsbn());
             stmt.setString(2, cpf.getCpf());
+            stmt.setInt(3, id.getId());
+
 
             stmt.execute();
         } catch (Exception e) {
