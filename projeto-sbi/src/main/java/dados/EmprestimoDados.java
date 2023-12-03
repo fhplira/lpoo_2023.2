@@ -27,8 +27,6 @@ public class EmprestimoDados {
             stmt.setString(1, isbn.getIsbn());
             stmt.setString(2, cpf.getCpf());
 
-            
-            //verificar se o executeQuery é sem parâmetro
             stmt.execute();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao realizar o empréstimo");
@@ -79,6 +77,36 @@ public class EmprestimoDados {
 		} catch (Exception e) {
         	throw new ExcecaoDados("Erro ao buscar Emprestimos");
     	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+	}
+	
+	public void fazerDevolucao(EmprestimoModelo isbn, EmprestimoModelo cpf) throws ExcecaoDados {
+		try {
+        	con = new ConexaoDados().getConnection();
+        	
+        	//
+
+            String realizaEmprestimo = "SELECT * FROM emprestimos WHERE isbn = ? AND  cpf_leitor = ?";
+            stmt = con.prepareStatement(realizaEmprestimo);
+
+            stmt.setString(1, isbn.getIsbn());
+            stmt.setString(2, cpf.getCpf());
+
+            stmt.execute();
+        } catch (Exception e) {
+        	throw new ExcecaoDados("Erro ao realizar devolução");
+        } finally {
             try {
                 if (stmt != null) {stmt.close();}
             } catch (SQLException e) {
