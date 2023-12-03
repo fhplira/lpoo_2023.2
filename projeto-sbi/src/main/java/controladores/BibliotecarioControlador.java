@@ -7,7 +7,7 @@ public class BibliotecarioControlador {
 	
 	private BibliotecarioDados dados = new BibliotecarioDados();
 
-	public void login(String nome, String email, String senha) throws ExcecaoControlador {
+	public void login(String nome, String email, String senha) throws Exception, ExcecaoControlador {
 		
 		if(nome.isBlank()) {
 			throw new ExcecaoControlador("O campo nome não pode ser vazio.");
@@ -22,34 +22,23 @@ public class BibliotecarioControlador {
 		}
 		
 		if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z.]+$")) {
-			throw new ExcecaoControlador("Caracteres Invalidos digitados no campo Email");
+			throw new ExcecaoControlador("Caracteres Invalidos digitados no campo Email.");
 		}
 		
 		if(senha.isBlank()) {
 			throw new ExcecaoControlador("O campo senha não pode ser vazio.");
 		}
 		
-		try {
-			dados.verificarNomeBibliotecario(nome);
-					
-		}catch(ExcecaoDados e) {
-			 throw new ExcecaoControlador(e.getMessage(), e);
+		if(!dados.verificarNomeBibliotecario(nome)) {
+			throw new ExcecaoControlador("Nome de usuario não encontrado.");
 		}
 		
-		
-		try {
-			dados.verificarEmailBibliotecario(email);
-					
-		}catch(ExcecaoDados e) {
-			 throw new ExcecaoControlador(e.getMessage(), e);
+		if(!dados.verificarEmailBibliotecario(email)) {
+			throw new ExcecaoControlador("Email de usuário não encontrado.");
 		}
 		
-		
-		try {
-			dados.verificarEmailBibliotecario(senha);
-					
-		}catch(ExcecaoDados e) {
-			 throw new ExcecaoControlador(e.getMessage(), e);
+		if(!dados.verificarSenha(senha)) {
+			throw new ExcecaoControlador("Senha incorreta.");
 		}
 		
 	}

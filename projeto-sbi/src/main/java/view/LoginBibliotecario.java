@@ -54,7 +54,6 @@ public class LoginBibliotecario extends JFrame {
 	public LoginBibliotecario() {
 		setMaximumSize(new Dimension(2048, 2048));
 		setMinimumSize(new Dimension(824, 510));
-		//setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 824, 510);
 		contentPane = new JPanel();

@@ -22,6 +22,8 @@ import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.SwingConstants;
 
 public class CadastrarLeitor extends JFrame {
 
@@ -52,6 +54,8 @@ public class CadastrarLeitor extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastrarLeitor() {
+		setMaximumSize(new Dimension(2048, 2048));
+		setMinimumSize(new Dimension(824, 510));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 824, 510);
 		contentPane = new JPanel();
@@ -59,32 +63,41 @@ public class CadastrarLeitor extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{824, 0};
+		gbl_contentPane.rowHeights = new int[]{449, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(141, 197, 62));
-		panel.setBounds(10, 11, 788, 449);
-		contentPane.add(panel);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.weighty = 1.0;
+		gbc_panel.weightx = 1.0;
+		gbc_panel.fill = GridBagConstraints.VERTICAL;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 0;
+		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWidths = new int[] {162, 393, 162};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblTitulo = new JLabel("CADASTRAR LEITOR");
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 30));
 		GridBagConstraints gbc_lblTitulo = new GridBagConstraints();
-		gbc_lblTitulo.gridwidth = 4;
-		gbc_lblTitulo.insets = new Insets(0, 0, 30, 0);
-		gbc_lblTitulo.gridx = 0;
+		gbc_lblTitulo.insets = new Insets(50, 0, 40, 5);
+		gbc_lblTitulo.gridx = 1;
 		gbc_lblTitulo.gridy = 1;
 		panel.add(lblTitulo, gbc_lblTitulo);
 		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblNome = new GridBagConstraints();
-		gbc_lblNome.insets = new Insets(0, 200, 20, 5);
+		gbc_lblNome.insets = new Insets(0, 160, 30, 5);
 		gbc_lblNome.anchor = GridBagConstraints.EAST;
 		gbc_lblNome.gridx = 0;
 		gbc_lblNome.gridy = 2;
@@ -92,8 +105,8 @@ public class CadastrarLeitor extends JFrame {
 		
 		txtNome = new JTextField();
 		GridBagConstraints gbc_txtNome = new GridBagConstraints();
-		gbc_txtNome.insets = new Insets(0, 0, 20, 200);
 		gbc_txtNome.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNome.insets = new Insets(0, 0, 30, 30);
 		gbc_txtNome.gridx = 1;
 		gbc_txtNome.gridy = 2;
 		panel.add(txtNome, gbc_txtNome);
@@ -103,15 +116,15 @@ public class CadastrarLeitor extends JFrame {
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
 		gbc_lblEmail.anchor = GridBagConstraints.EAST;
-		gbc_lblEmail.insets = new Insets(0, 0, 20, 5);
+		gbc_lblEmail.insets = new Insets(0, 160, 30, 5);
 		gbc_lblEmail.gridx = 0;
 		gbc_lblEmail.gridy = 3;
 		panel.add(lblEmail, gbc_lblEmail);
 		
 		txtEmail = new JTextField();
 		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
-		gbc_txtEmail.insets = new Insets(0, 0, 20, 200);
 		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtEmail.insets = new Insets(0, 0, 30, 30);
 		gbc_txtEmail.gridx = 1;
 		gbc_txtEmail.gridy = 3;
 		panel.add(txtEmail, gbc_txtEmail);
@@ -121,15 +134,15 @@ public class CadastrarLeitor extends JFrame {
 		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblCPF = new GridBagConstraints();
 		gbc_lblCPF.anchor = GridBagConstraints.EAST;
-		gbc_lblCPF.insets = new Insets(0, 0, 100, 5);
+		gbc_lblCPF.insets = new Insets(0, 160, 30, 5);
 		gbc_lblCPF.gridx = 0;
 		gbc_lblCPF.gridy = 4;
 		panel.add(lblCPF, gbc_lblCPF);
 		
 		txtCpf = new JTextField();
 		GridBagConstraints gbc_txtCpf = new GridBagConstraints();
-		gbc_txtCpf.insets = new Insets(0, 0, 100, 200);
 		gbc_txtCpf.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCpf.insets = new Insets(0, 0, 30, 30);
 		gbc_txtCpf.gridx = 1;
 		gbc_txtCpf.gridy = 4;
 		panel.add(txtCpf, gbc_txtCpf);
@@ -163,10 +176,10 @@ public class CadastrarLeitor extends JFrame {
 		});
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		GridBagConstraints gbc_btnCadastrar = new GridBagConstraints();
-		gbc_btnCadastrar.gridwidth = 4;
-		gbc_btnCadastrar.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCadastrar.gridwidth = 3;
+		gbc_btnCadastrar.insets = new Insets(100, 0, 60, 0);
 		gbc_btnCadastrar.gridx = 0;
-		gbc_btnCadastrar.gridy = 7;
+		gbc_btnCadastrar.gridy = 5;
 		panel.add(btnCadastrar, gbc_btnCadastrar);
 	}
 }

@@ -12,7 +12,7 @@ public class BibliotecarioDados {
 	Connection con = null;
 	ResultSet result;
 	
-	public void verificarNomeBibliotecario(String nome) throws ExcecaoDados {
+	public boolean verificarNomeBibliotecario(String nome) throws Exception {
 		
 		try {
 			con = new ConexaoDados().getConnection();
@@ -21,9 +21,10 @@ public class BibliotecarioDados {
 			stmt = con.prepareStatement(verificaEmailBibliotecario);
 			stmt.setString(1, nome);
 			result = stmt.executeQuery();
+			return result.next();
 			
 		} catch(Exception e) {
-			throw new ExcecaoDados("Usuário não encontrado");
+			return false;
 		} finally {
             try {
                 if (stmt != null) {stmt.close();}
@@ -40,7 +41,7 @@ public class BibliotecarioDados {
 		
 	}
 
-	public void verificarEmailBibliotecario(String email) throws ExcecaoDados {
+	public boolean verificarEmailBibliotecario(String email) throws Exception {
 		
 		try {
 			con = new ConexaoDados().getConnection();
@@ -49,9 +50,10 @@ public class BibliotecarioDados {
 			stmt = con.prepareStatement(verificaEmailBibliotecario);
 			stmt.setString(1, email);
 			result = stmt.executeQuery();
+			return result.next();
 			
 		} catch(Exception e) {
-			throw new ExcecaoDados("Usuário não encontrado");
+			return false;
 		} finally {
             try {
                 if (stmt != null) {stmt.close();}
@@ -69,7 +71,7 @@ public class BibliotecarioDados {
 	}
 	
 	
-	public void verificarSenha(String senha) throws ExcecaoDados {
+	public boolean verificarSenha(String senha) throws Exception {
 		
 		try {
 			con = new ConexaoDados().getConnection();
@@ -78,9 +80,10 @@ public class BibliotecarioDados {
 			stmt = con.prepareStatement(verificaSenha);
 			stmt.setString(1, senha);
 			result = stmt.executeQuery();
+			return result.next();
 			
 		} catch(Exception e) {
-			throw new ExcecaoDados("Senha incorreta");
+			return false;
 		} finally {
             try {
                 if (stmt != null) {stmt.close();}
