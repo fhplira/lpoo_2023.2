@@ -5,13 +5,13 @@ public class LeitorModelo {
 	private String nome;
 	private String email;
 	private String cpf;
-	private int livrosEmprestados;
+	private int emprestimos;
 	
 	public LeitorModelo(String nome, String cpf, String email) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
-		livrosEmprestados = 0;
+		emprestimos = 0;
 	}
 	
 	public LeitorModelo() {
@@ -49,12 +49,12 @@ public class LeitorModelo {
 		this.email = email;
 	}
 
-	public int getLivrosEmprestados() {
-		return livrosEmprestados;
+	public int getEmprestimos() {
+		return emprestimos;
 	}
 
-	public void setLivrosEmprestados() {
-		this.livrosEmprestados++;
+	public void setEmprestimos() {
+		this.emprestimos++;
 	}
 	
 }
