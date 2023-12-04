@@ -19,8 +19,6 @@ public class EmprestimoModelo {
 	public EmprestimoModelo(String isbn, String cpf) {
 		this.isbn = isbn;
 		this.cpf = cpf;
-		this.dataEmprestimo = LocalDateTime.now();
-		this.dataDevolucao = this.getDataEmprestimo().plusDays(15);
 		this.dataEmprestimoFormatada = getDataEmprestimo().format(padraoHora);
 		this.dataDevolucaoFormatada = getDataDevolucao().format(padraoHora);
 	}

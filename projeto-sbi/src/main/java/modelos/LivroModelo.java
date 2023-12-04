@@ -2,15 +2,16 @@ package modelos;
 
 public class LivroModelo {
 	
-	int id;
-	String isbn;
-	String titulo;
-	String autor;
-	String editora;
-	String dataPublicacao;
-	String descricao;
-	String img;	
-	boolean disponivel = true;
+	private String isbn;
+	private String titulo;
+	private String autor;
+	private String editora;
+	private String dataPublicacao;
+	private String descricao;
+	private String img;
+	private int total;
+	private int disponivel;
+	private int emprestados;
 	
 	public LivroModelo() {
 		
@@ -24,14 +25,6 @@ public class LivroModelo {
 		this.dataPublicacao = dataPublicacao;
 		this.descricao = descricao;
 		this.img = img;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getIsbn() {
@@ -91,12 +84,28 @@ public class LivroModelo {
 		this.img = img;
 	}
 
-	public boolean isDisponivel() {
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getDisponivel() {
 		return disponivel;
 	}
 
-	public void setDisponivel(boolean disponivel) {
+	public void setDisponivel(int disponivel) {
 		this.disponivel = disponivel;
+	}
+
+	public int getEmprestados() {
+		return emprestados;
+	}
+
+	public void setEmprestados(int emprestados) {
+		this.emprestados = emprestados;
 	}
 	
 }

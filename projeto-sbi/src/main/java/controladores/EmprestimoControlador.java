@@ -36,10 +36,13 @@ public class EmprestimoControlador {
 				throw new ExcecaoControlador(e.getMessage(), e);
 			}
 			
-			EmprestimoModelo emprestimo = new EmprestimoModelo(isbn, cpf);
+			EmprestimoModelo emprestimo = new EmprestimoModelo();
+			emprestimo.setIsbn(isbn);
+			emprestimo.setCpf(cpf);
+			
 			
 			try {
-				dados.realizarEmprestimo(emprestimo, emprestimo);
+				dados.realizarEmprestimo(emprestimo);
 			}
 			catch(ExcecaoDados e) {
 				throw new ExcecaoControlador(e.getMessage(), e);

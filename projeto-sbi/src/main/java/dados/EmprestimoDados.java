@@ -16,17 +16,17 @@ public class EmprestimoDados {
 	Connection con = null;
 	ResultSet result;
 	
-	public void realizarEmprestimo(EmprestimoModelo isbn, EmprestimoModelo cpf) throws ExcecaoDados {
+	public void realizarEmprestimo(EmprestimoModelo emprestimo) throws ExcecaoDados {
 		
 		try {
         	con = new ConexaoDados().getConnection();
 
-            String realizaEmprestimo = "INSERT INTO emprestimo (isbn, cpf_leitor) (?, ?)";
+            String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, multa) VALUES (?, ?, ?)";
             stmt = con.prepareStatement(realizaEmprestimo);
 
-            stmt.setString(1, isbn.getIsbn());
-            stmt.setString(2, cpf.getCpf());
-
+            stmt.setString(1, emprestimo.getIsbn());
+            stmt.setString(2, emprestimo.getCpf());
+            stmt.setDouble(3, emprestimo.getMulta());
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
@@ -61,7 +61,7 @@ public class EmprestimoDados {
 			
 			while (result.next()) {
 				EmprestimoModelo emprestimo = new EmprestimoModelo();
-				emprestimo.setId(result.getInt("id_emprestimo"));
+				//emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn"));
 				emprestimo.setCpf(result.getString("cpf_leitor"));
 				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");

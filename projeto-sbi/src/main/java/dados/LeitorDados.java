@@ -19,12 +19,14 @@ public class LeitorDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String cadastraLeitor = "INSERT INTO leitor (nome_leitor, cpf_leitor, email_leitor)  VALUES (?, ?, ?)";
+			String cadastraLeitor = "INSERT INTO leitor (nome_leitor, cpf_leitor, email_leitor, emprestimos_leitor) "
+					+ " VALUES (?, ?, ?, ?)";
 			stmt = con.prepareStatement(cadastraLeitor);
 			
 			stmt.setString(1, leitor.getNome());
 			stmt.setString(2, leitor.getCpf());
 			stmt.setString(3, leitor.getEmail());
+			stmt.setInt(4, leitor.getEmprestimos());
 			stmt.execute();
 		} catch (Exception e){
 			throw new ExcecaoDados("Erro ao tentar cadastrar Leitor");

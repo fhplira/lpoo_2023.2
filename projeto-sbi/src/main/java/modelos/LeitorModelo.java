@@ -1,7 +1,7 @@
 package modelos;
 
 public class LeitorModelo {
-	private int id;
+	
 	private String nome;
 	private String email;
 	private String cpf;
@@ -11,19 +11,12 @@ public class LeitorModelo {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
-		emprestimos = 0;
+		this.emprestimos = 0;
 	}
 	
 	public LeitorModelo() {
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getNome() {
 		return this.nome;
