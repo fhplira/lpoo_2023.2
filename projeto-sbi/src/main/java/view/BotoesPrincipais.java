@@ -115,6 +115,8 @@ public class BotoesPrincipais extends JFrame {
 						btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						btnNewButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								dispose();
+								
 							}
 						});
 						

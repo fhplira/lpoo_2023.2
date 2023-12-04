@@ -29,6 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ControleExemplares extends JFrame {
 
@@ -74,11 +76,11 @@ public class ControleExemplares extends JFrame {
 				public void valueChanged(ListSelectionEvent e) {
 					int index = listaLivros.getSelectedIndex();
 					String titulo = livros.get(index).getTitulo();
-					int intQtdExemplares = livros.get(index).getTotal();
-					livros.get(index).toString(intQtdExemplares);
+					String qtdExemplares = livros.get(index).getControleExemplar();
+					
 					
 					txtTituloLivro.setText(titulo);
-					txtQtdExemplares.setToolTipText(intQtdExemplares);
+					txtQtdExemplares.setToolTipText(qtdExemplares);
 				}
 			});
 			
@@ -193,6 +195,13 @@ public class ControleExemplares extends JFrame {
 		panel.add(btnRemoverExemplar, gbc_btnRemoverExemplar);
 		
 		JButton btnNewButton = new JButton("SAIR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new BotoesPrincipais().setVisible(true);
+				
+			}
+		});
 		btnNewButton.setForeground(new Color(255, 0, 0));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
