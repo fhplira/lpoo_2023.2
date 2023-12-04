@@ -24,11 +24,17 @@ public class EmprestimoDados {
             String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, multa) VALUES (?, ?, ?)";
             stmt = con.prepareStatement(realizaEmprestimo);
 
+<<<<<<< HEAD
             stmt.setString(1, emprestimo.getIsbn());
             stmt.setString(2, emprestimo.getCpf());
             stmt.setDouble(3, emprestimo.getMulta());
             
             //verificar se o executeQuery é sem parâmetro
+=======
+            stmt.setString(1, isbn.getIsbn());
+            stmt.setString(2, cpf.getCpf());
+
+>>>>>>> db1337cb12bf721c6e518cd85e41812100c7d095
             stmt.execute();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao realizar o empréstimo");
@@ -79,6 +85,39 @@ public class EmprestimoDados {
 		} catch (Exception e) {
         	throw new ExcecaoDados("Erro ao buscar Emprestimos");
     	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+	}
+	
+	public void fazerDevolucao(EmprestimoModelo isbn, EmprestimoModelo cpf, EmprestimoModelo id) throws ExcecaoDados {
+		try {
+        	con = new ConexaoDados().getConnection();
+        	
+        	//precisa desenvolver mais, é so uma base
+        	//sugestao: colocar status do emprestimo
+
+            String realizaEmprestimo = "DELETE * FROM emprestimos WHERE isbn = ? AND  cpf_leitor = ? AND id_emprestimo = ?";
+            stmt = con.prepareStatement(realizaEmprestimo);
+
+            stmt.setString(1, isbn.getIsbn());
+            stmt.setString(2, cpf.getCpf());
+            stmt.setInt(3, id.getId());
+
+
+            stmt.execute();
+        } catch (Exception e) {
+        	throw new ExcecaoDados("Erro ao realizar devolução");
+        } finally {
             try {
                 if (stmt != null) {stmt.close();}
             } catch (SQLException e) {
