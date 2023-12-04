@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controladores.ExcecaoControlador;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -138,6 +141,13 @@ public class BotoesPrincipais extends JFrame {
 						botaoTodosOsLivros.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						botaoTodosOsLivros.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								dispose();
+								try {
+									new VisualizarLivros().setVisible(true);
+								} catch (ExcecaoControlador e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 							}
 						});
 						GridBagConstraints gbc_botaoTodosOsLivros = new GridBagConstraints();

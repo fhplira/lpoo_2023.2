@@ -39,15 +39,16 @@ public class LivroControlador {
 							throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
 					}	
 			
-					 /*
-				     *    try{
-				     * 			if (dados.verificaSeExisteISBN(isbn)){
-				     * 					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
-				     * 			}
-				     *    }catch(ExcecaoDados e){
-				 		  			throw new ExcecaoControlador(e.getMessage(), e);
-			   				} 
-				     */  
+					
+				    try{
+				      	 if (dados.verificarLivro(isbn)){
+				     		 throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
+				     	}
+				        
+				    }catch(ExcecaoDados e){
+				 		  	 throw new ExcecaoControlador(e.getMessage(), e);
+			   		} 
+				    
 					
 			final String urlGet = "https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY";
 			HttpClient cliente = HttpClient.newHttpClient();
@@ -156,15 +157,15 @@ public class LivroControlador {
 						throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
 					}
 				
-			  /*
-			     *    try{
-			     * 			if (dados.verificaSeExisteISBN(isbn)){
-			     * 					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
-			     * 			}
-			     *    }catch(ExcecaoDados e){
+			  
+			        try{
+			      		  if (dados.verificarLivro(isbn)){
+			      				throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
+			      		  }
+			        }catch(ExcecaoDados e){
 			 		  			throw new ExcecaoControlador(e.getMessage(), e);
-		   				} 
-			  */  
+		   			} 
+			    
 		
 			    
 			LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, descricao, img);

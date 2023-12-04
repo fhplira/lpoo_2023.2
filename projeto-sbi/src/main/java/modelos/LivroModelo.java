@@ -107,5 +107,11 @@ public class LivroModelo {
 	public void setEmprestados(int emprestados) {
 		this.emprestados = emprestados;
 	}
+
+	public String toString() {
+		return  titulo;
+	}
+	
+	
 	
 }
