@@ -24,17 +24,14 @@ public class EmprestimoDados {
             String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, multa) VALUES (?, ?, ?)";
             stmt = con.prepareStatement(realizaEmprestimo);
 
-<<<<<<< HEAD
+
             stmt.setString(1, emprestimo.getIsbn());
             stmt.setString(2, emprestimo.getCpf());
             stmt.setDouble(3, emprestimo.getMulta());
             
             //verificar se o executeQuery é sem parâmetro
-=======
-            stmt.setString(1, isbn.getIsbn());
-            stmt.setString(2, cpf.getCpf());
-
->>>>>>> db1337cb12bf721c6e518cd85e41812100c7d095
+            stmt.setString(1, emprestimo.getIsbn());
+            stmt.setString(2, emprestimo.getCpf());
             stmt.execute();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao realizar o empréstimo");
