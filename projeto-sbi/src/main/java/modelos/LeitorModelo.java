@@ -5,13 +5,12 @@ public class LeitorModelo {
 	private String nome;
 	private String email;
 	private String cpf;
-	private int emprestimos;
+	private int emprestimo = 0;
 	
 	public LeitorModelo(String nome, String cpf, String email) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
-		this.emprestimos = 0;
 	}
 	
 	public LeitorModelo() {
@@ -42,12 +41,15 @@ public class LeitorModelo {
 		this.email = email;
 	}
 
-	public int getEmprestimos() {
-		return emprestimos;
+	public int getEmprestimo() {
+		return emprestimo;
 	}
 
-	public void setEmprestimos() {
-		this.emprestimos++;
+	public void setEmprestimo(int emprestimo) {
+		this.emprestimo = emprestimo;
 	}
 	
+	public void adicionarEmprestimo(int emprestimo) {
+		this.emprestimo = this.getEmprestimo() + emprestimo;
+	}
 }

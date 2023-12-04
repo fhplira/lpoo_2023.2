@@ -17,16 +17,9 @@ public class EmprestimoControlador {
 	private EmprestimoDados dados = new EmprestimoDados();   
 	private LeitorDados leitorDados = new LeitorDados();
 	private LivroDados livroDados = new LivroDados();
+	private LeitorControlador leitorControlador = new LeitorControlador();
 	
-	public void realizarEmprestimo(String isbn, String cpf) throws ExcecaoControlador {
-			
-			try {
-				if(!leitorDados.verificarLeitor(cpf)) {
-					throw new ExcecaoControlador("Leitor não Existe");
-				}
-			}catch(ExcecaoDados e) {
-				throw new ExcecaoControlador(e.getMessage(), e);
-			}
+	public void realizarEmprestimo(String isbn, String cpf) throws ExcecaoControlador, ExcecaoDados {
 			
 			try {
 				if(!livroDados.verificarLivro(isbn)) {
@@ -40,6 +33,20 @@ public class EmprestimoControlador {
 			emprestimo.setIsbn(isbn);
 			emprestimo.setCpf(cpf);
 			
+			LeitorModelo leitor = new LeitorModelo();
+			
+			leitor = leitorControlador.buscarLeitorPorCpf(cpf);
+			
+			try {
+				if(leitor.getEmprestimo() >= 2) {
+					throw new ExcecaoControlador("Número de emprestimos excedidos");
+				}else {
+					leitor.adicionarEmprestimo(1);
+					leitorDados.adicionarEmprestimo(leitor);
+				}
+			}catch(ExcecaoDados e) {
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
 			
 			try {
 				dados.realizarEmprestimo(emprestimo);

@@ -19,14 +19,14 @@ public class LeitorDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String cadastraLeitor = "INSERT INTO leitor (nome_leitor, cpf_leitor, email_leitor, emprestimos_leitor) "
+			String cadastraLeitor = "INSERT INTO leitor (nome_leitor, cpf_leitor, email_leitor, emprestimo_leitor) "
 					+ " VALUES (?, ?, ?, ?)";
 			stmt = con.prepareStatement(cadastraLeitor);
 			
 			stmt.setString(1, leitor.getNome());
 			stmt.setString(2, leitor.getCpf());
 			stmt.setString(3, leitor.getEmail());
-			stmt.setInt(4, leitor.getEmprestimos());
+			stmt.setInt(4, leitor.getEmprestimo());
 			stmt.execute();
 		} catch (Exception e){
 			throw new ExcecaoDados("Erro ao tentar cadastrar Leitor");
@@ -49,11 +49,12 @@ public class LeitorDados {
 	public void atualizarLeitor(LeitorModelo leitor) throws ExcecaoDados {
 		
 		try {
-			String atualizaLeitor = "UPDATE leitor SET" 
-					+ "nome_leitor = ?"
-					+ "email_leitor = ?"
-					+ "WHERE cpf_leitor = ?";
+			con = new ConexaoDados().getConnection();
 			
+			String atualizaLeitor = "UPDATE leitor SET" 
+					+ "nome_leitor = ?, "
+					+ "email_leitor = ? "
+					+ "WHERE cpf_leitor = ?";
 			stmt = con.prepareStatement(atualizaLeitor);
 			
 			stmt.setString(1, leitor.getNome());
@@ -127,9 +128,14 @@ public class LeitorDados {
 			result = stmt.executeQuery();
 			
 			LeitorModelo leitor = new LeitorModelo();
-			leitor.setNome(result.getString("nome_leitor"));
-			leitor.setCpf(result.getString("cpf_leitor"));
-			leitor.setEmail(result.getString("Email_leitor"));
+			
+			if(result.next()) {
+				leitor.setNome(result.getString("nome_leitor"));
+				leitor.setCpf(result.getString("cpf_leitor"));
+				leitor.setEmail(result.getString("email_leitor"));
+				leitor.setEmprestimo(result.getInt("emprestimo_leitor"));
+			}
+			
 			return leitor;
 			 
 		} catch(Exception e) {
@@ -148,4 +154,33 @@ public class LeitorDados {
             }
         }
 	}
+	
+	public void adicionarEmprestimo(LeitorModelo leitor) throws ExcecaoDados {
+		try {
+			con = new ConexaoDados().getConnection();
+			String adicionarEmprestimo = "UPDATE leitor SET emprestimo_leitor = ? "
+					+ " WHERE cpf_leitor = ?";
+			stmt = con.prepareStatement(adicionarEmprestimo);
+			
+			stmt.setInt(1, leitor.getEmprestimo());
+			stmt.setString(2, leitor.getCpf());
+			stmt.execute();
+			
+		}catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar adicionar emprestimo");
+		}finally {
+			try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+	}
+	
 }
