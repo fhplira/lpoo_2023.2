@@ -30,8 +30,6 @@ public class EmprestimoDados {
             stmt.setDouble(3, emprestimo.getMulta());
             
             //verificar se o executeQuery é sem parâmetro
-            stmt.setString(1, emprestimo.getIsbn());
-            stmt.setString(2, emprestimo.getCpf());
             stmt.execute();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao realizar o empréstimo");
