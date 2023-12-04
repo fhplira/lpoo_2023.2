@@ -9,6 +9,7 @@ public class LivroModelo {
 	private String dataPublicacao;
 	private String descricao;
 	private String img;
+	private String controleExemplar;
 	private int total;
 	private int disponivel;
 	private int emprestados;
@@ -111,7 +112,14 @@ public class LivroModelo {
 	public String toString() {
 		return  titulo;
 	}
-	
-	
+
+	public String getControleExemplar() {
+		return controleExemplar;
+	}
+
+	public void setControleExemplar(String controleExemplar) {
+		this.controleExemplar = controleExemplar;
+	}
+
 	
 }

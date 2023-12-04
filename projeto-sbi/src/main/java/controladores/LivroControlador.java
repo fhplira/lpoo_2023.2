@@ -179,7 +179,7 @@ public class LivroControlador {
 		}
 		
 		
-		public void controleDeExemplares(String isbn, int quantidade) throws ExcecaoControlador {
+		public void AdicionarExemplares(String isbn, String controleExemplar) throws ExcecaoControlador {
 			
 					if(isbn.isBlank()){
 						throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
@@ -191,6 +191,14 @@ public class LivroControlador {
 					
 					if((isbn.length() != 10) && (isbn.length() != 13)) {
 						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+					}
+					
+					if(isbn.isBlank()){
+						throw new ExcecaoControlador("O campo quantidade de exemplares não pode ser vazio.");
+					}
+			
+					if(!isbn.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo quantidade de exemplares não pode ter letras e nem espaços.");
 					}
 			 
 			
@@ -215,6 +223,50 @@ public class LivroControlador {
 				*/
 		}
 		
+		public void ExcluirExemplares(String isbn, String controleExemplar) throws ExcecaoControlador {
+			
+			if(isbn.isBlank()){
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
+			}
+	
+			if(!isbn.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+			}
+			
+			if((isbn.length() != 10) && (isbn.length() != 13)) {
+				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+			}
+			
+			if(isbn.isBlank()){
+				throw new ExcecaoControlador("O campo quantidade de exemplares não pode ser vazio.");
+			}
+	
+			if(!isbn.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo quantidade de exemplares não pode ter letras e nem espaços.");
+			}
+	 
+	
+	    /*
+	     *    try{
+	     * 			if (dados.verificaSeExisteISBN(isbn)){
+	     * 					throw new ExcecaoControlador("ISBN já cadastrado na base de dado.");
+	     * 			}
+	     *    }catch(ExcecaoDados e){
+	 		  			throw new ExcecaoControlador(e.getMessage(), e);
+   				} 	    
+	      
+	     
+			try {
+				
+				dados.controleDeExemplares(isbn, quantidade);
+				
+			}catch (ExcecaoDados e){
+				 throw new ExcecaoControlador(e.getMessage(), e);
+			}
+			
+		*/
+}
+
 		
 		public void atualizarLivro(String isbn,String titulo, String autor, String editora, String dataPublicacao, String descricao, String img) throws ExcecaoControlador {
 			
