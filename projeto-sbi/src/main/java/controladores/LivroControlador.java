@@ -379,7 +379,7 @@ public class LivroControlador {
 		
 		
 		
-		public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoControlador {
+		public LivroModelo buscarLivroPorTitulo(String titulo) throws ExcecaoControlador {
 			
 					if(titulo.isBlank()){
 						  throw new ExcecaoControlador("O campo título não pode ser vazio.");

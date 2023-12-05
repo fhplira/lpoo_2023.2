@@ -36,15 +36,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class VisualizarLivros extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private String titulo1;
-    private String autor1;
-    private String isbn1;
-
+	private LivroControlador livroControlador = new LivroControlador();
 	/**
 	 * Launch the application.
 	 */
@@ -69,6 +67,7 @@ public class VisualizarLivros extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 821, 501);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(137, 197, 61));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -78,22 +77,18 @@ public class VisualizarLivros extends JFrame {
 		panel.setBounds(46, 60, 460, 378);
 		contentPane.add(panel);
 		
-       LivroControlador livrosControlador = new LivroControlador();
+   
 		
-		List<LivroModelo> livros = livrosControlador.buscarTodosOsLivros();
+		List<LivroModelo> livros = livroControlador.buscarTodosOsLivros();
 		
 		 DefaultListModel<LivroModelo> modeloJList = new DefaultListModel<>();
-	        for (LivroModelo livro : livros) {
-	            modeloJList.addElement(livro);
-	        }
-	        
-
-	        JList<LivroModelo> jList = new JList<>(modeloJList);
+	       
+		 modeloJList.addAll(livros);
+	       
+	     JList<LivroModelo> jList = new JList<>(modeloJList);
 	        jList.setSize(400, 447);
-	        //jList.setBounds(325, 0, 441, 452);
 	        panel.setLayout(null);
 	        JScrollPane scrollPane = new JScrollPane();
-	        //jList.getBaseline(200, 200);
 	   
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        setLocationRelativeTo(null);
@@ -104,64 +99,24 @@ public class VisualizarLivros extends JFrame {
 	        visualizarLivro.addActionListener(new ActionListener() {
 	        	
 	        		public void actionPerformed(ActionEvent e) {
-	        			LivroModelo pegarLivro = new LivroModelo();
-		                
-		                   LivroModelo livroClicado = jList.getSelectedValue();
-		                   String titulo = livroClicado.getTitulo();
-		                   
-		                   for(LivroModelo procurarLivro : livros) {
-		                	   if(procurarLivro.equals(livroClicado)) {
-		                		   pegarLivro.getTitulo();	                		 
-		                		   pegarLivro.getIsbn();	                		 
-		                		   pegarLivro.getDataPublicacao();	                		 
-		                		                		 
-		                	   }
-		                   }
-		                   
-		                   LivroControlador livrosControlador = new LivroControlador();
-		                   List<LivroModelo> livro = new ArrayList<>();
-		                   
-		                   try {
-							livro = livrosControlador.buscarLivroPorTitulo(titulo);
-						} catch (ExcecaoControlador e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
 		                  
-		                  
-		                   for(LivroModelo livroEspecifico : livro) {
-		                	   titulo1 = livroEspecifico.getTitulo();
-		                	   autor1 = livroEspecifico.getAutor();
-		                	   isbn1 = livroEspecifico.getIsbn();
-		                   }
-		                   
-		                
-		                   File file = new File("src/main/resources/images/9789722113663");
-		       		    
-		   				byte[] bytes = null;
-						try {
-							bytes = Files.readAllBytes(file.toPath());
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-		   				ImageIcon imagemIcon = new ImageIcon(bytes);
-		   				
-		   				//JLabel label = new JLabel(imagemIcon);
-		   				//contentPane.add(label);
-		                   
-		                   JDialog dialog = new JDialog();
-			                dialog.setVisible(true);
-			                dialog.setSize(600, 800);
-			        	
-			        		//dialog.add(new JLabel(livro.get(1)));
-			        		dialog.add(new JLabel(("titulo " + titulo1)));
-			        		dialog.add(new JLabel(imagemIcon));
-			        		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			        	     setLocationRelativeTo(null);
-			      
-	        		}
-	        });
+		        		   LivroModelo livroClicado = jList.getSelectedValue();  
+		       		       String titulo = livroClicado.getTitulo();
+		       		     
+							try {
+								LivroModelo chamarLivroCliclado = livroControlador.buscarLivroPorTitulo(titulo);
+								
+								VisualizarLivroEspecifico enviar = new VisualizarLivroEspecifico();
+								enviar.enviarValores(chamarLivroCliclado);
+								enviar.setVisible(true);
+								dispose();
+							} catch (ExcecaoControlador ex) {
+								JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+							} catch (Exception exc){
+								JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+	        		
+	        		}});
 	        visualizarLivro.setBounds(610, 121, 148, 23);
 	        contentPane.add(visualizarLivro);
 	        
@@ -171,6 +126,10 @@ public class VisualizarLivros extends JFrame {
 		        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		        lblNewLabel.setBounds(312, 11, 263, 38);
 		        contentPane.add(lblNewLabel);
+		        
+		        JLabel caralho = new JLabel("New label");
+		        caralho.setBounds(640, 200, 46, 14);
+		        contentPane.add(caralho);
 	        	
 	       
 	              
