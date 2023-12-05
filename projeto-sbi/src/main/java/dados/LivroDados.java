@@ -239,7 +239,7 @@ public class LivroDados {
 		}
     }
     
-    public List<LivroModelo> buscarLivroPorTitulo(String titulo) throws ExcecaoDados {
+    public LivroModelo buscarLivroPorTitulo(String titulo) throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
@@ -248,10 +248,8 @@ public class LivroDados {
         	stmt.setString(1, titulo);
         	result = stmt.executeQuery();
         	
-        	List<LivroModelo> listaLivros = new ArrayList<>();
-        	
+        	LivroModelo livro = new LivroModelo();
         	while (result.next()) {
-        		LivroModelo livro = new LivroModelo();
         		livro.setTitulo(result.getString("titulo_livro"));
         		livro.setIsbn(result.getString("isbn"));
             	livro.setAutor(result.getString("autor"));
@@ -259,11 +257,10 @@ public class LivroDados {
             	livro.setDataPublicacao(result.getString("data_publicacao"));
             	livro.setDescricao(result.getString("descricao"));
             	livro.setImg(result.getString("img"));
-            	
-            	listaLivros.add(livro);
+            
         	}
         	
-        	return listaLivros;
+        	return livro;
         	
     	} catch (Exception e) {
         	throw new ExcecaoDados("Livro não encontrado");

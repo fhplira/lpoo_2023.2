@@ -110,7 +110,7 @@ public class LivroModelo {
 	}
 
 	public String toString() {
-		return  titulo;
+		return titulo;
 	}
 
 	public String getControleExemplar() {
