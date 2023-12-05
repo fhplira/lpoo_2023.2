@@ -7,15 +7,8 @@ public class BibliotecarioControlador {
 	
 	private BibliotecarioDados dados = new BibliotecarioDados();
 
-	public void login(String nome, String email, String senha) throws Exception, ExcecaoControlador {
+	public void login(String email, String senha) throws Exception, ExcecaoControlador {
 		
-		if(nome.isBlank()) {
-			throw new ExcecaoControlador("O campo nome não pode ser vazio.");
-		}
-		
-		if(!nome.matches("^[a-zA-Z,\\s]+$")){
-			throw new ExcecaoControlador("O campo nome não pode ter números.");
-		}
 		
 		if(email.isBlank()) {
 			throw new ExcecaoControlador("O campo email não pode ser vazio.");
@@ -29,9 +22,6 @@ public class BibliotecarioControlador {
 			throw new ExcecaoControlador("O campo senha não pode ser vazio.");
 		}
 		
-		if(!dados.verificarNomeBibliotecario(nome)) {
-			throw new ExcecaoControlador("Nome de usuario não encontrado.");
-		}
 		
 		if(!dados.verificarEmailBibliotecario(email)) {
 			throw new ExcecaoControlador("Email de usuário não encontrado.");

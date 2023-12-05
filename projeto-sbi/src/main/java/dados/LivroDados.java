@@ -325,6 +325,49 @@ public class LivroDados {
     }
     
     
+    public LivroModelo buscarLivroPorTituloModelo(String titulo) throws ExcecaoDados {
+    	try {
+    		con = new ConexaoDados().getConnection();
+    		
+    		String buscarTitulo = "SELECT * FROM livro WHERE titulo_livro = ?";
+    		stmt = con.prepareStatement(buscarTitulo);
+        	stmt.setString(1, titulo);
+        	result = stmt.executeQuery();
+        	
+        	LivroModelo livro = new LivroModelo();
+        	
+        	while (result.next()) {
+        		livro.setTitulo(result.getString("titulo_livro"));
+        		livro.setIsbn(result.getString("isbn"));
+            	livro.setAutor(result.getString("autor"));
+            	livro.setEditora(result.getString("editora"));
+            	livro.setDataPublicacao(result.getString("data_publicacao"));
+            	livro.setDescricao(result.getString("descricao"));
+            	livro.setImg(result.getString("img"));
+            	
+        	}
+        	
+        	return livro;
+        	
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Livro não encontrado");
+        	
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+    }
+    
+    
 }
 
 
