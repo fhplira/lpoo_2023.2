@@ -182,24 +182,17 @@ public class LivroControlador {
 		public void AdicionarExemplares(String isbn, String controleExemplar) throws ExcecaoControlador {
 			
 					if(isbn.isBlank()){
-						throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
+						throw new ExcecaoControlador("O campo isbn não pode ser vazio.");
+					}
+						
+					if(controleExemplar.isBlank()){
+						throw new ExcecaoControlador("O campo quantidade não pode ser vazio.");
 					}
 			
-					if(!isbn.matches("^\\d+$")){
-						throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+					if(!controleExemplar.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo quantidade não pode ter letras e nem espaços.");
 					}
 					
-					if((isbn.length() != 10) && (isbn.length() != 13)) {
-						throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-					}
-					
-					if(isbn.isBlank()){
-						throw new ExcecaoControlador("O campo quantidade de exemplares não pode ser vazio.");
-					}
-			
-					if(!isbn.matches("^\\d+$")){
-						throw new ExcecaoControlador("O campo quantidade de exemplares não pode ter letras e nem espaços.");
-					}
 			 
 			
 			    /*
@@ -225,27 +218,19 @@ public class LivroControlador {
 		
 		public void ExcluirExemplares(String isbn, String controleExemplar) throws ExcecaoControlador {
 			
-			if(isbn.isBlank()){
-				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
-			}
-	
-			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
-			}
+					if(isbn.isBlank()){
+						throw new ExcecaoControlador("O campo isbn não pode ser vazio.");
+					}
+						
+					if(controleExemplar.isBlank()){
+						throw new ExcecaoControlador("O campo quantidade não pode ser vazio.");
+					}
 			
-			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-			}
-			
-			if(isbn.isBlank()){
-				throw new ExcecaoControlador("O campo quantidade de exemplares não pode ser vazio.");
-			}
-	
-			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoControlador("O campo quantidade de exemplares não pode ter letras e nem espaços.");
-			}
+					if(!controleExemplar.matches("^\\d+$")){
+						throw new ExcecaoControlador("O campo quantidade não pode ter letras e nem espaços.");
+					}
 	 
-	
+					// Verificar a quantidade de exemplares
 	    /*
 	     *    try{
 	     * 			if (dados.verificaSeExisteISBN(isbn)){
