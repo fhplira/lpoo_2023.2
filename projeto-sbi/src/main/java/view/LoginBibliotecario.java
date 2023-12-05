@@ -31,7 +31,6 @@ public class LoginBibliotecario extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textEmail;
-	private JTextField textNome;
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +68,6 @@ public class LoginBibliotecario extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		GridBagConstraints gbc_textNome;
 		
 		
 		
@@ -94,36 +92,19 @@ public class LoginBibliotecario extends JFrame {
 		JLabel lblBemVindo = new JLabel("Bem-vindo!");
 		lblBemVindo.setFont(new Font("Dialog", Font.BOLD, 30));
 		GridBagConstraints gbc_lblBemVindo = new GridBagConstraints();
+		gbc_lblBemVindo.anchor = GridBagConstraints.SOUTH;
 		gbc_lblBemVindo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblBemVindo.gridx = 1;
 		gbc_lblBemVindo.gridy = 0;
 		panel.add(lblBemVindo, gbc_lblBemVindo);
 		
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setFont(new Font("Dialog", Font.BOLD, 13));
-		GridBagConstraints gbc_lblNome = new GridBagConstraints();
-		gbc_lblNome.anchor = GridBagConstraints.WEST;
-		gbc_lblNome.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNome.gridx = 1;
-		gbc_lblNome.gridy = 1;
-		panel.add(lblNome, gbc_lblNome);
-		
-		textNome = new JTextField();
-		gbc_textNome = new GridBagConstraints();
-		gbc_textNome.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textNome.insets = new Insets(0, 0, 5, 5);
-		gbc_textNome.gridx = 1;
-		gbc_textNome.gridy = 2;
-		panel.add(textNome, gbc_textNome);
-		textNome.setColumns(10);
-		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Dialog", Font.BOLD, 13));
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
-		gbc_lblEmail.anchor = GridBagConstraints.WEST;
+		gbc_lblEmail.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEmail.gridx = 1;
-		gbc_lblEmail.gridy = 3;
+		gbc_lblEmail.gridy = 2;
 		panel.add(lblEmail, gbc_lblEmail);
 		
 		textEmail = new JTextField();
@@ -131,17 +112,17 @@ public class LoginBibliotecario extends JFrame {
 		gbc_textEmail.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_textEmail.gridx = 1;
-		gbc_textEmail.gridy = 4;
+		gbc_textEmail.gridy = 3;
 		panel.add(textEmail, gbc_textEmail);
 		textEmail.setColumns(10);
 		
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
 		GridBagConstraints gbc_lblSenha = new GridBagConstraints();
-		gbc_lblSenha.anchor = GridBagConstraints.WEST;
+		gbc_lblSenha.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_lblSenha.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSenha.gridx = 1;
-		gbc_lblSenha.gridy = 5;
+		gbc_lblSenha.gridy = 4;
 		panel.add(lblSenha, gbc_lblSenha);
 		
 		passwordField = new JPasswordField();
@@ -149,14 +130,13 @@ public class LoginBibliotecario extends JFrame {
 		gbc_passwordField.insets = new Insets(0, 0, 5, 5);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 6;
+		gbc_passwordField.gridy = 5;
 		panel.add(passwordField, gbc_passwordField);
 		
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String nome = textNome.getText();
 				String email = textEmail.getText();
 				char[] senhaBibliotecario = passwordField.getPassword();
 				String senha = String.valueOf(senhaBibliotecario);
@@ -164,7 +144,7 @@ public class LoginBibliotecario extends JFrame {
 				BibliotecarioControlador bibliotecario = new BibliotecarioControlador();
 				
 				try {
-					bibliotecario.login(nome, email, senha);
+					bibliotecario.login(email, senha);
 					dispose();
 					new BotoesPrincipais().setVisible(true);
 					
@@ -180,9 +160,10 @@ public class LoginBibliotecario extends JFrame {
 		
 		
 		GridBagConstraints gbc_btnEntrar = new GridBagConstraints();
+		gbc_btnEntrar.anchor = GridBagConstraints.SOUTH;
 		gbc_btnEntrar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnEntrar.gridx = 1;
-		gbc_btnEntrar.gridy = 7;
+		gbc_btnEntrar.gridy = 6;
 		panel.add(btnEntrar, gbc_btnEntrar);
 	}
 }

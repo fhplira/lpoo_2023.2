@@ -60,8 +60,6 @@ public class VisualizarLivroEspecifico extends JFrame {
 		contentPane.setBackground(new Color(141, 197, 62));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		VisualizarLivros livro = new VisualizarLivros();
-		
 
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
