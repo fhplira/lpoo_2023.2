@@ -18,7 +18,7 @@ public class LivroModelo {
 		
 	}
 	
-	public LivroModelo(String isbn, String titulo, String autor, String editora,String dataPublicacao, String descricao, String img) {
+	public LivroModelo(String isbn, String titulo, String autor, String editora, String dataPublicacao, String descricao, String img) {
 		this.isbn = isbn;
 		this.titulo = titulo;
 		this.autor = autor;

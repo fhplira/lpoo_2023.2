@@ -1,4 +1,5 @@
 package controladores;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -94,7 +95,18 @@ public class LivroControlador {
 							
 					        String nomeArquivo = isbn;
 		
-					        Path destinoPath = Path.of(caminhoDestino, nomeArquivo);
+					        String caminhoPastaLivros = System.getenv("APPDATA") + "/" + Constantes.PASTA_APP + "/" + Constantes.PASTA_LIVROS;
+					        
+					        File file = new File(caminhoPastaLivros);
+					        if (!file.exists()) {
+								file.mkdirs();
+							}
+					        
+					        Path destinoPath = Path.of(caminhoPastaLivros, nomeArquivo);
+					        
+					        
+					        
+					        //Path destinoPath = Path.of(caminhoDestino, nomeArquivo);
 		
 					        InputStream inputStream = conexao.getInputStream();
 					        Files.copy(inputStream, destinoPath, StandardCopyOption.REPLACE_EXISTING);        	

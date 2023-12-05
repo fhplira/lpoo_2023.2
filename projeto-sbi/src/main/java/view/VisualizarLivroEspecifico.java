@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,6 +21,10 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.DropMode;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JEditorPane;
 
 public class VisualizarLivroEspecifico extends JFrame {
 
@@ -34,6 +39,8 @@ public class VisualizarLivroEspecifico extends JFrame {
 	private JTextField textField_1CampoDisponiveis;
 	private JTextField textFieldEmprestados;
 	private JTextArea textAreaDescricao;
+	private JLabel lblNewLabelImagemLivro;
+
 
 	/**
 	 * Launch the application.
@@ -50,6 +57,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 			}
 		});
 	}
+	
 
 	public void enviarValores(LivroModelo livroClicado) throws HeadlessException {
 		textFieldTitulo.setText(livroClicado.getTitulo());
@@ -60,7 +68,12 @@ public class VisualizarLivroEspecifico extends JFrame {
 		textFieldCampoTotalExemplares.setText(Integer.toString(livroClicado.getTotal()));
 		textField_1CampoDisponiveis.setText(Integer.toString(livroClicado.getDisponivel()));
 		textFieldEmprestados.setText(Integer.toString(livroClicado.getEmprestados()));
-	    //textAreaDescricao.setToolTipText(livroClicado.getDescricao());
+		textAreaDescricao.setText(livroClicado.getDescricao());
+
+	   
+	    ImageIcon icon = new ImageIcon(livroClicado.getImg());
+	    
+	    lblNewLabelImagemLivro.setIcon(icon);
 	}
 
 
@@ -102,7 +115,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JLabel lblNewLabelImagemLivro = new JLabel("titulo\r\n");
+		lblNewLabelImagemLivro = new JLabel("titulo\r\n");
 		lblNewLabelImagemLivro.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_lblNewLabelImagemLivro = new GridBagConstraints();
 		gbc_lblNewLabelImagemLivro.insets = new Insets(30, 0, 0, 0);
@@ -216,9 +229,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		gbc_lblNewLabelDescricao.gridy = 6;
 		contentPane.add(lblNewLabelDescricao, gbc_lblNewLabelDescricao);
 		
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setMaximumSize(new Dimension(300, 50));
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 50);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -226,12 +237,12 @@ public class VisualizarLivroEspecifico extends JFrame {
 		gbc_scrollPane.gridy = 6;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
-		JTextArea textAreaDescricao = new JTextArea();
+		textAreaDescricao = new JTextArea();
 		scrollPane.setViewportView(textAreaDescricao);
 		textAreaDescricao.setBackground(new Color(141, 197, 62));
+		scrollPane.setViewportView(textAreaDescricao);
 		textAreaDescricao.setLineWrap(true);
 		textAreaDescricao.setWrapStyleWord(true);
-		textAreaDescricao.setMaximumSize(new Dimension(300, 50));
 		
 		
 		JLabel lblNewLabelTotal = new JLabel("Quantidade:");
@@ -245,7 +256,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		textFieldCampoTotalExemplares = new JTextField();
 		textFieldCampoTotalExemplares.setBackground(new Color(141, 197, 62));
 		GridBagConstraints gbc_textFieldCampoTotalExemplares = new GridBagConstraints();
-		gbc_textFieldCampoTotalExemplares.insets = new Insets(0, 0, 5, 600);
+		gbc_textFieldCampoTotalExemplares.insets = new Insets(0, 0, 5, 50);
 		gbc_textFieldCampoTotalExemplares.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldCampoTotalExemplares.gridx = 1;
 		gbc_textFieldCampoTotalExemplares.gridy = 7;
@@ -263,7 +274,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		textField_1CampoDisponiveis = new JTextField();
 		textField_1CampoDisponiveis.setBackground(new Color(141, 197, 62));
 		GridBagConstraints gbc_textField_1CampoDisponiveis = new GridBagConstraints();
-		gbc_textField_1CampoDisponiveis.insets = new Insets(0, 0, 5, 600);
+		gbc_textField_1CampoDisponiveis.insets = new Insets(0, 0, 5, 50);
 		gbc_textField_1CampoDisponiveis.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1CampoDisponiveis.gridx = 1;
 		gbc_textField_1CampoDisponiveis.gridy = 8;
@@ -281,7 +292,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		textFieldEmprestados = new JTextField();
 		textFieldEmprestados.setBackground(new Color(141, 197, 62));
 		GridBagConstraints gbc_textFieldEmprestados = new GridBagConstraints();
-		gbc_textFieldEmprestados.insets = new Insets(0, 0, 5, 600);
+		gbc_textFieldEmprestados.insets = new Insets(0, 0, 5, 50);
 		gbc_textFieldEmprestados.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldEmprestados.gridx = 1;
 		gbc_textFieldEmprestados.gridy = 9;
