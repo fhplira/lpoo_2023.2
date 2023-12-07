@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import controladores.Constantes;
 import controladores.ExcecaoControlador;
 import modelos.LivroModelo;
 
@@ -18,10 +19,16 @@ import java.awt.GridBagConstraints;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Insets;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.imageio.ImageIO;
 import javax.swing.DropMode;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JEditorPane;
@@ -42,6 +49,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 	private JLabel lblNewLabelImagemLivro;
 
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +66,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		});
 	}
 	
-
+	
 	public void enviarValores(LivroModelo livroClicado) throws HeadlessException {
 		textFieldTitulo.setText(livroClicado.getTitulo());
 		textFieldCampoAutor.setText(livroClicado.getAutor());
@@ -69,11 +77,34 @@ public class VisualizarLivroEspecifico extends JFrame {
 		textField_1CampoDisponiveis.setText(Integer.toString(livroClicado.getDisponivel()));
 		textFieldEmprestados.setText(Integer.toString(livroClicado.getEmprestados()));
 		textAreaDescricao.setText(livroClicado.getDescricao());
+		
+		String nomeImagem = livroClicado.getIsbn();
 
-	   
-	    ImageIcon icon = new ImageIcon(livroClicado.getImg());
+		String caminhoPastaLivros = System.getenv("APPDATA") + "/" + Constantes.PASTA_APP + "/" + Constantes.PASTA_LIVROS;
+		
+		String nomeImagemLivro = caminhoPastaLivros + "/" + nomeImagem;
+		
+		File file = new File(nomeImagemLivro);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		
+		try {
+			BufferedImage imagem = ImageIO.read(file);
+			if (imagem != null) {
+				ImageIcon icon = new ImageIcon(imagem);	
+				lblNewLabelImagemLivro.setIcon(icon);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
 	    
-	    lblNewLabelImagemLivro.setIcon(icon);
+	    
 	}
 
 
@@ -115,7 +146,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		lblNewLabelImagemLivro = new JLabel("titulo\r\n");
+		lblNewLabelImagemLivro = new JLabel();
 		lblNewLabelImagemLivro.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_lblNewLabelImagemLivro = new GridBagConstraints();
 		gbc_lblNewLabelImagemLivro.insets = new Insets(30, 0, 0, 0);
@@ -123,7 +154,6 @@ public class VisualizarLivroEspecifico extends JFrame {
 		gbc_lblNewLabelImagemLivro.gridy = 0;
 		panel.add(lblNewLabelImagemLivro, gbc_lblNewLabelImagemLivro);
 		
-		lblNewLabelImagemLivro.setText("imagem");
 		
 		JLabel lblNewLabelTituloLivro = new JLabel("Titulo:");
 		GridBagConstraints gbc_lblNewLabelTituloLivro = new GridBagConstraints();
