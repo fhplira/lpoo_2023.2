@@ -127,10 +127,6 @@ public class VisualizarLivros extends JFrame {
 		        lblNewLabel.setBounds(312, 11, 263, 38);
 		        contentPane.add(lblNewLabel);
 		        
-		        JLabel caralho = new JLabel("New label");
-		        caralho.setBounds(640, 200, 46, 14);
-		        contentPane.add(caralho);
-	        	
 	       
 	              
 	      

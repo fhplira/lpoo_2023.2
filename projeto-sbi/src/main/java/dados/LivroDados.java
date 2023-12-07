@@ -19,7 +19,7 @@ public class LivroDados {
         try {
         	con = new ConexaoDados().getConnection();
 
-            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(cadastraLivro);
 
             stmt.setString(1, livro.getIsbn());
@@ -29,6 +29,7 @@ public class LivroDados {
             stmt.setString(5, livro.getDataPublicacao());
             stmt.setString(6, livro.getDescricao());
             stmt.setString(7, livro.getImg());
+            stmt.setInt(8, livro.getTotal() + 1);;
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
@@ -128,18 +129,20 @@ public class LivroDados {
 
     }
     
-    public void deletarLivroPorIsbn(LivroModelo livro) throws ExcecaoDados {
+    public void deletarExemplarLivro(LivroModelo livro, int exemplarASubtrair) throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String deletaLivroPorIsbn = "DELETE * FROM LIVRO WHERE isbn = ?";
-    		stmt = con.prepareStatement(deletaLivroPorIsbn);
+    		String deletaExemplarLivro = "UPDATE livro SET total = total - ?"
+    				+ "WHERE isbn = ?";
+    		stmt = con.prepareStatement(deletaExemplarLivro);
     		
-    		stmt.setString(1, livro.getIsbn());
+    		stmt.setInt(1, exemplarASubtrair);
+    		stmt.setString(2, livro.getIsbn());
     		
     		stmt.execute();
     	} catch (Exception e) {
-    		throw new ExcecaoDados("Erro ao tentar deletar o livro do sistema");
+    		throw new ExcecaoDados("Erro ao tentar deletar exemplar do sistema");
     	} finally {
             try {
                 if (stmt != null) {stmt.close();}

@@ -85,9 +85,6 @@ public class VisualizarLivroEspecifico extends JFrame {
 		String nomeImagemLivro = caminhoPastaLivros + "/" + nomeImagem;
 		
 		File file = new File(nomeImagemLivro);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
 		
 		
 		try {
