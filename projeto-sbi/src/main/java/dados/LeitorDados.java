@@ -46,24 +46,22 @@ public class LeitorDados {
 		
 	}
 	
-	public void atualizarLeitor(LeitorModelo leitor) throws ExcecaoDados {
+	public void atualizarNomeLeitor(LeitorModelo leitor) throws ExcecaoDados {
 		
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String atualizaLeitor = "UPDATE leitor SET" 
+			String atualizaNomeLeitor = "UPDATE leitor SET" 
 					+ "nome_leitor = ?, "
-					+ "email_leitor = ? "
 					+ "WHERE cpf_leitor = ?";
-			stmt = con.prepareStatement(atualizaLeitor);
+			stmt = con.prepareStatement(atualizaNomeLeitor);
 			
 			stmt.setString(1, leitor.getNome());
-			stmt.setString(2, leitor.getEmail());
-			stmt.setString(3, leitor.getCpf());
+			stmt.setString(2, leitor.getCpf());
 			stmt.execute();
 			
 		} catch(Exception e) {
-			throw new ExcecaoDados("Erro ao tentar atualizar informções do leitor");
+			throw new ExcecaoDados("Erro ao tentar atualizar informções o nome do leitor");
 		} finally {
             try {
                 if (stmt != null) {stmt.close();}
@@ -77,9 +75,37 @@ public class LeitorDados {
                 throw new ExcecaoDados("Erro ao fechar a conexão: ");                
             }
         }
+	}
+	
+	public void atualizarEmailLeitor(LeitorModelo leitor) throws ExcecaoDados {
 		
-		
-		
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String atualizaEmailLeitor = "UPDATE leitor SET" 
+					+ "email_leitor = ? "
+					+ "WHERE cpf_leitor = ?";
+			stmt = con.prepareStatement(atualizaEmailLeitor);
+			
+			stmt.setString(1, leitor.getNome());
+			stmt.setString(2, leitor.getEmail());
+			stmt.execute();
+			
+		} catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar atualizar informções o email do leitor");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+        }
 	}
 	
 	public boolean verificarLeitor(String cpf) throws ExcecaoDados {
@@ -183,4 +209,31 @@ public class LeitorDados {
 		}
 	}
 	
+	public void deletarLeitorPorCpf(String cpf) throws ExcecaoDados {
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String deletarLeitorPorCpf = "DELETE FROM leitor WHERE cpf_leitor = ?";
+			
+			stmt = con.prepareStatement(deletarLeitorPorCpf);
+			
+			stmt.setString(1, cpf);
+			
+			stmt.execute();
+		}catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar excluir o leitor");
+		}finally {
+			try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+	}
 }

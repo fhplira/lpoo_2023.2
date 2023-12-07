@@ -99,4 +99,46 @@ public class LeitorControlador {
 		}
 		
 	}
+	
+	public void atualizarNomeLeitor(LeitorModelo leitor, String nome) throws ExcecaoControlador {
+		
+		if(leitor.getNome().matches("[0-9]+")) {
+			throw new ExcecaoControlador("O campo Nome não pode ter números");
+		}
+		
+		if(leitor.getNome().isBlank()) {
+			throw new ExcecaoControlador("O campo Nome não pode ser Vazio");
+		}
+		
+		try {
+			leitor = dados.buscarLeitorPorCpf(leitor.getCpf());
+			leitor.setNome(nome);
+			dados.atualizarNomeLeitor(leitor);
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
+	
+	public void atualizarEmailLeitor(LeitorModelo leitor, String email) throws ExcecaoControlador {
+		
+		if(email.isBlank()) {
+			throw new ExcecaoControlador("O campo Email não pode ser Vazio");
+		}
+		
+		if(email.matches(".*\\s+.*")) {
+			throw new ExcecaoControlador("O campo Email não pode ter espaço em branco");
+		}
+		
+		if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z.]+$")) {
+			throw new ExcecaoControlador("Caracteres Invalidos digitados no campo Email");
+		}
+		
+		try {
+			leitor = dados.buscarLeitorPorCpf(leitor.getCpf());
+			leitor.setEmail(email);
+			dados.atualizarNomeLeitor(leitor);
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
 }
