@@ -59,7 +59,7 @@ public class VisualizarLeitor extends JFrame {
 		final LeitorControlador controlador = new LeitorControlador();
 		final JButton btnEditarDados = new JButton("Editar dados");
 		final JButton btnAtualizarDados = new JButton("Atualizar dados");
-		final String cpf = txtCpf.getText();
+		 
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 689, 550);
@@ -120,6 +120,7 @@ public class VisualizarLeitor extends JFrame {
 		JButton btnBuscarLeitor = new JButton("Buscar Leitor");
 		btnBuscarLeitor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String cpf = txtCpf.getText();
 				try {
 					LeitorModelo leitor = controlador.buscarLeitorPorCpf(cpf);
 					
@@ -227,6 +228,7 @@ public class VisualizarLeitor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String email = txtEmail.getText();
 				String nome = txtNome.getText();
+				String cpf = txtCpf.getText();
 				
 				try {
 					LeitorModelo leitor = controlador.buscarLeitorPorCpf(cpf);
