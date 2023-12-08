@@ -27,7 +27,7 @@ public class BibliotecarioControlador {
 			throw new ExcecaoControlador("Email de usuário não encontrado.");
 		}
 		
-		if(!dados.verificarSenha(senha)) {
+		if(!dados.verificarSenha(email, senha)) {
 			throw new ExcecaoControlador("Senha incorreta.");
 		}
 		

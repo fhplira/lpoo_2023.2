@@ -71,14 +71,15 @@ public class BibliotecarioDados {
 	}
 	
 	
-	public boolean verificarSenha(String senha) throws Exception {
+	public boolean verificarSenha(String email, String senha) throws Exception {
 		
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String verificaSenha = "SELECT * FROM bibliotecario WHERE senha_bibliotecario = ?";
+			String verificaSenha = "SELECT * FROM bibliotecario WHERE email_bibliotecario = ? AND senha_bibliotecario = ?";
 			stmt = con.prepareStatement(verificaSenha);
-			stmt.setString(1, senha);
+			stmt.setString(1, email);
+			stmt.setString(2, senha);
 			result = stmt.executeQuery();
 			return result.next();
 			

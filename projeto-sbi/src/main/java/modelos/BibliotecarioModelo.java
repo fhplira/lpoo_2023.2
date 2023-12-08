@@ -2,8 +2,8 @@ package modelos;
 
 public class BibliotecarioModelo {
 	
-	private String email;
-	private String senha;
+	private String email = "BrunoCartaxo@gmail.com";
+	private String senha = "12345";
 	private String nome;
 	
 	public BibliotecarioModelo() {
