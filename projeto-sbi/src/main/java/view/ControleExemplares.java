@@ -74,11 +74,7 @@ public class ControleExemplares extends JFrame {
 		try {
 			
 			final List<LivroModelo> livros = controlador.buscarTodosOsLivros();
-
-			for(LivroModelo livro : livros) {
-				modeloJlist.addElement(livro);
-			}
-
+			
 			modeloJlist.addAll(livros);
 			
 			listaLivros.addListSelectionListener(new ListSelectionListener() {

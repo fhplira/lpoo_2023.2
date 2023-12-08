@@ -107,7 +107,6 @@ public class CadastrarLivro extends JFrame {
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVoltar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		GridBagConstraints gbc_btnVoltar = new GridBagConstraints();
-		gbc_btnVoltar.anchor = GridBagConstraints.EAST;
 		gbc_btnVoltar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnVoltar.gridx = 0;
 		gbc_btnVoltar.gridy = 0;
@@ -165,7 +164,6 @@ public class CadastrarLivro extends JFrame {
 		
 		btnCadastrarPorIsbn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_btnCadastrarPorIsbn = new GridBagConstraints();
-		gbc_btnCadastrarPorIsbn.anchor = GridBagConstraints.WEST;
 		gbc_btnCadastrarPorIsbn.insets = new Insets(0, 0, 5, 0);
 		gbc_btnCadastrarPorIsbn.gridx = 1;
 		gbc_btnCadastrarPorIsbn.gridy = 2;
@@ -329,15 +327,13 @@ public class CadastrarLivro extends JFrame {
 		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridwidth = 2;
 		gbc_lblNewLabel.insets = new Insets(20, 0, 5, 0);
-		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 9;
 		panelCadastro.add(lblNewLabel, gbc_lblNewLabel);
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		GridBagConstraints gbc_btnCadastrar = new GridBagConstraints();
-		gbc_btnCadastrar.gridwidth = 2;
-		gbc_btnCadastrar.gridx = 0;
+		gbc_btnCadastrar.gridx = 1;
 		gbc_btnCadastrar.gridy = 10;
 		panelCadastro.add(btnCadastrar, gbc_btnCadastrar);
 		
