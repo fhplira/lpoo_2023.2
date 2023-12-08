@@ -33,6 +33,8 @@ import java.awt.Color;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
+import java.awt.Component;
 
 public class ControleExemplares extends JFrame {
 
@@ -63,11 +65,10 @@ public class ControleExemplares extends JFrame {
 	 * Create the frame.
 	 */
 	public ControleExemplares() {
-		setResizable(false);
+		setMinimumSize(new Dimension(824, 510));
+		//setResizable(false);
 		
 		DefaultListModel<LivroModelo> modeloJlist = new DefaultListModel();
-		final JList listaLivros = new JList(modeloJlist);
-		JScrollPane scroll = new JScrollPane(listaLivros);
 		
 		final LivroControlador controlador = new LivroControlador();
 			
@@ -76,14 +77,6 @@ public class ControleExemplares extends JFrame {
 			final List<LivroModelo> livros = controlador.buscarTodosOsLivros();
 			
 			modeloJlist.addAll(livros);
-			
-			listaLivros.addListSelectionListener(new ListSelectionListener() {
-				public void valueChanged(ListSelectionEvent e) {
-					int index = listaLivros.getSelectedIndex();
-					String isbn = livros.get(index).getIsbn();
-					txtIsbn.setText(isbn);
-				}
-			});
 			
 		} catch (ExcecaoControlador e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -101,41 +94,45 @@ public class ControleExemplares extends JFrame {
 		
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{217, 516, 0};
+		gbl_contentPane.rowHeights = new int[]{16, 408, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblNewLabel = new JLabel("LIVROS:");
-		lblNewLabel.setBounds(5, 5, 52, 16);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 0;
+		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(232, 11, 516, 423);
 		panel.setBackground(new Color(141, 197, 62));
-		contentPane.add(panel);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridheight = 2;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 0;
+		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{207, 214, 0, 0, 0};
 		gbl_panel.rowHeights = new int[]{37, 50, 22, 22, 140, 27, 0, 0, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblTitutlo = new JLabel("CONTROLE DE EXEMPLARES");
+		lblTitutlo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblTitutlo.setFont(new Font("Tahoma", Font.BOLD, 30));
 		GridBagConstraints gbc_lblTitutlo = new GridBagConstraints();
 		gbc_lblTitutlo.insets = new Insets(0, 0, 5, 0);
-		gbc_lblTitutlo.gridwidth = 4;
+		gbc_lblTitutlo.gridwidth = 5;
 		gbc_lblTitutlo.gridx = 0;
-		gbc_lblTitutlo.gridy = 0;
+		gbc_lblTitutlo.gridy = 1;
 		panel.add(lblTitutlo, gbc_lblTitutlo);
-		
-		JLabel lblImagem = new JLabel("New label");
-		GridBagConstraints gbc_lblImagem = new GridBagConstraints();
-		gbc_lblImagem.gridheight = 4;
-		gbc_lblImagem.gridwidth = 4;
-		gbc_lblImagem.insets = new Insets(0, 0, 5, 0);
-		gbc_lblImagem.gridx = 0;
-		gbc_lblImagem.gridy = 1;
-		panel.add(lblImagem, gbc_lblImagem);
 		
 		JLabel lblIsbn = new JLabel("ISBN:");
 		lblIsbn.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -151,7 +148,7 @@ public class ControleExemplares extends JFrame {
 		txtIsbn.setEnabled(false);
 		GridBagConstraints gbc_txtIsbn = new GridBagConstraints();
 		gbc_txtIsbn.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtIsbn.insets = new Insets(0, 0, 5, 0);
+		gbc_txtIsbn.insets = new Insets(0, 0, 5, 5);
 		gbc_txtIsbn.gridx = 1;
 		gbc_txtIsbn.gridy = 5;
 		panel.add(txtIsbn, gbc_txtIsbn);
@@ -248,12 +245,26 @@ public class ControleExemplares extends JFrame {
 		gbc_btnNewButton.gridx = 3;
 		gbc_btnNewButton.gridy = 9;
 		panel.add(btnNewButton, gbc_btnNewButton);
-		scroll.setBounds(5, 26, 217, 408);
+		final JList listaLivros = new JList(modeloJlist);
+		JScrollPane scroll = new JScrollPane(listaLivros);
+		
+		listaLivros.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				int index = listaLivros.getSelectedIndex();
+				String isbn = livros.get(index).getIsbn();
+				txtIsbn.setText(isbn);
+			}
+		});
 		
 		listaLivros.setBounds(EXIT_ON_CLOSE, ABORT, 100, 450);
 		listaLivros.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		listaLivros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listaLivros.setVisibleRowCount(5);
-		getContentPane().add(scroll);
+		GridBagConstraints gbc_scroll = new GridBagConstraints();
+		gbc_scroll.fill = GridBagConstraints.BOTH;
+		gbc_scroll.insets = new Insets(0, 0, 0, 5);
+		gbc_scroll.gridx = 0;
+		gbc_scroll.gridy = 1;
+		getContentPane().add(scroll, gbc_scroll);
 	}
 }

@@ -37,6 +37,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.Component;
 
 public class VisualizarLivros extends JFrame {
 
@@ -64,6 +67,7 @@ public class VisualizarLivros extends JFrame {
 	 * @throws ExcecaoControlador 
 	 */
 	public VisualizarLivros() throws ExcecaoControlador {
+		setMinimumSize(new Dimension(824, 510));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 821, 501);
 		contentPane = new JPanel();
@@ -71,11 +75,12 @@ public class VisualizarLivros extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(46, 60, 460, 378);
-		contentPane.add(panel);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{46, 529, 35, 148, 0};
+		gbl_contentPane.rowHeights = new int[]{38, 378, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
 		
    
 		
@@ -84,21 +89,64 @@ public class VisualizarLivros extends JFrame {
 		 DefaultListModel<LivroModelo> modeloJList = new DefaultListModel<>();
 	       
 		 modeloJList.addAll(livros);
-	       
-	     JList<LivroModelo> jList = new JList<>(modeloJList);
-	        jList.setSize(400, 447);
-	        panel.setLayout(null);
 	        JScrollPane scrollPane = new JScrollPane();
 	   
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        setLocationRelativeTo(null);
 	        
-	        panel.add(jList);
 	        
-	        JButton visualizarLivro = new JButton("Visualizar Livro");
-	        visualizarLivro.addActionListener(new ActionListener() {
-	        	
-	        		public void actionPerformed(ActionEvent e) {
+	       
+		        JLabel lblNewLabel = new JLabel("VisualizarLivros");
+		        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		        GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		        gbc_lblNewLabel.gridwidth = 2;
+		        gbc_lblNewLabel.fill = GridBagConstraints.VERTICAL;
+		        gbc_lblNewLabel.insets = new Insets(40, 0, 15, 5);
+		        gbc_lblNewLabel.gridx = 1;
+		        gbc_lblNewLabel.gridy = 0;
+		        contentPane.add(lblNewLabel, gbc_lblNewLabel);
+	        
+	        JButton btnNewButton = new JButton("VOLTAR");
+	        btnNewButton.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		dispose();
+	        		new BotoesPrincipais().setVisible(true);
+	        	}
+	        });
+	        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+	        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+	        gbc_btnNewButton.insets = new Insets(40, 0, 15, 20);
+	        gbc_btnNewButton.gridx = 3;
+	        gbc_btnNewButton.gridy = 0;
+	        contentPane.add(btnNewButton, gbc_btnNewButton);
+	        
+	        JPanel panel = new JPanel();
+	        GridBagConstraints gbc_panel = new GridBagConstraints();
+	        gbc_panel.fill = GridBagConstraints.BOTH;
+	        gbc_panel.insets = new Insets(0, 0, 20, 5);
+	        gbc_panel.gridx = 1;
+	        gbc_panel.gridy = 1;
+	        contentPane.add(panel, gbc_panel);
+	     GridBagLayout gbl_panel = new GridBagLayout();
+	     gbl_panel.columnWidths = new int[]{400, 0};
+	     gbl_panel.rowHeights = new int[]{367, 0};
+	     gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+	     gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+	     panel.setLayout(gbl_panel);
+	     
+	     JList<LivroModelo> jList = new JList<>(modeloJList);
+	     
+	     GridBagConstraints gbc_jList = new GridBagConstraints();
+	     gbc_jList.fill = GridBagConstraints.BOTH;
+	     gbc_jList.gridx = 0;
+	     gbc_jList.gridy = 0;
+	     panel.add(jList, gbc_jList);
+		        
+		        JButton visualizarLivro = new JButton("Visualizar Livro");
+		        visualizarLivro.setAlignmentX(Component.CENTER_ALIGNMENT);
+		        visualizarLivro.addActionListener(new ActionListener() {
+		        	
+		        		public void actionPerformed(ActionEvent e) {
 		                  
 		        		   LivroModelo livroClicado = jList.getSelectedValue();  
 		       		       String titulo = livroClicado.getTitulo();
@@ -115,17 +163,13 @@ public class VisualizarLivros extends JFrame {
 							} catch (Exception exc){
 								JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 							}
-	        		
-	        		}});
-	        visualizarLivro.setBounds(610, 121, 148, 23);
-	        contentPane.add(visualizarLivro);
-	        
-	        
-	       
-		        JLabel lblNewLabel = new JLabel("VisualizarLivros");
-		        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		        lblNewLabel.setBounds(312, 11, 263, 38);
-		        contentPane.add(lblNewLabel);
+		        		
+		        		}});
+		        GridBagConstraints gbc_visualizarLivro = new GridBagConstraints();
+		        gbc_visualizarLivro.insets = new Insets(0, 0, 0, 20);
+		        gbc_visualizarLivro.gridx = 3;
+		        gbc_visualizarLivro.gridy = 1;
+		        contentPane.add(visualizarLivro, gbc_visualizarLivro);
 		        
 	       
 	              

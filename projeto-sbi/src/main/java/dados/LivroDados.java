@@ -158,6 +158,36 @@ public class LivroDados {
 		}
     }
     
+    public void acrescentarExemplarLivro(LivroModelo livro, int exemplarASomar) throws ExcecaoDados {
+    	try {
+    		con = new ConexaoDados().getConnection();
+    		
+    		String deletaExemplarLivro = "UPDATE livro SET total = total + ?"
+    				+ "WHERE isbn = ?";
+    		stmt = con.prepareStatement(deletaExemplarLivro);
+    		
+    		stmt.setInt(1, exemplarASomar);
+    		stmt.setString(2, livro.getIsbn());
+    		
+    		stmt.execute();
+    	} catch (Exception e) {
+    		throw new ExcecaoDados("Erro ao tentar acrescentar exemplar do sistema");
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+    }
+    
+    
     public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
