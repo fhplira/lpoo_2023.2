@@ -19,7 +19,7 @@ public class LivroDados {
         try {
         	con = new ConexaoDados().getConnection();
 
-            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, total, disponivel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(cadastraLivro);
 
             stmt.setString(1, livro.getIsbn());
@@ -29,7 +29,8 @@ public class LivroDados {
             stmt.setString(5, livro.getDataPublicacao());
             stmt.setString(6, livro.getDescricao());
             stmt.setString(7, livro.getImg());
-            stmt.setInt(8, livro.getTotal() + 1);;
+            stmt.setInt(8, livro.getTotal() + 1);
+            stmt.setInt(9, livro.getDisponivel() + 1);
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();

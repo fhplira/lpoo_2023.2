@@ -134,12 +134,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					dispose();
-					try {
-						new VisualizarLivros().setVisible(true);
-					} catch (ExcecaoControlador e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					new VisualizarLivros().setVisible(true);
 				
 			}
 		});
