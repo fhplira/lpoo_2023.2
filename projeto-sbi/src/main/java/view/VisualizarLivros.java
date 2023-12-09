@@ -66,7 +66,7 @@ public class VisualizarLivros extends JFrame {
 	 * Create the frame.
 	 * @throws ExcecaoControlador 
 	 */
-	public VisualizarLivros() throws ExcecaoControlador {
+	public VisualizarLivros() {
 		setMinimumSize(new Dimension(824, 510));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 821, 501);
@@ -84,8 +84,14 @@ public class VisualizarLivros extends JFrame {
 		
    
 		
-		List<LivroModelo> livros = livroControlador.buscarTodosOsLivros();
+		List<LivroModelo> livros = new ArrayList<>();
 		
+		try {
+			livros = livroControlador.buscarTodosOsLivros();
+		} catch (ExcecaoControlador e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 DefaultListModel<LivroModelo> modeloJList = new DefaultListModel<>();
 	       
 		 modeloJList.addAll(livros);

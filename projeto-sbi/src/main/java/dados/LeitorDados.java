@@ -51,8 +51,7 @@ public class LeitorDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String atualizaNomeLeitor = "UPDATE leitor SET" 
-					+ "nome_leitor = ?, "
+			String atualizaNomeLeitor = "UPDATE leitor SET nome_leitor = ? "
 					+ "WHERE cpf_leitor = ?";
 			stmt = con.prepareStatement(atualizaNomeLeitor);
 			
@@ -82,8 +81,7 @@ public class LeitorDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String atualizaEmailLeitor = "UPDATE leitor SET" 
-					+ "email_leitor = ? "
+			String atualizaEmailLeitor = "UPDATE leitor SET email_leitor = ? "
 					+ "WHERE cpf_leitor = ?";
 			stmt = con.prepareStatement(atualizaEmailLeitor);
 			

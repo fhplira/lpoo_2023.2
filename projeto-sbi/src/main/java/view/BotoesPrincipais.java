@@ -144,12 +144,7 @@ public class BotoesPrincipais extends JFrame {
 						botaoTodosOsLivros.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								dispose();
-								try {
 									new VisualizarLivros().setVisible(true);
-								} catch (ExcecaoControlador e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
 							}
 						});
 						GridBagConstraints gbc_botaoTodosOsLivros = new GridBagConstraints();

@@ -10,9 +10,9 @@ public class LivroModelo {
 	private String descricao;
 	private String img;
 	private String controleExemplar;
-	private int total;
-	private int disponivel;
-	private int emprestados;
+	private int total = 0;
+	private int disponivel = 0;
+	private int emprestados = 0;
 	
 	public LivroModelo() {
 		

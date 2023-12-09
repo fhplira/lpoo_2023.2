@@ -216,17 +216,22 @@ public class LivroControlador {
 			if(!controleExemplar.matches("^\\d+$")){
 				throw new ExcecaoControlador("O campo quantidade não pode ter letras e nem espaços.");
 			}
+			int controleExemplarInteiro = Integer.parseInt(controleExemplar);
+			
+			if(controleExemplarInteiro < 0) {
+				throw new ExcecaoControlador("A quantidade não pode ser menor que zero");
+			}
+			
+			if(controleExemplarInteiro == 0) {
+				throw new ExcecaoControlador("A quantidade não pode ser igual a zero");
+			}
+			
+			try {			
+				dados.acrescentarExemplarLivro(isbn, controleExemplarInteiro);
+			}catch (ExcecaoDados e){
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
 
-			/*  
-					try {
-
-						dados.controleDeExemplares(isbn, quantidade);
-
-					}catch (ExcecaoDados e){
-						 throw new ExcecaoControlador(e.getMessage(), e);
-					}
-
-			 */
 		}
 		
 		public void ExcluirExemplares(String isbn, String controleExemplar) throws ExcecaoControlador {
@@ -242,19 +247,39 @@ public class LivroControlador {
 			if(!controleExemplar.matches("^\\d+$")){
 				throw new ExcecaoControlador("O campo quantidade não pode ter letras e nem espaços.");
 			}
-
-			// Verificar a quantidade de exemplares
-			/*
+			
+			int controleExemplarInteiro = Integer.parseInt(controleExemplar);
+			
+			if(controleExemplarInteiro < 0) {
+				throw new ExcecaoControlador("A quantidade não pode ser menor que zero");
+			}
+			
+			if(controleExemplarInteiro == 0) {
+				throw new ExcecaoControlador("A quantidade não pode ser igual a zero");
+			}
+			
+			try {
+				int quantidade = dados.buscarQuantidadeLivros(isbn);
+				if(controleExemplarInteiro > quantidade) {
+					throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
+				+ "\n Quantidade de livro: " + quantidade);
+				}
+				if(quantidade == 0) {
+					throw new ExcecaoControlador("Nao existe exeplares para exclusão");
+				}
+			}catch(ExcecaoDados e) {
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
+			
 
 			try {
-
-				dados.controleDeExemplares(isbn, quantidade);
+				dados.deletarExemplarLivro(isbn, controleExemplarInteiro);
 
 			}catch (ExcecaoDados e){
 				 throw new ExcecaoControlador(e.getMessage(), e);
 			}
 
-			 */
+			 
 }
 	
 	

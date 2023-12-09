@@ -72,9 +72,11 @@ public class ControleExemplares extends JFrame {
 		
 		final LivroControlador controlador = new LivroControlador();
 			
+		List<LivroModelo> livros = new ArrayList<>();
+		
 		try {
 			
-			final List<LivroModelo> livros = controlador.buscarTodosOsLivros();
+			livros = controlador.buscarTodosOsLivros();
 			
 			modeloJlist.addAll(livros);
 			
@@ -251,7 +253,7 @@ public class ControleExemplares extends JFrame {
 		listaLivros.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int index = listaLivros.getSelectedIndex();
-				String isbn = livros.get(index).getIsbn();
+				String isbn = modeloJlist.get(index).getIsbn();
 				txtIsbn.setText(isbn);
 			}
 		});

@@ -232,11 +232,13 @@ public class VisualizarLeitor extends JFrame {
 				
 				try {
 					LeitorModelo leitor = controlador.buscarLeitorPorCpf(cpf);
-					if(!email.isBlank()) {
-						controlador.atualizarEmailLeitor(leitor, email);
-					}
 					if(!nome.isBlank()) {
 						controlador.atualizarNomeLeitor(leitor, nome);
+						JOptionPane.showMessageDialog(null, "Nome atualizado com sucesso para: " + nome, "Success", JOptionPane.INFORMATION_MESSAGE);
+					}
+					if(!email.isBlank()) {
+						controlador.atualizarEmailLeitor(leitor, email);
+						JOptionPane.showMessageDialog(null, "Email atualizado com sucesso para: " + email, "Success", JOptionPane.INFORMATION_MESSAGE);
 					}
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

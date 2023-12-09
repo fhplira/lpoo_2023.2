@@ -129,16 +129,16 @@ public class LivroDados {
 
     }
     
-    public void deletarExemplarLivro(LivroModelo livro, int exemplarASubtrair) throws ExcecaoDados {
+    public void deletarExemplarLivro(String isbn, int exemplarASubtrair) throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String deletaExemplarLivro = "UPDATE livro SET total = total - ?"
+    		String deletaExemplarLivro = "UPDATE livro SET total = total - ? "
     				+ "WHERE isbn = ?";
     		stmt = con.prepareStatement(deletaExemplarLivro);
     		
     		stmt.setInt(1, exemplarASubtrair);
-    		stmt.setString(2, livro.getIsbn());
+    		stmt.setString(2, isbn);
     		
     		stmt.execute();
     	} catch (Exception e) {
@@ -158,16 +158,16 @@ public class LivroDados {
 		}
     }
     
-    public void acrescentarExemplarLivro(LivroModelo livro, int exemplarASomar) throws ExcecaoDados {
+    public void acrescentarExemplarLivro(String isbn, int exemplarASomar) throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String deletaExemplarLivro = "UPDATE livro SET total = total + ?"
+    		String acrescentaExemplarLivro = "UPDATE livro SET total = total + ? "
     				+ "WHERE isbn = ?";
-    		stmt = con.prepareStatement(deletaExemplarLivro);
+    		stmt = con.prepareStatement(acrescentaExemplarLivro);
     		
     		stmt.setInt(1, exemplarASomar);
-    		stmt.setString(2, livro.getIsbn());
+    		stmt.setString(2, isbn);
     		
     		stmt.execute();
     	} catch (Exception e) {
@@ -187,6 +187,38 @@ public class LivroDados {
 		}
     }
     
+    public int buscarQuantidadeLivros(String isbn) throws ExcecaoDados {
+    	try{
+    		con = new ConexaoDados().getConnection();
+		
+		String buscarQuantidadeLivros = "SELECT total FROM livro WHERE isbn = ?";
+		stmt = con.prepareStatement(buscarQuantidadeLivros);
+    	
+    	stmt.setString(1, isbn);
+    	result = stmt.executeQuery();
+  
+    	if(result.next()) {
+    		int quantidade = result.getInt("total");
+    		return quantidade;
+    	}else {
+    		throw new ExcecaoDados("Erro ao buscar quantidade de livros");
+    	}
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Livro não encontrado");
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+    	}
+    }
     
     public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoDados {
     	try {

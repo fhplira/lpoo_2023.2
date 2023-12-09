@@ -106,10 +106,6 @@ public class LeitorControlador {
 			throw new ExcecaoControlador("O campo Nome não pode ter números");
 		}
 		
-		if(leitor.getNome().isBlank()) {
-			throw new ExcecaoControlador("O campo Nome não pode ser Vazio");
-		}
-		
 		try {
 			if(!nome.equals(leitor.getNome())) {
 				leitor.setNome(nome);
@@ -121,10 +117,6 @@ public class LeitorControlador {
 	}
 	
 	public void atualizarEmailLeitor(LeitorModelo leitor, String email) throws ExcecaoControlador {
-		
-		if(email.isBlank()) {
-			throw new ExcecaoControlador("O campo Email não pode ser Vazio");
-		}
 		
 		if(email.matches(".*\\s+.*")) {
 			throw new ExcecaoControlador("O campo Email não pode ter espaço em branco");
