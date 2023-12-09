@@ -21,13 +21,14 @@ public class EmprestimoDados {
 		try {
         	con = new ConexaoDados().getConnection();
 
-            String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, multa) VALUES (?, ?, ?)";
+            String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, dias_atraso, atrasado) VALUES (?, ?, ?, ?)";
             stmt = con.prepareStatement(realizaEmprestimo);
 
 
             stmt.setString(1, emprestimo.getIsbn());
             stmt.setString(2, emprestimo.getCpf());
-            stmt.setDouble(3, emprestimo.getMulta());
+            stmt.setInt(3, emprestimo.getDiasAtraso());
+            stmt.setBoolean(4, emprestimo.isAtrasado());
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
@@ -62,14 +63,15 @@ public class EmprestimoDados {
 			
 			while (result.next()) {
 				EmprestimoModelo emprestimo = new EmprestimoModelo();
-				emprestimo.setId(result.getInt("id_emprestimo"));
+				//emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn"));
 				emprestimo.setCpf(result.getString("cpf_leitor"));
 				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
                 emprestimo.setDataEmprestimo(timestampDataEmprestimo.toLocalDateTime());
                 java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
                 emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
-                emprestimo.setMulta(result.getDouble("multa"));
+                emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
+                emprestimo.setAtrasado(result.getBoolean("atrasado"));
                 
                 
 				listaEmprestimos.add(emprestimo);

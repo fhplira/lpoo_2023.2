@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import modelos.LeitorModelo;
+import modelos.LivroModelo;
 
 public class LeitorDados {
 
@@ -222,6 +224,45 @@ public class LeitorDados {
 			throw new ExcecaoDados("Erro ao tentar excluir o leitor");
 		}finally {
 			try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+	}
+	
+	public List<LeitorModelo> buscarTodosLeitores() throws ExcecaoDados{
+		try {
+    		con = new ConexaoDados().getConnection();
+    		
+    		String buscarLeitores = "SELECT * FROM leitor";
+    		stmt = con.prepareStatement(buscarLeitores);
+        	result = stmt.executeQuery();
+        	
+        	List<LeitorModelo> listaLeitores = new ArrayList<>();
+        	
+        	if(result.next()) {
+        		LeitorModelo leitor = new LeitorModelo();
+        		leitor.setNome(result.getString("nome_leitor"));
+				leitor.setCpf(result.getString("cpf_leitor"));
+				leitor.setEmail(result.getString("email_leitor"));
+				leitor.setEmprestimo(result.getInt("emprestimo_leitor"));
+            	
+            	listaLeitores.add(leitor);
+        	}
+        	
+        	return listaLeitores;
+        	
+    	} catch (Exception e) {
+        	throw new ExcecaoDados("Leitor não encontrado");
+    	} finally {
+            try {
                 if (stmt != null) {stmt.close();}
             } catch (SQLException e) {
                 throw new ExcecaoDados("Erro ao fechar o Statement: ");

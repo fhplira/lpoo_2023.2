@@ -19,7 +19,7 @@ public class LivroDados {
         try {
         	con = new ConexaoDados().getConnection();
 
-            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, total, disponivel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String cadastraLivro = "INSERT INTO livro (isbn, titulo_livro, autor, editora, data_publicacao, descricao, img, total, disponivel, emprestado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(cadastraLivro);
 
             stmt.setString(1, livro.getIsbn());
@@ -31,6 +31,7 @@ public class LivroDados {
             stmt.setString(7, livro.getImg());
             stmt.setInt(8, livro.getTotal() + 1);
             stmt.setInt(9, livro.getDisponivel() + 1);
+            stmt.setInt(10, livro.getEmprestados());
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
@@ -130,16 +131,18 @@ public class LivroDados {
 
     }
     
-    public void deletarExemplarLivro(String isbn, int exemplarASubtrair) throws ExcecaoDados {
+    public void deletarExemplarLivro(LivroModelo livro, int exemplarASubtrair) throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String deletaExemplarLivro = "UPDATE livro SET total = total - ? "
+    		String deletaExemplarLivro = "UPDATE livro SET total = total - ?, "
+    				+ "disponivel = disponivel - ? "
     				+ "WHERE isbn = ?";
     		stmt = con.prepareStatement(deletaExemplarLivro);
     		
     		stmt.setInt(1, exemplarASubtrair);
-    		stmt.setString(2, isbn);
+    		stmt.setInt(2, exemplarASubtrair);
+    		stmt.setString(2, livro.getIsbn());
     		
     		stmt.execute();
     	} catch (Exception e) {
@@ -159,16 +162,18 @@ public class LivroDados {
 		}
     }
     
-    public void acrescentarExemplarLivro(String isbn, int exemplarASomar) throws ExcecaoDados {
+    public void acrescentarExemplarLivro(LivroModelo livro, int exemplarASomar) throws ExcecaoDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String acrescentaExemplarLivro = "UPDATE livro SET total = total + ? "
+    		String acrescentaExemplarLivro = "UPDATE livro SET total = total + ?, "
+    				+ "disponivel = disponivel + ? "
     				+ "WHERE isbn = ?";
     		stmt = con.prepareStatement(acrescentaExemplarLivro);
     		
     		stmt.setInt(1, exemplarASomar);
-    		stmt.setString(2, isbn);
+    		stmt.setInt(2, exemplarASomar);
+    		stmt.setString(3, livro.getIsbn());
     		
     		stmt.execute();
     	} catch (Exception e) {
@@ -277,15 +282,15 @@ public class LivroDados {
         	result = stmt.executeQuery();
         	LivroModelo livro = new LivroModelo();
         	
-        	//resul.first;
-        	livro.setIsbn(result.getString("isbn"));
-        	livro.setTitulo(result.getString("titulo_livro"));
-        	livro.setAutor(result.getString("autor"));
-        	livro.setEditora(result.getString("editora"));
-        	livro.setDataPublicacao(result.getString("data_publicacao"));
-        	livro.setDescricao(result.getString("descricao"));
-        	livro.setImg(result.getString("img"));
-   
+        	if(result.next()) {
+        		livro.setIsbn(result.getString("isbn"));
+        		livro.setTitulo(result.getString("titulo_livro"));
+        		livro.setAutor(result.getString("autor"));
+        		livro.setEditora(result.getString("editora"));
+        		livro.setDataPublicacao(result.getString("data_publicacao"));
+        		livro.setDescricao(result.getString("descricao"));
+        		livro.setImg(result.getString("img"));
+        	}
         	return livro;
         	
     	} catch (Exception e) {
@@ -433,7 +438,72 @@ public class LivroDados {
 		}
     }
     
+    public void modificarExemplarFazerEmprestimo(LivroModelo livro) throws ExcecaoDados{
+    	try {
+    		con = new ConexaoDados().getConnection();
+    		
+    		String adiconarEmprestado = "UPDATE livro SET emprestado = emprestado + ?, "
+    				+ "disponivel = disponivel - ? "
+    				+ "WHERE isbn = ?";
+            stmt = con.prepareStatement(adiconarEmprestado);
+            
+            
+            stmt.setInt(1, 1);
+            stmt.setInt(2, 1);
+            stmt.setString(3, livro.getIsbn());
+            
+            stmt.execute();
+    	}catch (Exception e) {
+        	throw new ExcecaoDados("Erro ao modificar os valores");
+        } finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+    	 
+    }
+    
+    public void modificarExemplarFinalizarEmprestimo(LivroModelo livro) throws ExcecaoDados{
+    	try {
+    		con = new ConexaoDados().getConnection();
+    		
+    		String adiconarDisponivel = "UPDATE livro SET emprestado = emprestado - ?, "
+    				+ "disponivel = disponivel + ? "
+    				+ "WHERE isbn = ?";
+            stmt = con.prepareStatement(adiconarDisponivel);
+            
+            
+            stmt.setInt(1, 1);
+            stmt.setInt(2, 1);
+            stmt.setString(3, livro.getIsbn());
+            
+            stmt.execute();
+    	}catch (Exception e) {
+        	throw new ExcecaoDados("Erro ao modificar os valores");
+        } finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		} 
+    }
     
 }
+
 
 

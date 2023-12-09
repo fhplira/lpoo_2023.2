@@ -1,5 +1,7 @@
 package controladores;
 
+import java.util.List;
+
 import dados.ExcecaoDados;
 import dados.LeitorDados;
 import modelos.LeitorModelo;
@@ -132,6 +134,14 @@ public class LeitorControlador {
 				dados.atualizarEmailLeitor(leitor);
 			}
 		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
+	
+	public List<LeitorModelo> buscarTodosLeitores() throws ExcecaoControlador{
+		try {
+			return dados.buscarTodosLeitores();
+		}catch (ExcecaoDados e){
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 	}

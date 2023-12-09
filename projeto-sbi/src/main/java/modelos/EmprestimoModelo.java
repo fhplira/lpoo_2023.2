@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class EmprestimoModelo {
 	
-	private double multa = 0;
-	private int diasAtrasados = 0; 
+	private boolean  atrasado = false;
+	private int diasAtraso = 0; 
 	private int id;
 	private String isbn;
 	private String cpf;
@@ -26,21 +26,21 @@ public class EmprestimoModelo {
 	public EmprestimoModelo() {
 		
 	}
-	
-	public double getMulta() {
-		return multa;
+
+	public boolean isAtrasado() {
+		return atrasado;
 	}
 
-	public void setMulta(double multa) {
-		this.multa = multa;
+	public void setAtrasado(boolean atrasado) {
+		this.atrasado = atrasado;
 	}
 
-	public int getDiasAtrasados() {
-		return diasAtrasados;
+	public int getDiasAtraso() {
+		return diasAtraso;
 	}
 
-	public void setDiasAtrasados(int diasAtrasados) {
-		this.diasAtrasados = diasAtrasados;
+	public void setDiasAtraso(int diasAtraso) {
+		this.diasAtraso = diasAtraso;
 	}
 
 	public String getCpf() {

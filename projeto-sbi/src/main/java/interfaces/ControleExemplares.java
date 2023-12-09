@@ -185,7 +185,9 @@ public class ControleExemplares extends JFrame {
 				String qtdExemplares = txtQtdExemplares.getText();
 				
 				try {
-					controlador.AdicionarExemplares(isbn, qtdExemplares);
+					LivroModelo livro = new LivroModelo();
+					livro.setIsbn(isbn);
+					controlador.AdicionarExemplares(livro, qtdExemplares);
 					JOptionPane.showMessageDialog(null, "Exemplar/s adicionado/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {
 					// TODO Auto-generated catch block
@@ -214,7 +216,9 @@ public class ControleExemplares extends JFrame {
 				String qtdExemplares = txtQtdExemplares.getText();
 				
 				try {
-					controlador.ExcluirExemplares(Isbn, qtdExemplares);
+					LivroModelo livro = new LivroModelo();
+					livro.setIsbn(Isbn);
+					controlador.ExcluirExemplares(livro, qtdExemplares);
 					JOptionPane.showMessageDialog(null, "Exemplar/s excluído/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

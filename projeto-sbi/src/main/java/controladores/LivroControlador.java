@@ -203,9 +203,9 @@ public class LivroControlador {
 		}
 		
 		
-		public void AdicionarExemplares(String isbn, String controleExemplar) throws ExcecaoControlador {
+		public void AdicionarExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
 
-			if(isbn.isBlank()){
+			if(livro.getIsbn().isBlank()){
 				throw new ExcecaoControlador("O campo isbn não pode ser vazio.");
 			}
 
@@ -227,16 +227,16 @@ public class LivroControlador {
 			}
 			
 			try {			
-				dados.acrescentarExemplarLivro(isbn, controleExemplarInteiro);
+				dados.acrescentarExemplarLivro(livro, controleExemplarInteiro);
 			}catch (ExcecaoDados e){
 				throw new ExcecaoControlador(e.getMessage(), e);
 			}
 
 		}
 		
-		public void ExcluirExemplares(String isbn, String controleExemplar) throws ExcecaoControlador {
+		public void ExcluirExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
 
-			if(isbn.isBlank()){
+			if(livro.getIsbn().isBlank()){
 				throw new ExcecaoControlador("O campo isbn não pode ser vazio.");
 			}
 
@@ -259,7 +259,7 @@ public class LivroControlador {
 			}
 			
 			try {
-				int quantidade = dados.buscarQuantidadeLivros(isbn);
+				int quantidade = dados.buscarQuantidadeLivros(livro.getIsbn());
 				if(controleExemplarInteiro > quantidade) {
 					throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
 				+ "\n Quantidade de livro: " + quantidade);
@@ -273,7 +273,7 @@ public class LivroControlador {
 			
 
 			try {
-				dados.deletarExemplarLivro(isbn, controleExemplarInteiro);
+				dados.deletarExemplarLivro(livro, controleExemplarInteiro);
 
 			}catch (ExcecaoDados e){
 				 throw new ExcecaoControlador(e.getMessage(), e);

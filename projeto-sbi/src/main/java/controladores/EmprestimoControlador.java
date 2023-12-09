@@ -9,8 +9,9 @@ import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
 //Remover todos os comentarios apos a criação da classe EmprestimoDados e seus Métodos.
-//Próximas Adições Metodos: 3° Fazer Devolução;
-// e 4 Avisar Leitor (sobre a proximidade do final do emprestimo).
+//Próximas Adições Metodos: 1° BuscarEmprestimo especifico;
+// 2° Fazer Devolução;
+// e 3° Avisar Leitor (sobre a proximidade do final do emprestimo).
 
 public class EmprestimoControlador {
 	private EmprestimoDados dados = new EmprestimoDados();   
@@ -35,6 +36,20 @@ public class EmprestimoControlador {
 			LeitorModelo leitor = new LeitorModelo();
 			
 			leitor = leitorControlador.buscarLeitorPorCpf(cpf);
+			LivroModelo livro = new LivroModelo();
+			
+			if(livro.getDisponivel() <= 0) {
+				throw new ExcecaoDados("Sem livros disponiveis para emprestimo");
+			}
+			
+			try {
+				livro = livroDados.buscarLivroPorIsbn(isbn);
+				livro.setEmprestados(1);
+				livro.setDisponivel(1);
+				livroDados.modificarExemplarFazerEmprestimo(livro);
+			}catch(ExcecaoDados e) {
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
 			
 			try {
 				if(leitor.getEmprestimo() >= 2) {
@@ -42,10 +57,13 @@ public class EmprestimoControlador {
 				}else {
 					leitor.adicionarEmprestimo(1);
 					leitorDados.adicionarEmprestimo(leitor);
-				}
+				}	
 			}catch(ExcecaoDados e) {
 				throw new ExcecaoControlador(e.getMessage(), e);
 			}
+			
+			
+			
 			
 			try {
 				dados.realizarEmprestimo(emprestimo);
