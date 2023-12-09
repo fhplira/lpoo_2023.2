@@ -1,4 +1,4 @@
-package view;
+package interfaces;
 
 import java.awt.Dialog;
 import java.awt.EventQueue;
