@@ -111,9 +111,10 @@ public class LeitorControlador {
 		}
 		
 		try {
-			leitor = dados.buscarLeitorPorCpf(leitor.getCpf());
-			leitor.setNome(nome);
-			dados.atualizarNomeLeitor(leitor);
+			if(!nome.equals(leitor.getNome())) {
+				leitor.setNome(nome);
+				dados.atualizarNomeLeitor(leitor);
+			}
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
@@ -134,9 +135,10 @@ public class LeitorControlador {
 		}
 		
 		try {
-			leitor = dados.buscarLeitorPorCpf(leitor.getCpf());
-			leitor.setEmail(email);
-			dados.atualizarNomeLeitor(leitor);
+			if(!email.equals(leitor.getEmail())) {
+				leitor.setEmail(email);
+				dados.atualizarEmailLeitor(leitor);
+			}
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}

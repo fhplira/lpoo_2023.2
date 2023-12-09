@@ -61,7 +61,7 @@ public class LeitorDados {
 			stmt.execute();
 			
 		} catch(Exception e) {
-			throw new ExcecaoDados("Erro ao tentar atualizar informções o nome do leitor");
+			throw new ExcecaoDados("Erro ao tentar atualizar o nome do leitor");
 		} finally {
             try {
                 if (stmt != null) {stmt.close();}
@@ -87,12 +87,12 @@ public class LeitorDados {
 					+ "WHERE cpf_leitor = ?";
 			stmt = con.prepareStatement(atualizaEmailLeitor);
 			
-			stmt.setString(1, leitor.getNome());
-			stmt.setString(2, leitor.getEmail());
+			stmt.setString(1, leitor.getEmail());
+			stmt.setString(2, leitor.getCpf());
 			stmt.execute();
 			
 		} catch(Exception e) {
-			throw new ExcecaoDados("Erro ao tentar atualizar informções o email do leitor");
+			throw new ExcecaoDados("Erro ao tentar atualizar o email do leitor");
 		} finally {
             try {
                 if (stmt != null) {stmt.close();}
