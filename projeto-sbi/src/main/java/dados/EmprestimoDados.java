@@ -62,7 +62,7 @@ public class EmprestimoDados {
 			
 			while (result.next()) {
 				EmprestimoModelo emprestimo = new EmprestimoModelo();
-				//emprestimo.setId(result.getInt("id_emprestimo"));
+				emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn"));
 				emprestimo.setCpf(result.getString("cpf_leitor"));
 				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
