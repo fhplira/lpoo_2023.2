@@ -81,6 +81,14 @@ public class EmprestimoDados {
         }
 	}
 	
+	public EmprestimoModelo buscarEmprestimo(EmprestimoModelo emprestimo) throws ExcecaoDados{
+		try {
+			
+		}
+		
+		return emprestimo;
+	}
+	
 	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoDados {
 		
 		try {
@@ -91,9 +99,9 @@ public class EmprestimoDados {
 			result = stmt.executeQuery();
 			
 			List<EmprestimoModelo> listaEmprestimos = new ArrayList<>();
-			EmprestimoModelo emprestimo = new EmprestimoModelo();
 			
 			while(result.next()) {
+				EmprestimoModelo emprestimo = new EmprestimoModelo();
 				emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn"));
 				emprestimo.setCpf(result.getString("cpf_leitor"));

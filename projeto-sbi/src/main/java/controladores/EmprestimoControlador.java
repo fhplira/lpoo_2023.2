@@ -10,10 +10,8 @@ import modelos.EmprestimoModelo;
 import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
-//Remover todos os comentarios apos a criação da classe EmprestimoDados e seus Métodos.
-//Próximas Adições Metodos: 1° BuscarEmprestimo especifico;
-// 2° Fazer Devolução;
-// e 3° Avisar Leitor (sobre a proximidade do final do emprestimo).
+// Fazer Devolução;
+// Avisar Leitor (sobre a proximidade do final do emprestimo).
 
 public class EmprestimoControlador {
 	private EmprestimoDados dados = new EmprestimoDados();   
