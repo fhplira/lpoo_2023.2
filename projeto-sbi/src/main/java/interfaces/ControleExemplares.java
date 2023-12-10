@@ -186,7 +186,7 @@ public class ControleExemplares extends JFrame {
 				
 				try {
 					LivroModelo livro = new LivroModelo();
-					livro.setIsbn(isbn);
+					livro = controlador.buscarLivroPorIsbn(isbn);
 					controlador.AdicionarExemplares(livro, qtdExemplares);
 					JOptionPane.showMessageDialog(null, "Exemplar/s adicionado/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {
@@ -217,7 +217,7 @@ public class ControleExemplares extends JFrame {
 				
 				try {
 					LivroModelo livro = new LivroModelo();
-					livro.setIsbn(Isbn);
+					livro = controlador.buscarLivroPorIsbn(Isbn);
 					controlador.ExcluirExemplares(livro, qtdExemplares);
 					JOptionPane.showMessageDialog(null, "Exemplar/s excluído/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {

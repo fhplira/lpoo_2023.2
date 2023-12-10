@@ -96,7 +96,7 @@ public class EmprestimoDados {
 		}
 	}
 	
-	public void fazerDevolucao(EmprestimoModelo isbn, EmprestimoModelo cpf, EmprestimoModelo id) throws ExcecaoDados {
+	public void fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoDados {
 		try {
         	con = new ConexaoDados().getConnection();
         	
@@ -106,9 +106,9 @@ public class EmprestimoDados {
             String realizaEmprestimo = "DELETE * FROM emprestimos WHERE isbn = ? AND  cpf_leitor = ? AND id_emprestimo = ?";
             stmt = con.prepareStatement(realizaEmprestimo);
 
-            stmt.setString(1, isbn.getIsbn());
-            stmt.setString(2, cpf.getCpf());
-            stmt.setInt(3, id.getId());
+            stmt.setString(1, emprestimo.getIsbn());
+            stmt.setString(2, emprestimo.getCpf());
+            stmt.setInt(3, emprestimo.getId());
 
 
             stmt.execute();

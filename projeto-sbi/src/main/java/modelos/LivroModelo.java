@@ -12,7 +12,7 @@ public class LivroModelo {
 	private String controleExemplar;
 	private int total = 0;
 	private int disponivel = 0;
-	private int emprestados = 0;
+	private int emprestado = 0;
 	
 	public LivroModelo() {
 		
@@ -92,6 +92,10 @@ public class LivroModelo {
 	public void setTotal(int total) {
 		this.total = total;
 	}
+	
+	public void setValorTotal() {
+		this.total = this.getDisponivel() + this.getEmprestado();
+	}
 
 	public int getDisponivel() {
 		return disponivel;
@@ -100,13 +104,29 @@ public class LivroModelo {
 	public void setDisponivel(int disponivel) {
 		this.disponivel = disponivel;
 	}
-
-	public int getEmprestados() {
-		return emprestados;
+	
+	public void setAdicionarDisponivel(int disponivel) {
+		this.disponivel += disponivel ;
+	}
+	
+	public void setRemoverDisponivel(int disponivel) {
+		this.disponivel -= disponivel ;
 	}
 
-	public void setEmprestados(int emprestados) {
-		this.emprestados = emprestados;
+	public int getEmprestado() {
+		return emprestado;
+	}
+
+	public void setEmprestado(int emprestado) {
+		this.emprestado = emprestado;
+	}
+	
+	public void setAdicionarEmprestado(int emprestado) {
+		this.emprestado += emprestado;
+	}
+	
+	public void setRemoverEmprestado(int emprestado) {
+		this.emprestado -= emprestado;
 	}
 
 	public String toString() {
