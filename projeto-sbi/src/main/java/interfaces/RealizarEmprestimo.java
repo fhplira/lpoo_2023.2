@@ -91,18 +91,31 @@ public class RealizarEmprestimo extends JFrame {
 		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{162, 393, 162, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
+		
+		JButton btnNewButton = new JButton("VOLTAR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new BotoesPrincipais().setVisible(true);
+			}
+		});
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(15, 0, 5, 0);
+		gbc_btnNewButton.gridx = 2;
+		gbc_btnNewButton.gridy = 0;
+		panel.add(btnNewButton, gbc_btnNewButton);
 		
 		JLabel lblNewLabelEmprestimo = new JLabel("EMPRÉSTIMO");
 		lblNewLabelEmprestimo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblNewLabelEmprestimo.setFont(new Font("Tahoma", Font.BOLD, 25));
 		GridBagConstraints gbc_lblNewLabelEmprestimo = new GridBagConstraints();
-		gbc_lblNewLabelEmprestimo.insets = new Insets(50, 0, 40, 5);
+		gbc_lblNewLabelEmprestimo.insets = new Insets(40, 0, 40, 5);
 		gbc_lblNewLabelEmprestimo.gridx = 1;
-		gbc_lblNewLabelEmprestimo.gridy = 0;
+		gbc_lblNewLabelEmprestimo.gridy = 1;
 		panel.add(lblNewLabelEmprestimo, gbc_lblNewLabelEmprestimo);
 		
 		JLabel lblNewLabelISBN = new JLabel("ISBN DO LIVRO:");
@@ -112,7 +125,7 @@ public class RealizarEmprestimo extends JFrame {
 		gbc_lblNewLabelISBN.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabelISBN.insets = new Insets(0, 30, 30, 5);
 		gbc_lblNewLabelISBN.gridx = 0;
-		gbc_lblNewLabelISBN.gridy = 1;
+		gbc_lblNewLabelISBN.gridy = 2;
 		panel.add(lblNewLabelISBN, gbc_lblNewLabelISBN);
 		
 		
@@ -123,7 +136,7 @@ public class RealizarEmprestimo extends JFrame {
 		gbc_textField1ISBNExemplar.insets = new Insets(0, 5, 30, 30);
 		gbc_textField1ISBNExemplar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField1ISBNExemplar.gridx = 1;
-		gbc_textField1ISBNExemplar.gridy = 1;
+		gbc_textField1ISBNExemplar.gridy = 2;
 		panel.add(textField1ISBNExemplar, gbc_textField1ISBNExemplar);
 		textField1ISBNExemplar.setColumns(10);
 		
@@ -134,7 +147,7 @@ public class RealizarEmprestimo extends JFrame {
 		gbc_lblNewLabelCPF.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabelCPF.insets = new Insets(0, 30, 100, 5);
 		gbc_lblNewLabelCPF.gridx = 0;
-		gbc_lblNewLabelCPF.gridy = 2;
+		gbc_lblNewLabelCPF.gridy = 3;
 		panel.add(lblNewLabelCPF, gbc_lblNewLabelCPF);
 		
 		JTextField textFieldCPFDoLeitor = new JTextField();
@@ -143,7 +156,7 @@ public class RealizarEmprestimo extends JFrame {
 		gbc_textFieldCPFDoLeitor.insets = new Insets(0, 5, 100, 30);
 		gbc_textFieldCPFDoLeitor.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldCPFDoLeitor.gridx = 1;
-		gbc_textFieldCPFDoLeitor.gridy = 2;
+		gbc_textFieldCPFDoLeitor.gridy = 3;
 		panel.add(textFieldCPFDoLeitor, gbc_textFieldCPFDoLeitor);
 		
 		JButton btnNewButtonRealizarEmprestimo = new JButton("Realizar Empréstimo");
@@ -171,7 +184,7 @@ public class RealizarEmprestimo extends JFrame {
 		GridBagConstraints gbc_btnNewButtonRealizarEmprestimo = new GridBagConstraints();
 		gbc_btnNewButtonRealizarEmprestimo.insets = new Insets(0, 0, 20, 30);
 		gbc_btnNewButtonRealizarEmprestimo.gridx = 1;
-		gbc_btnNewButtonRealizarEmprestimo.gridy = 3;
+		gbc_btnNewButtonRealizarEmprestimo.gridy = 4;
 		panel.add(btnNewButtonRealizarEmprestimo, gbc_btnNewButtonRealizarEmprestimo);
 	}
 }

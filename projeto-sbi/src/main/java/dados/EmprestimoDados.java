@@ -50,19 +50,20 @@ public class EmprestimoDados {
 
     }
 	
-	public List<EmprestimoModelo> listarEmprestimos() throws ExcecaoDados {
+	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoDados {
 		
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String buscaEmprestimos = "SELECT * FROM emprestimo"; 
+			String buscaEmprestimos = "SELECT * FROM emprestimo WHERE cpf_leitor_fk = ? AND isbn_fk = ? "; 
 			stmt = con.prepareStatement(buscaEmprestimos);
+			stmt.setString(1, cpf);
+			stmt.setString(2, isbn);
 			result = stmt.executeQuery();
 			
-			List<EmprestimoModelo> listaEmprestimos = new ArrayList<>();
+			EmprestimoModelo emprestimo = new EmprestimoModelo();
 			
 			while (result.next()) {
-				EmprestimoModelo emprestimo = new EmprestimoModelo();
 				//emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn"));
 				emprestimo.setCpf(result.getString("cpf_leitor"));
@@ -73,11 +74,9 @@ public class EmprestimoDados {
                 emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
                 emprestimo.setAtrasado(result.getBoolean("atrasado"));
                 
-                
-				listaEmprestimos.add(emprestimo);
 			}
 			
-			return listaEmprestimos;
+			return emprestimo;
 			
 		} catch (Exception e) {
         	throw new ExcecaoDados("Erro ao buscar Emprestimos");

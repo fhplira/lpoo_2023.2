@@ -60,15 +60,15 @@ public class BotoesPrincipais extends JFrame {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{275, 224, 226, 57, 0};
-		gbl_contentPane.rowHeights = new int[]{59, 30, 36, 36, 36, 36, 36, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{59, 30, 36, 36, 36, 36, 36, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel tituloMenu = new JLabel("MENU");
 		tituloMenu.setFont(new Font("Tahoma", Font.BOLD, 30));
 		GridBagConstraints gbc_tituloMenu = new GridBagConstraints();
-		gbc_tituloMenu.insets = new Insets(35, 0, 0, 5);
+		gbc_tituloMenu.insets = new Insets(35, 0, 5, 5);
 		gbc_tituloMenu.gridx = 1;
 		gbc_tituloMenu.gridy = 0;
 		contentPane.add(tituloMenu, gbc_tituloMenu);
@@ -101,7 +101,7 @@ public class BotoesPrincipais extends JFrame {
 							}
 						});
 						
-						JButton botaoRealizarEmprestimo = new JButton("Realizar Emprestimo");
+						JButton botaoRealizarEmprestimo = new JButton("Realizar Empréstimo");
 						botaoRealizarEmprestimo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						botaoRealizarEmprestimo.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -116,7 +116,7 @@ public class BotoesPrincipais extends JFrame {
 						btnNewButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								dispose();
-								
+								new VisualizarLeitor().setVisible(true);
 							}
 						});
 						
@@ -184,6 +184,22 @@ public class BotoesPrincipais extends JFrame {
 						gbc_botaoLivroExemplares.gridx = 1;
 						gbc_botaoLivroExemplares.gridy = 7;
 						contentPane.add(botaoLivroExemplares, gbc_botaoLivroExemplares);
+						
+						JButton botaoVisualizarEmprestimo = new JButton("Visualizar Empréstimo");
+						botaoVisualizarEmprestimo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								dispose();
+								new VisualizarEmprestimo().setVisible(true);
+							}
+						});
+						
+						botaoVisualizarEmprestimo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+						GridBagConstraints gbc_botaoVisualizarEmprestimo = new GridBagConstraints();
+						gbc_botaoVisualizarEmprestimo.fill = GridBagConstraints.HORIZONTAL;
+						gbc_botaoVisualizarEmprestimo.insets = new Insets(0, 0, 0, 5);
+						gbc_botaoVisualizarEmprestimo.gridx = 1;
+						gbc_botaoVisualizarEmprestimo.gridy = 8;
+						contentPane.add(botaoVisualizarEmprestimo, gbc_botaoVisualizarEmprestimo);
 		
 		
 	}
