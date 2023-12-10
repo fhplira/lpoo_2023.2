@@ -10,7 +10,6 @@ import modelos.EmprestimoModelo;
 import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
-// Fazer Devolução;
 // Avisar Leitor (sobre a proximidade do final do emprestimo).
 
 public class EmprestimoControlador {
@@ -79,8 +78,33 @@ public class EmprestimoControlador {
 		}
 	}
 	
-	public EmprestimoModelo fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+	public void fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+		try {
+			if(!dados.verificarEmprestimo(emprestimo.getCpf(), emprestimo.getIsbn())) {
+				throw new ExcecaoControlador("Este emprestimo não existe");
+			}
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
 		
-		return null;
+		if(emprestimo.isDevolvido()) {
+			throw new ExcecaoControlador("Emprestimo já devolvido");
+		}
+		
+		LeitorModelo leitor = new LeitorModelo();
+		leitor = leitorControlador.buscarLeitorPorCpf(emprestimo.getCpf());
+		
+		LivroModelo livro = new LivroModelo();
+		livro = livroControlador.buscarLivroPorIsbn(emprestimo.getIsbn());
+		
+		try {
+			dados.fazerDevolucao(emprestimo);
+			emprestimo.setDevolvido(true);
+			leitor.removerEmprestimo(1);
+			livro.setRemoverEmprestado(1);
+			livro.setAdicionarDisponivel(1);
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
 	}
 }

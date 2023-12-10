@@ -21,14 +21,14 @@ public class EmprestimoDados {
 		try {
         	con = new ConexaoDados().getConnection();
 
-            String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, dias_atraso, atrasado) VALUES (?, ?, ?, ?)";
+            String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, dias_atraso, devolvido) VALUES (?, ?, ?, ?)";
             stmt = con.prepareStatement(realizaEmprestimo);
 
 
             stmt.setString(1, emprestimo.getIsbn());
             stmt.setString(2, emprestimo.getCpf());
             stmt.setInt(3, emprestimo.getDiasAtraso());
-            stmt.setBoolean(4, emprestimo.isAtrasado());
+            stmt.setBoolean(4, emprestimo.isDevolvido());
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
@@ -99,7 +99,7 @@ public class EmprestimoDados {
 	                java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
 	                emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
 	                emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
-	                emprestimo.setAtrasado(result.getBoolean("atrasado"));
+	                emprestimo.setDevolvido(result.getBoolean("devolvido"));
 				}
 				return emprestimo;
 				
@@ -140,7 +140,7 @@ public class EmprestimoDados {
                 java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
                 emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
                 emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
-                emprestimo.setAtrasado(result.getBoolean("atrasado"));
+                emprestimo.setDevolvido(result.getBoolean("devolvido"));
                 
                 listaEmprestimos.add(emprestimo);		
             }
@@ -167,19 +167,16 @@ public class EmprestimoDados {
 	public void fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoDados {
 		try {
         	con = new ConexaoDados().getConnection();
-        	
-        	//precisa desenvolver mais, é so uma base
-        	//sugestao: colocar status do emprestimo
 
-            String realizaEmprestimo = "DELETE * FROM emprestimos WHERE isbn_fk = ? AND  cpf_leitor_fk = ? AND id_emprestimo = ?";
-            stmt = con.prepareStatement(realizaEmprestimo);
+            String fazerDevolucao = "UPDATE emprestimo SET devolvido = ? "
+					+ "WHERE cpf_leitor_fk = ? AND isbn_fk = ?";
+            stmt = con.prepareStatement(fazerDevolucao);
 
-            stmt.setString(1, emprestimo.getIsbn());
+            stmt.setBoolean(1, emprestimo.isDevolvido());
             stmt.setString(2, emprestimo.getCpf());
-            stmt.setInt(3, emprestimo.getId());
-
-
+            stmt.setString(3, emprestimo.getIsbn());
             stmt.execute();
+            
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao realizar devolução");
         } finally {
