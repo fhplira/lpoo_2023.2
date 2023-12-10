@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import controladores.EmprestimoControlador;
 import controladores.ExcecaoControlador;
 import controladores.LeitorControlador;
+import modelos.EmprestimoModelo;
 import modelos.LeitorModelo;
 
 import java.awt.GridBagLayout;
@@ -312,6 +313,28 @@ public class VisualizarEmprestimo extends JFrame {
 		textFieldDiasAtrasados1.setColumns(10);
 		
 		JButton btnDevolverLivro1 = new JButton("DEVOLVER");
+		btnDevolverLivro1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				EmprestimoModelo emprestimo = new EmprestimoModelo();
+				emprestimo.setCpf(textField_CpfLeitor.getText());
+				emprestimo.setIsbn(textField_ISBNLivro1.getText());
+				//emprestimo.setId(Integer.toString(textIdEmprestimo1.getToolTipText()));
+				
+				String nomeDoLivro = textField_TituloLivro.getText();
+				
+				EmprestimoControlador controlador = new EmprestimoControlador();
+				try {
+					controlador.fazerDevolucao(emprestimo);
+					JOptionPane.showMessageDialog(null, "O livro " + nomeDoLivro + " foi devolvido com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
+				} catch (ExcecaoControlador e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception exc){
+					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			
+		});
 		GridBagConstraints gbc_btnDevolverLivro1 = new GridBagConstraints();
 		gbc_btnDevolverLivro1.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDevolverLivro1.gridx = 5;
