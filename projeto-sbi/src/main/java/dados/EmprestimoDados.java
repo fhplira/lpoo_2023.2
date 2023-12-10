@@ -50,21 +50,51 @@ public class EmprestimoDados {
 
     }
 	
-	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoDados {
+	public boolean verificarEmprestimo(String cpf, String isbn) throws ExcecaoDados {
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String verificarEmprestimo = "SELECT * FROM emprestimo WHERE cpf_leitor_fk = ? AND isbn_fk = ?";
+			stmt = con.prepareStatement(verificarEmprestimo);
+			
+			stmt.setString(1, cpf);
+			stmt.setString(2, isbn);
+			result = stmt.executeQuery();
+			 if (result.next()) {    
+		            return true;
+		        } else {
+		            return false;
+		        }
+		} catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar buscar Emprestimo");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+        }
+	}
+	
+	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoDados {
 		
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String buscaEmprestimos = "SELECT * FROM emprestimo WHERE cpf_leitor_fk = ? AND isbn_fk = ? "; 
+			String buscaEmprestimos = "SELECT * FROM emprestimo"; 
 			stmt = con.prepareStatement(buscaEmprestimos);
-			stmt.setString(1, cpf);
-			stmt.setString(2, isbn);
 			result = stmt.executeQuery();
 			
+			List<EmprestimoModelo> listaEmprestimos = new ArrayList<>();
 			EmprestimoModelo emprestimo = new EmprestimoModelo();
 			
-			while (result.next()) {
-				//emprestimo.setId(result.getInt("id_emprestimo"));
+			while(result.next()) {
+				emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn"));
 				emprestimo.setCpf(result.getString("cpf_leitor"));
 				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
@@ -74,12 +104,13 @@ public class EmprestimoDados {
                 emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
                 emprestimo.setAtrasado(result.getBoolean("atrasado"));
                 
-			}
+                listaEmprestimos.add(emprestimo);		
+            }
 			
-			return emprestimo;
+			return listaEmprestimos;
 			
 		} catch (Exception e) {
-        	throw new ExcecaoDados("Erro ao buscar Emprestimos");
+        	throw new ExcecaoDados("Erro ao buscar lista de emprestimos");
     	} finally {
             try {
                 if (stmt != null) {stmt.close();}

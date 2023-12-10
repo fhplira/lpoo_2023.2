@@ -1,5 +1,7 @@
 package controladores;
 
+import java.util.List;
+
 import dados.EmprestimoDados;
 import dados.ExcecaoDados;
 import dados.LeitorDados;
@@ -49,6 +51,14 @@ public class EmprestimoControlador {
 			}
 			
 			try {
+				if(dados.verificarEmprestimo(cpf, isbn)) {
+					throw new ExcecaoControlador("Este emprestimo já foi realizado para o leitor");
+				}
+			}catch(ExcecaoDados e) {
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
+			
+			try {
 				dados.realizarEmprestimo(emprestimo);
 				leitor.adicionarEmprestimo(1);
 				leitorDados.adicionarEmprestimo(leitor);
@@ -61,7 +71,15 @@ public class EmprestimoControlador {
 			}
 			
 		}
-		
+	
+	
+	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoControlador{
+		try {
+			return dados.buscarTodosEmprestimos();
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
 	
 	public EmprestimoModelo fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoControlador {
 		
