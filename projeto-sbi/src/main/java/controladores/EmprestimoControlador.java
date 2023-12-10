@@ -63,7 +63,7 @@ public class EmprestimoControlador {
 		}
 		
 	
-	public EmprestimoModelo fazerDevolucao(LivroModelo livro, LeitorModelo leitor) throws ExcecaoControlador {
+	public EmprestimoModelo fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoControlador {
 		
 		return null;
 	}
