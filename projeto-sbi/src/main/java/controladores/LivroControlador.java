@@ -146,7 +146,61 @@ public class LivroControlador {
 		
 		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao) throws ExcecaoControlador{
 
-			LivroModelo livro = verficarCamposCadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
+		    if(isbn.isBlank()){
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
+			}
+			
+			if(!isbn.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+			}
+			
+			if((isbn.length() != 10) && (isbn.length() != 13)) {
+				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+			}
+			
+			
+			if(titulo.isBlank()){
+				throw new ExcecaoControlador("O campo título não pode ser vazio.");
+			}
+			
+			if(autor.isBlank()){
+				throw new ExcecaoControlador("O campo autor não pode ser vazio.");
+			}
+			
+			if(!autor.matches("^[a-zA-Z,\\s]+$")){
+				throw new ExcecaoControlador("O campo autor não pode ter números.");
+			}
+			
+			if(dataPublicacao.isBlank()){
+				throw new ExcecaoControlador("O campo data da publicação não pode ser vazio.");
+			}
+			
+			if(!dataPublicacao.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$") && (!dataPublicacao.matches("^(\\D*\\d\\D*){4}$"))){
+				throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
+			}
+			
+			if(editora.isBlank()){
+				throw new ExcecaoControlador("O campo editora não pode ser vazio.");
+			}
+			
+			
+			if(img.isBlank()){
+				throw new ExcecaoControlador("O campo imagem não pode ser vazio.");
+			}
+			
+			if(descricao.isBlank()){
+				throw new ExcecaoControlador("O campo descrição não pode ser vazio.");
+			}
+			
+			try{
+				if (dados.verificarLivro(isbn)){
+					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
+				}
+			}catch(ExcecaoDados e1){
+				throw new ExcecaoControlador(e1.getMessage(), e1);
+			}
+		    
+		    LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
 
 			try {
 				dados.cadastrarLivro(livro);			
@@ -156,53 +210,6 @@ public class LivroControlador {
 		}
 
 
-		private LivroModelo verficarCamposCadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao) throws ExcecaoControlador {
-
-			if(isbn.isBlank()){
-				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
-			}
-
-			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
-			}
-
-			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-			}
-
-
-			if(titulo.isBlank()){
-				throw new ExcecaoControlador("O campo título não pode ser vazio.");
-			}
-
-			if(autor.isBlank()){
-				throw new ExcecaoControlador("O campo autor não pode ser vazio.");
-			}
-
-			if(!autor.matches("^[a-zA-Z,\\s]+$")){
-				throw new ExcecaoControlador("O campo autor não pode ter números.");
-			}
-
-			if(!dataPublicacao.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$") && (!dataPublicacao.matches("^(\\D*\\d\\D*){4}$"))){
-				throw new ExcecaoControlador("O campo data da publicação está inválida. Verifique se esta no formato correto dd/mm/yyyy ou yyyy");
-			}
-
-
-			try{
-				if (dados.verificarLivro(isbn)){
-					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
-				}
-			}catch(ExcecaoDados e){
-				throw new ExcecaoControlador(e.getMessage(), e);
-			} 
-
-
-   
-			LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, descricao, img);
-			return livro;
-		}
-		
-		
 		public void AdicionarExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
 
 			if(livro.getIsbn().isBlank()){

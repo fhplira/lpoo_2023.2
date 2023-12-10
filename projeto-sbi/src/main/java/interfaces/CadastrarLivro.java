@@ -157,8 +157,7 @@ public class CadastrarLivro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				dispose();
-				new BotoesPrincipais().setVisible(true);
+				
 			}
 		});
 		
@@ -300,12 +299,7 @@ public class CadastrarLivro extends JFrame {
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
-				BotoesPrincipais frameBotoesPrincipais = new BotoesPrincipais();
-				dispose();
-				frameBotoesPrincipais.setVisible(true);
-				
-				
+	
 			}
 		});
 		

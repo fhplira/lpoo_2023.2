@@ -147,6 +147,10 @@ public class VisualizarEmprestimo extends JFrame {
 		JButton btnBuscarEmprestimo = new JButton("BUSCAR");
 		btnBuscarEmprestimo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(textFieldEmpretimoCpf.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "O campo cpf não pode ser vazio", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 				String cpfLeitor = textFieldEmpretimoCpf.getText();
 				
 				try {
