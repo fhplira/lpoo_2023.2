@@ -157,10 +157,6 @@ public class CadastrarLivro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-<<<<<<< HEAD
-				
-=======
->>>>>>> 365935241bd310a4ff3af506eedf1bad1244fd59
 			}
 		});
 		
@@ -302,12 +298,6 @@ public class CadastrarLivro extends JFrame {
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-<<<<<<< HEAD
-	
-=======
-				
-				
->>>>>>> 365935241bd310a4ff3af506eedf1bad1244fd59
 			}
 		});
 		
