@@ -83,10 +83,40 @@ public class EmprestimoDados {
 	
 	public EmprestimoModelo buscarEmprestimo(EmprestimoModelo emprestimo) throws ExcecaoDados{
 		try {
+			con = new ConexaoDados().getConnection();
 			
+			String buscaEmprestimo = "SELECT * FROM emprestimo WHERE cpf_leitor_fk = ? AND isbn_fk = ?"; 
+			stmt = con.prepareStatement(buscaEmprestimo);
+			stmt.setString(1, emprestimo.getCpf());
+			stmt.setString(2, emprestimo.getIsbn());
+			result = stmt.executeQuery();
+				if(result.next()) {
+					emprestimo.setId(result.getInt("id_emprestimo"));
+					emprestimo.setIsbn(result.getString("isbn_fk"));
+					emprestimo.setCpf(result.getString("cpf_leitor_fk"));
+					java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
+	                emprestimo.setDataEmprestimo(timestampDataEmprestimo.toLocalDateTime());
+	                java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
+	                emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
+	                emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
+	                emprestimo.setAtrasado(result.getBoolean("atrasado"));
+				}
+				return emprestimo;
+				
+		}catch (Exception e) {
+        	throw new ExcecaoDados("Erro ao buscar emprestimo");
+    	} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
 		}
-		
-		return emprestimo;
 	}
 	
 	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoDados {
@@ -103,8 +133,8 @@ public class EmprestimoDados {
 			while(result.next()) {
 				EmprestimoModelo emprestimo = new EmprestimoModelo();
 				emprestimo.setId(result.getInt("id_emprestimo"));
-				emprestimo.setIsbn(result.getString("isbn"));
-				emprestimo.setCpf(result.getString("cpf_leitor"));
+				emprestimo.setIsbn(result.getString("isbn_fk"));
+				emprestimo.setCpf(result.getString("cpf_leitor_fk"));
 				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
                 emprestimo.setDataEmprestimo(timestampDataEmprestimo.toLocalDateTime());
                 java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
@@ -141,7 +171,7 @@ public class EmprestimoDados {
         	//precisa desenvolver mais, é so uma base
         	//sugestao: colocar status do emprestimo
 
-            String realizaEmprestimo = "DELETE * FROM emprestimos WHERE isbn = ? AND  cpf_leitor = ? AND id_emprestimo = ?";
+            String realizaEmprestimo = "DELETE * FROM emprestimos WHERE isbn_fk = ? AND  cpf_leitor_fk = ? AND id_emprestimo = ?";
             stmt = con.prepareStatement(realizaEmprestimo);
 
             stmt.setString(1, emprestimo.getIsbn());
