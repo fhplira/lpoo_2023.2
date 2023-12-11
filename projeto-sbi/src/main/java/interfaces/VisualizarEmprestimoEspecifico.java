@@ -6,12 +6,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controladores.EmprestimoControlador;
+import controladores.ExcecaoControlador;
 import modelos.EmprestimoModelo;
 import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -25,13 +29,16 @@ public class VisualizarEmprestimoEspecifico extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNomeLeitor;
 	private JTextField textFieldEmailLeitor;
-	private JTextField textField_2;
 	private JTextField textField_id_1;
 	private JTextField textField_isbn_1;
 	private JTextField textField_Titulo_1;
 	private JTextField textField_dataEmprestimo_1;
 	private JTextField textField_data_devolucao_1;
 	private JTextField textField_diasAtrasados_1;
+	private JTextField textFieldDevolvido;
+	private JTextField textFieldCpf;
+	
+	private EmprestimoControlador emprestimoControlador = new EmprestimoControlador();
 
 	/**
 	 * Launch the application.
@@ -59,7 +66,8 @@ public class VisualizarEmprestimoEspecifico extends JFrame {
 		textField_Titulo_1.setText(livro.getTitulo());
 		textFieldNomeLeitor.setText(leitor.getNome());
 		textFieldEmailLeitor.setText(leitor.getEmail());
-		
+		textFieldCpf.setText(leitor.getCpf());
+		textFieldDevolvido.setText(Boolean.toString(emprestimo.isDevolvido()));
 	}
 
 	/**
@@ -176,6 +184,24 @@ public class VisualizarEmprestimoEspecifico extends JFrame {
 		botaoDevolver_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				try {
+					EmprestimoModelo pegarEmprestimoParaDevolver = new EmprestimoModelo();
+					pegarEmprestimoParaDevolver.setCpf(textFieldCpf.getText());
+					pegarEmprestimoParaDevolver.setIsbn(textField_isbn_1.getText());
+			
+					
+					EmprestimoModelo emprestimoPego =  emprestimoControlador.buscarEmprestimo(pegarEmprestimoParaDevolver);
+					emprestimoControlador.fazerDevolucao(emprestimoPego);
+					
+					JOptionPane.showMessageDialog(null, "O livro " + textField_Titulo_1.getText()+ " foi devolvido com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
+					textFieldDevolvido.setText(Boolean.toString(true));
+					
+				} catch (ExcecaoControlador e1) {	
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception exc){
+					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 		botaoDevolver_1.setBounds(445, 234, 89, 23);
@@ -184,9 +210,31 @@ public class VisualizarEmprestimoEspecifico extends JFrame {
 		JButton botaoVoltar = new JButton("VOLTAR");
 		botaoVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new VisualizarEmprestimos().setVisible(true);
 			}
 		});
 		botaoVoltar.setBounds(703, 11, 89, 23);
 		panel.add(botaoVoltar);
+		
+		JLabel labelDevolvido = new JLabel("Devolvido");
+		labelDevolvido.setBounds(53, 354, 46, 14);
+		panel.add(labelDevolvido);
+		
+		textFieldDevolvido = new JTextField();
+		textFieldDevolvido.setEditable(false);
+		textFieldDevolvido.setBounds(166, 351, 86, 20);
+		panel.add(textFieldDevolvido);
+		textFieldDevolvido.setColumns(10);
+		
+		JLabel labelCpf = new JLabel("CPF:");
+		labelCpf.setBounds(424, 133, 46, 14);
+		panel.add(labelCpf);
+		
+		textFieldCpf = new JTextField();
+		textFieldCpf.setEditable(false);
+		textFieldCpf.setBounds(484, 127, 86, 20);
+		panel.add(textFieldCpf);
+		textFieldCpf.setColumns(10);
 	}
 }

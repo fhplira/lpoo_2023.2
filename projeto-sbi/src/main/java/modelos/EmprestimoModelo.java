@@ -97,5 +97,11 @@ public class EmprestimoModelo {
 	
 	public String getDataDevolucaoFormatada() {
 		return dataDevolucaoFormatada;
+	}
+
+	@Override
+	public String toString() {
+		return "ID do Empréstimo = " + id + " , CPF do Leitor = " + cpf;
 	}	
+		
 }
