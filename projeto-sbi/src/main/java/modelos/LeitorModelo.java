@@ -52,4 +52,8 @@ public class LeitorModelo {
 	public void adicionarEmprestimo(int emprestimo) {
 		this.emprestimo = this.getEmprestimo() + emprestimo;
 	}
+	
+	public void removerEmprestimo(int emprestimo) {
+		this.emprestimo = this.getEmprestimo() - emprestimo;
+	}
 }

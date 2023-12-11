@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS emprestimo (
 	data_emprestimo DATE DEFAULT (CURRENT_DATE),
 	data_devolucao DATE DEFAULT (CURRENT_DATE + INTERVAL 15 DAY),
 	dias_atraso INT,
-	atrasado BOOLEAN,
+	devolvido BOOLEAN,
 	PRIMARY KEY (id_emprestimo),
     FOREIGN KEY (cpf_leitor_fk) REFERENCES leitor (cpf_leitor),
     FOREIGN KEY (isbn_fk) REFERENCES livro (isbn)
