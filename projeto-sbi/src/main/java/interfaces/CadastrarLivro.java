@@ -86,7 +86,6 @@ public class CadastrarLivro extends JFrame {
 		panelCadastro.setMinimumSize(new Dimension(824, 510));
 		panelCadastro.setBackground(new Color(141, 197, 62));
 		GridBagConstraints gbc_panelCadastro = new GridBagConstraints();
-		gbc_panelCadastro.fill = GridBagConstraints.BOTH;
 		gbc_panelCadastro.gridx = 0;
 		gbc_panelCadastro.gridy = 0;
 		contentPane.add(panelCadastro, gbc_panelCadastro);
@@ -117,7 +116,7 @@ public class CadastrarLivro extends JFrame {
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnVoltar.setAlignmentX(0.5f);
 		GridBagConstraints gbc_btnVoltar = new GridBagConstraints();
-		gbc_btnVoltar.insets = new Insets(30, 0, 60, 0);
+		gbc_btnVoltar.insets = new Insets(30, 0, 60, 5);
 		gbc_btnVoltar.gridx = 2;
 		gbc_btnVoltar.gridy = 0;
 		panelCadastro.add(btnVoltar, gbc_btnVoltar);
