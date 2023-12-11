@@ -107,4 +107,13 @@ public class EmprestimoControlador {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 	}
+	
+	public EmprestimoModelo buscarEmprestimo(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+		try {
+			return dados.buscarEmprestimo(emprestimo);
+		}catch(ExcecaoDados e2) {
+			throw new ExcecaoControlador(e2.getMessage(), e2);
+		}
+	
+	}
 }

@@ -101,6 +101,12 @@ public class VisualizarEmprestimos extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("VOLTAR");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new BotoesPrincipais().setVisible(true);
+			}
+		});
 		btnNewButton_1.setBounds(542, 180, 89, 23);
 		contentPane.add(btnNewButton_1);
 	}
