@@ -21,6 +21,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 
 public class VisualizarEmprestimoEspecifico extends JFrame {
@@ -60,8 +62,13 @@ public class VisualizarEmprestimoEspecifico extends JFrame {
 		
 		textField_isbn_1.setText(emprestimo.getIsbn());
 		textField_id_1.setText(Integer.toString(emprestimo.getId()));
-		textField_dataEmprestimo_1.setText(emprestimo.getDataEmprestimoFormatada());
-		textField_data_devolucao_1.setText(emprestimo.getDataDevolucaoFormatada());
+		
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		 String dataEmprestimoFormatada = emprestimo.getDataEmprestimo().format(formatter);
+		 String dataDevolucaoFormatada = emprestimo.getDataDevolucao().format(formatter);
+
+		textField_dataEmprestimo_1.setText(dataEmprestimoFormatada);
+		textField_data_devolucao_1.setText(dataDevolucaoFormatada);
 		textField_diasAtrasados_1.setText(Integer.toString(emprestimo.getDiasAtraso()));
 		textField_Titulo_1.setText(livro.getTitulo());
 		textFieldNomeLeitor.setText(leitor.getNome());

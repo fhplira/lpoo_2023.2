@@ -98,11 +98,12 @@ public class EmprestimoControlador {
 		livro = livroControlador.buscarLivroPorIsbn(emprestimo.getIsbn());
 		
 		try {
-			dados.fazerDevolucao(emprestimo);
 			emprestimo.setDevolvido(true);
+			dados.fazerDevolucao(emprestimo);
 			leitor.removerEmprestimo(1);
 			livro.setRemoverEmprestado(1);
 			livro.setAdicionarDisponivel(1);
+			livroDados.modificarExemplarFinalizarEmprestimo(livro);
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
