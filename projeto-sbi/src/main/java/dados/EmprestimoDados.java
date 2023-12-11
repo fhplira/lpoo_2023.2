@@ -32,20 +32,21 @@ public class EmprestimoDados {
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
-        } catch (Exception e) {
+        	} catch (Exception e) {
         	throw new ExcecaoDados("Erro ao realizar o empréstimo");
-        } finally {
-            try {
-                if (stmt != null) {stmt.close();}
-            } catch (SQLException e) {
-                throw new ExcecaoDados("Erro ao fechar o Statement: ");
-            }
-            
-            try {
-                if (con != null) {con.close();}
-            } catch (SQLException e) {
-                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
-            }
+        	} finally {
+        		
+	            try {
+	                if (stmt != null) {stmt.close();}
+	            } catch (SQLException e) {
+	                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+	            }
+	            
+	            try {
+	                if (con != null) {con.close();}
+	            } catch (SQLException e) {
+	                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+	            }
 		}
 
     }

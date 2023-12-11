@@ -128,13 +128,29 @@ public class ControleExemplares extends JFrame {
 		
 		JLabel lblTitutlo = new JLabel("CONTROLE DE EXEMPLARES");
 		lblTitutlo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblTitutlo.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblTitutlo.setFont(new Font("Tahoma", Font.BOLD, 25));
 		GridBagConstraints gbc_lblTitutlo = new GridBagConstraints();
-		gbc_lblTitutlo.insets = new Insets(0, 0, 5, 0);
-		gbc_lblTitutlo.gridwidth = 5;
+		gbc_lblTitutlo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTitutlo.gridwidth = 4;
 		gbc_lblTitutlo.gridx = 0;
 		gbc_lblTitutlo.gridy = 1;
 		panel.add(lblTitutlo, gbc_lblTitutlo);
+		
+		JButton btnNewButton = new JButton("VOLTAR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new BotoesPrincipais().setVisible(true);
+				
+			}
+		});
+		btnNewButton.setForeground(new Color(0, 0, 0));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 4;
+		gbc_btnNewButton.gridy = 1;
+		panel.add(btnNewButton, gbc_btnNewButton);
 		
 		JLabel lblIsbn = new JLabel("ISBN:");
 		lblIsbn.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -236,21 +252,6 @@ public class ControleExemplares extends JFrame {
 		gbc_btnRemoverExemplar.gridx = 1;
 		gbc_btnRemoverExemplar.gridy = 9;
 		panel.add(btnRemoverExemplar, gbc_btnRemoverExemplar);
-		
-		JButton btnNewButton = new JButton("SAIR");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new BotoesPrincipais().setVisible(true);
-				
-			}
-		});
-		btnNewButton.setForeground(new Color(255, 0, 0));
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 9;
-		panel.add(btnNewButton, gbc_btnNewButton);
 		final JList listaLivros = new JList(modeloJlist);
 		JScrollPane scroll = new JScrollPane(listaLivros);
 		
