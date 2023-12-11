@@ -185,11 +185,11 @@ public class BotoesPrincipais extends JFrame {
 						gbc_botaoLivroExemplares.gridy = 7;
 						contentPane.add(botaoLivroExemplares, gbc_botaoLivroExemplares);
 						
-						JButton botaoVisualizarEmprestimo = new JButton("Visualizar Empréstimo");
+						JButton botaoVisualizarEmprestimo = new JButton("Visualizar Empréstimos");
 						botaoVisualizarEmprestimo.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								dispose();
-								new VisualizarEmprestimo().setVisible(true);
+								new VisualizarEmprestimos().setVisible(true);
 							}
 						});
 						

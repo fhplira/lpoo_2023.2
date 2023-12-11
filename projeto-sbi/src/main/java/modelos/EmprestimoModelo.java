@@ -97,5 +97,5 @@ public class EmprestimoModelo {
 	
 	public String getDataDevolucaoFormatada() {
 		return dataDevolucaoFormatada;
-	}
+	}	
 }
