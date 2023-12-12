@@ -192,12 +192,7 @@ public class VisualizarEmprestimoEspecifico extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					EmprestimoModelo pegarEmprestimoParaDevolver = new EmprestimoModelo();
-					pegarEmprestimoParaDevolver.setCpf(textFieldCpf.getText());
-					pegarEmprestimoParaDevolver.setIsbn(textField_isbn_1.getText());
-			
-					
-					EmprestimoModelo emprestimoPego =  emprestimoControlador.buscarEmprestimo(pegarEmprestimoParaDevolver);
+					EmprestimoModelo emprestimoPego =  emprestimoControlador.buscarEmprestimo(textFieldCpf.getText(),textField_isbn_1.getText());
 					emprestimoControlador.fazerDevolucao(emprestimoPego);
 					
 					JOptionPane.showMessageDialog(null, "O livro " + textField_Titulo_1.getText()+ " foi devolvido com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);

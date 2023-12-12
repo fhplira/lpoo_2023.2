@@ -83,6 +83,10 @@ public class LivroControlador {
 
 			int controleExemplarInteiro = verificarCamposExemplares(livro, controleExemplar);
 			
+			if(livro.getDisponivel() == 0) {
+				throw new ExcecaoControlador("Não há exemplares para exclusão");
+			}
+			
 			if(controleExemplarInteiro > livro.getTotal()) {
 				throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
 			+ "\n Quantidade de livro: " + livro.getTotal());
@@ -337,6 +341,7 @@ public class LivroControlador {
 			if(controleExemplarInteiro == 0) {
 				throw new ExcecaoControlador("A quantidade não pode ser igual a zero");
 			}
+			
 			return controleExemplarInteiro;
 		}
 		

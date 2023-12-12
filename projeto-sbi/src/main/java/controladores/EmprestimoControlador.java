@@ -1,5 +1,6 @@
 package controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dados.EmprestimoDados;
@@ -39,12 +40,12 @@ public class EmprestimoControlador {
 			LivroModelo livro = new LivroModelo();
 			livro = livroControlador.buscarLivroPorIsbn(isbn);
 			
-			if(livro.getDisponivel() <= 0) {
-				throw new ExcecaoDados("Sem livros disponiveis para emprestimo");
-			}
-			
 			if(leitor.getEmprestimo() >= 2) {
 				throw new ExcecaoControlador("Número de emprestimos excedidos");
+			}
+			
+			if(livro.getDisponivel() <= 0) {
+				throw new ExcecaoControlador("Sem livros disponiveis para emprestimo");
 			}
 			
 			try {
@@ -69,10 +70,17 @@ public class EmprestimoControlador {
 			
 		}
 	
-	
 	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoControlador{
 		try {
-			return dados.buscarTodosEmprestimos();
+			List<EmprestimoModelo> emprestimos = new ArrayList<>();
+			emprestimos = dados.buscarTodosEmprestimos();
+			List<EmprestimoModelo> emprestimosAbertos = new ArrayList<>();
+			for(EmprestimoModelo emprestimo : emprestimos) {
+				if(!dados.verificarDevolucao(emprestimo)) {
+					emprestimosAbertos.add(emprestimo);
+				}
+			}
+			return emprestimosAbertos;
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
@@ -109,9 +117,9 @@ public class EmprestimoControlador {
 		}
 	}
 	
-	public EmprestimoModelo buscarEmprestimo(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoControlador {
 		try {
-			return dados.buscarEmprestimo(emprestimo);
+			return dados.buscarEmprestimo(cpf, isbn);
 		}catch(ExcecaoDados e2) {
 			throw new ExcecaoControlador(e2.getMessage(), e2);
 		}

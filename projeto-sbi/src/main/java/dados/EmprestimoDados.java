@@ -82,25 +82,26 @@ public class EmprestimoDados {
         }
 	}
 	
-	public EmprestimoModelo buscarEmprestimo(EmprestimoModelo emprestimo) throws ExcecaoDados{
+	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoDados{
 		try {
 			con = new ConexaoDados().getConnection();
 			
 			String buscaEmprestimo = "SELECT * FROM emprestimo WHERE cpf_leitor_fk = ? AND isbn_fk = ?"; 
 			stmt = con.prepareStatement(buscaEmprestimo);
-			stmt.setString(1, emprestimo.getCpf());
-			stmt.setString(2, emprestimo.getIsbn());
+			stmt.setString(1, cpf);
+			stmt.setString(2, isbn);
 			result = stmt.executeQuery();
-				if(result.next()) {
-					emprestimo.setId(result.getInt("id_emprestimo"));
-					emprestimo.setIsbn(result.getString("isbn_fk"));
-					emprestimo.setCpf(result.getString("cpf_leitor_fk"));
-					java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
-	                emprestimo.setDataEmprestimo(timestampDataEmprestimo.toLocalDateTime());
-	                java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
-	                emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
-	                emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
-	                emprestimo.setDevolvido(result.getBoolean("devolvido"));
+			EmprestimoModelo emprestimo = new EmprestimoModelo();
+			if(result.next()) {
+				emprestimo.setId(result.getInt("id_emprestimo"));
+				emprestimo.setIsbn(result.getString("isbn_fk"));
+				emprestimo.setCpf(result.getString("cpf_leitor_fk"));
+				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
+	            emprestimo.setDataEmprestimo(timestampDataEmprestimo.toLocalDateTime());
+	            java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
+	            emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
+	            emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
+	            emprestimo.setDevolvido(result.getBoolean("devolvido"));
 				}
 				return emprestimo;
 				
@@ -118,6 +119,37 @@ public class EmprestimoDados {
                 throw new ExcecaoDados("Erro ao fechar a conexão: ");                
             }
 		}
+	}
+	
+	public boolean verificarDevolucao(EmprestimoModelo emprestimo) throws ExcecaoDados{
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String verificarDevolucao = "SELECT * FROM emprestimo WHERE devolvido = 1 AND cpf_leitor_fk = ? AND isbn_fk = ?";
+			stmt = con.prepareStatement(verificarDevolucao);
+			
+			stmt.setString(1, emprestimo.getCpf());
+			stmt.setString(2, emprestimo.getIsbn());
+			result = stmt.executeQuery();
+			 if (result.next()) {    
+		            return true;
+		        } else {
+		            return false;
+		        }
+		} catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar buscar Status do Emprestimo");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+        }
 	}
 	
 	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoDados {

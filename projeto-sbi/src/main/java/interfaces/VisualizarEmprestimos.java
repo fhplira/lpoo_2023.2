@@ -18,6 +18,7 @@ import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -91,8 +92,7 @@ public class VisualizarEmprestimos extends JFrame {
 					dispose();
 					
 				} catch (ExcecaoControlador e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
