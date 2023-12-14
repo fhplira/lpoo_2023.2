@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
+import controladores.Constantes;
 import controladores.ExcecaoControlador;
 import controladores.LivroControlador;
 import modelos.LivroModelo;
@@ -15,8 +16,11 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+
+import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
@@ -32,6 +36,9 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Component;
@@ -68,7 +75,7 @@ public class ControleExemplares extends JFrame {
 		setMinimumSize(new Dimension(824, 510));
 		//setResizable(false);
 		
-		DefaultListModel<LivroModelo> modeloJlist = new DefaultListModel();
+		final DefaultListModel<LivroModelo> modeloJlist = new DefaultListModel();
 		
 		final LivroControlador controlador = new LivroControlador();
 			
@@ -120,9 +127,9 @@ public class ControleExemplares extends JFrame {
 		gbc_panel.gridy = 0;
 		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{207, 214, 0, 0, 0};
+		gbl_panel.columnWidths = new int[]{207, 214, 0, 0, 0, 0};
 		gbl_panel.rowHeights = new int[]{37, 50, 22, 22, 140, 27, 0, 0, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
@@ -147,8 +154,8 @@ public class ControleExemplares extends JFrame {
 		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 4;
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton.gridx = 5;
 		gbc_btnNewButton.gridy = 1;
 		panel.add(btnNewButton, gbc_btnNewButton);
 		
@@ -218,7 +225,8 @@ public class ControleExemplares extends JFrame {
 		});
 		btnAdicionarExemplar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_btnAdicionarExemplar = new GridBagConstraints();
-		gbc_btnAdicionarExemplar.anchor = GridBagConstraints.NORTHEAST;
+		gbc_btnAdicionarExemplar.gridwidth = 2;
+		gbc_btnAdicionarExemplar.anchor = GridBagConstraints.WEST;
 		gbc_btnAdicionarExemplar.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAdicionarExemplar.gridx = 0;
 		gbc_btnAdicionarExemplar.gridy = 9;
@@ -247,11 +255,12 @@ public class ControleExemplares extends JFrame {
 		});
 		btnRemoverExemplar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_btnRemoverExemplar = new GridBagConstraints();
-		gbc_btnRemoverExemplar.insets = new Insets(0, 0, 0, 5);
+		gbc_btnRemoverExemplar.gridwidth = 2;
 		gbc_btnRemoverExemplar.anchor = GridBagConstraints.NORTHEAST;
-		gbc_btnRemoverExemplar.gridx = 1;
+		gbc_btnRemoverExemplar.gridx = 4;
 		gbc_btnRemoverExemplar.gridy = 9;
 		panel.add(btnRemoverExemplar, gbc_btnRemoverExemplar);
+
 		final JList listaLivros = new JList(modeloJlist);
 		JScrollPane scroll = new JScrollPane(listaLivros);
 		
