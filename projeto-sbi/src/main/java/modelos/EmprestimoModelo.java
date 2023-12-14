@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class EmprestimoModelo {
 	
-	private boolean  atrasado = false;
+	private boolean devolvido = false;
 	private int diasAtraso = 0; 
 	private int id;
 	private String isbn;
@@ -27,12 +27,12 @@ public class EmprestimoModelo {
 		
 	}
 
-	public boolean isAtrasado() {
-		return atrasado;
+	public boolean isDevolvido() {
+		return devolvido;
 	}
 
-	public void setAtrasado(boolean atrasado) {
-		this.atrasado = atrasado;
+	public void setDevolvido(boolean devolvido) {
+		this.devolvido = devolvido;
 	}
 
 	public int getDiasAtraso() {
@@ -98,4 +98,10 @@ public class EmprestimoModelo {
 	public String getDataDevolucaoFormatada() {
 		return dataDevolucaoFormatada;
 	}
+
+	@Override
+	public String toString() {
+		return "ID do Empréstimo = " + id + " , CPF do Leitor = " + cpf;
+	}	
+		
 }

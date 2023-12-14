@@ -14,7 +14,7 @@ public class LeitorControlador {
 		
 		try {
 			if(dados.verificarLeitor(cpf)) {
-				throw new ExcecaoControlador("Leitor já existente");
+				throw new ExcecaoControlador("Cpf já cadastrado no Sistema");
 			}
 		}
 		catch(ExcecaoDados e) {

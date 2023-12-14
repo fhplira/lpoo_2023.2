@@ -29,9 +29,9 @@ public class LivroDados {
             stmt.setString(5, livro.getDataPublicacao());
             stmt.setString(6, livro.getDescricao());
             stmt.setString(7, livro.getImg());
-            stmt.setInt(8, livro.getTotal() + 1);
-            stmt.setInt(9, livro.getDisponivel() + 1);
-            stmt.setInt(10, livro.getEmprestados());
+            stmt.setInt(8, livro.getTotal());
+            stmt.setInt(9, livro.getDisponivel());
+            stmt.setInt(10, livro.getEmprestado());
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
@@ -135,14 +135,14 @@ public class LivroDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String deletaExemplarLivro = "UPDATE livro SET total = total - ?, "
-    				+ "disponivel = disponivel - ? "
+    		String deletaExemplarLivro = "UPDATE livro SET total = ?, "
+    				+ "disponivel = ? "
     				+ "WHERE isbn = ?";
     		stmt = con.prepareStatement(deletaExemplarLivro);
     		
-    		stmt.setInt(1, exemplarASubtrair);
-    		stmt.setInt(2, exemplarASubtrair);
-    		stmt.setString(2, livro.getIsbn());
+    		stmt.setInt(1, livro.getTotal());
+    		stmt.setInt(2, livro.getDisponivel());
+    		stmt.setString(3, livro.getIsbn());
     		
     		stmt.execute();
     	} catch (Exception e) {
@@ -166,13 +166,13 @@ public class LivroDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String acrescentaExemplarLivro = "UPDATE livro SET total = total + ?, "
-    				+ "disponivel = disponivel + ? "
+    		String acrescentaExemplarLivro = "UPDATE livro SET total = ?, "
+    				+ "disponivel = ? "
     				+ "WHERE isbn = ?";
     		stmt = con.prepareStatement(acrescentaExemplarLivro);
     		
-    		stmt.setInt(1, exemplarASomar);
-    		stmt.setInt(2, exemplarASomar);
+    		stmt.setInt(1, livro.getTotal());
+    		stmt.setInt(2, livro.getDisponivel());
     		stmt.setString(3, livro.getIsbn());
     		
     		stmt.execute();
@@ -290,6 +290,9 @@ public class LivroDados {
         		livro.setDataPublicacao(result.getString("data_publicacao"));
         		livro.setDescricao(result.getString("descricao"));
         		livro.setImg(result.getString("img"));
+        		livro.setTotal(result.getInt("total"));
+        		livro.setDisponivel(result.getInt("disponivel"));
+        		livro.setEmprestado(result.getInt("emprestado"));
         	}
         	return livro;
         	
@@ -442,14 +445,14 @@ public class LivroDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String adiconarEmprestado = "UPDATE livro SET emprestado = emprestado + ?, "
-    				+ "disponivel = disponivel - ? "
+    		String adiconarEmprestado = "UPDATE livro SET emprestado = ?, "
+    				+ "disponivel = ? "
     				+ "WHERE isbn = ?";
             stmt = con.prepareStatement(adiconarEmprestado);
             
             
-            stmt.setInt(1, 1);
-            stmt.setInt(2, 1);
+            stmt.setInt(1, livro.getEmprestado());
+            stmt.setInt(2, livro.getDisponivel());
             stmt.setString(3, livro.getIsbn());
             
             stmt.execute();
@@ -475,14 +478,14 @@ public class LivroDados {
     	try {
     		con = new ConexaoDados().getConnection();
     		
-    		String adiconarDisponivel = "UPDATE livro SET emprestado = emprestado - ?, "
-    				+ "disponivel = disponivel + ? "
+    		String adiconarDisponivel = "UPDATE livro SET emprestado = ?, "
+    				+ "disponivel = ? "
     				+ "WHERE isbn = ?";
             stmt = con.prepareStatement(adiconarDisponivel);
             
             
-            stmt.setInt(1, 1);
-            stmt.setInt(2, 1);
+            stmt.setInt(1, livro.getEmprestado());
+            stmt.setInt(2, livro.getDisponivel());
             stmt.setString(3, livro.getIsbn());
             
             stmt.execute();

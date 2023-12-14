@@ -1,5 +1,8 @@
 package controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dados.EmprestimoDados;
 import dados.ExcecaoDados;
 import dados.LeitorDados;
@@ -8,16 +11,14 @@ import modelos.EmprestimoModelo;
 import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
-//Remover todos os comentarios apos a criação da classe EmprestimoDados e seus Métodos.
-//Próximas Adições Metodos: 1° BuscarEmprestimo especifico;
-// 2° Fazer Devolução;
-// e 3° Avisar Leitor (sobre a proximidade do final do emprestimo).
+// Avisar Leitor (sobre a proximidade do final do emprestimo).
 
 public class EmprestimoControlador {
 	private EmprestimoDados dados = new EmprestimoDados();   
 	private LeitorDados leitorDados = new LeitorDados();
 	private LivroDados livroDados = new LivroDados();
 	private LeitorControlador leitorControlador = new LeitorControlador();
+	private LivroControlador livroControlador = new LivroControlador();
 	
 	public void realizarEmprestimo(String isbn, String cpf) throws ExcecaoControlador, ExcecaoDados {
 			
@@ -34,49 +35,94 @@ public class EmprestimoControlador {
 			emprestimo.setCpf(cpf);
 			
 			LeitorModelo leitor = new LeitorModelo();
-			
 			leitor = leitorControlador.buscarLeitorPorCpf(cpf);
+			
 			LivroModelo livro = new LivroModelo();
+			livro = livroControlador.buscarLivroPorIsbn(isbn);
+			
+			if(leitor.getEmprestimo() >= 2) {
+				throw new ExcecaoControlador("Número de emprestimos excedidos");
+			}
 			
 			if(livro.getDisponivel() <= 0) {
-				throw new ExcecaoDados("Sem livros disponiveis para emprestimo");
+				throw new ExcecaoControlador("Sem livros disponiveis para emprestimo");
 			}
 			
 			try {
-				livro = livroDados.buscarLivroPorIsbn(isbn);
-				livro.setEmprestados(1);
-				livro.setDisponivel(1);
-				livroDados.modificarExemplarFazerEmprestimo(livro);
+				if(dados.verificarEmprestimo(cpf, isbn)) {
+					throw new ExcecaoControlador("Este emprestimo já foi realizado para o leitor");
+				}
 			}catch(ExcecaoDados e) {
 				throw new ExcecaoControlador(e.getMessage(), e);
 			}
-			
-			try {
-				if(leitor.getEmprestimo() >= 2) {
-					throw new ExcecaoControlador("Número de emprestimos excedidos");
-				}else {
-					leitor.adicionarEmprestimo(1);
-					leitorDados.adicionarEmprestimo(leitor);
-				}	
-			}catch(ExcecaoDados e) {
-				throw new ExcecaoControlador(e.getMessage(), e);
-			}
-			
-			
-			
 			
 			try {
 				dados.realizarEmprestimo(emprestimo);
+				leitor.adicionarEmprestimo(1);
+				leitorDados.adicionarEmprestimo(leitor);
+				livro.setAdicionarEmprestado(1);
+				livro.setRemoverDisponivel(1);
+				livroDados.modificarExemplarFazerEmprestimo(livro);
 			}
 			catch(ExcecaoDados e) {
 				throw new ExcecaoControlador(e.getMessage(), e);
 			}
 			
 		}
-		
 	
-	public EmprestimoModelo fazerDevolucao(LivroModelo livro, LeitorModelo leitor) throws ExcecaoControlador {
+	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoControlador{
+		try {
+			List<EmprestimoModelo> emprestimos = new ArrayList<>();
+			emprestimos = dados.buscarTodosEmprestimos();
+			List<EmprestimoModelo> emprestimosAbertos = new ArrayList<>();
+			for(EmprestimoModelo emprestimo : emprestimos) {
+				if(!dados.verificarDevolucao(emprestimo)) {
+					emprestimosAbertos.add(emprestimo);
+				}
+			}
+			return emprestimosAbertos;
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
+	
+	public void fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+		try {
+			if(!dados.verificarEmprestimo(emprestimo.getCpf(), emprestimo.getIsbn())) {
+				throw new ExcecaoControlador("Este emprestimo não existe");
+			}
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
 		
-		return null;
+		if(emprestimo.isDevolvido()) {
+			throw new ExcecaoControlador("Emprestimo já devolvido");
+		}
+		
+		LeitorModelo leitor = new LeitorModelo();
+		leitor = leitorControlador.buscarLeitorPorCpf(emprestimo.getCpf());
+		
+		LivroModelo livro = new LivroModelo();
+		livro = livroControlador.buscarLivroPorIsbn(emprestimo.getIsbn());
+		
+		try {
+			emprestimo.setDevolvido(true);
+			dados.fazerDevolucao(emprestimo);
+			leitor.removerEmprestimo(1);
+			livro.setRemoverEmprestado(1);
+			livro.setAdicionarDisponivel(1);
+			livroDados.modificarExemplarFinalizarEmprestimo(livro);
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
+	
+	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoControlador {
+		try {
+			return dados.buscarEmprestimo(cpf, isbn);
+		}catch(ExcecaoDados e2) {
+			throw new ExcecaoControlador(e2.getMessage(), e2);
+		}
+	
 	}
 }

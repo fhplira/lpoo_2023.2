@@ -78,7 +78,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 		textFieldCampoEditora.setText(livroClicado.getEditora());
 		textFieldCampoTotalExemplares.setText(Integer.toString(livroClicado.getTotal()));
 		textField_1CampoDisponiveis.setText(Integer.toString(livroClicado.getDisponivel()));
-		textFieldEmprestados.setText(Integer.toString(livroClicado.getEmprestados()));
+		textFieldEmprestados.setText(Integer.toString(livroClicado.getEmprestado()));
 		textAreaDescricao.setText(livroClicado.getDescricao());
 		
 		String nomeImagem = livroClicado.getIsbn();

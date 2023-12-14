@@ -32,6 +32,9 @@ public class LivroControlador {
 			verificarIsbn(isbn); 
 
 			LivroModelo livro = buscarLivroApi(isbn);
+			livro.setAdicionarDisponivel(1);
+			livro.setEmprestado(0);
+			livro.setValorTotal();
 
 			try {
 				dados.cadastrarLivro(livro);			
@@ -40,6 +43,119 @@ public class LivroControlador {
 			} 
 
 		}
+		
+		
+		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao) throws ExcecaoControlador{
+
+		    verificarCamposCadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
+		    
+		    LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
+			livro.setAdicionarDisponivel(1);
+			livro.setEmprestado(0);
+			livro.setValorTotal();
+
+			try {
+				dados.cadastrarLivro(livro);			
+			}catch (ExcecaoDados e){
+				throw new ExcecaoControlador(e.getMessage(), e);
+			} 
+		}
+
+		
+		public void AdicionarExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
+
+			int controleExemplarInteiro = verificarCamposExemplares(livro, controleExemplar);
+			
+			LivroModelo exemplarLivro = new LivroModelo();
+			
+			try {
+				exemplarLivro = dados.buscarLivroPorIsbn(livro.getIsbn());
+				exemplarLivro.setAdicionarDisponivel(controleExemplarInteiro);
+				exemplarLivro.setValorTotal();
+				dados.acrescentarExemplarLivro(exemplarLivro, controleExemplarInteiro);
+			}catch (ExcecaoDados e){
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
+
+		}
+		
+		public void ExcluirExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
+
+			int controleExemplarInteiro = verificarCamposExemplares(livro, controleExemplar);
+			
+			if(livro.getDisponivel() == 0) {
+				throw new ExcecaoControlador("Não há exemplares para exclusão");
+			}
+			
+			if(controleExemplarInteiro > livro.getTotal()) {
+				throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
+			+ "\n Quantidade de livro: " + livro.getTotal());
+			}
+			
+			if(livro.getTotal() == 0) {
+				throw new ExcecaoControlador("Nao existe exeplares para exclusão");
+			}
+			
+			LivroModelo exemplarLivro = new LivroModelo();
+			
+			try {
+				exemplarLivro = dados.buscarLivroPorIsbn(livro.getIsbn());
+				exemplarLivro.setRemoverDisponivel(controleExemplarInteiro);
+				exemplarLivro.setValorTotal();
+				dados.deletarExemplarLivro(exemplarLivro, controleExemplarInteiro);
+
+			}catch (ExcecaoDados e){
+				 throw new ExcecaoControlador(e.getMessage(), e);
+			}
+
+			 
+}
+		
+		public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoControlador{
+
+			try {
+				return dados.buscarTodosOsLivros();
+			}catch (ExcecaoDados e){
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
+		}
+		
+		
+		public LivroModelo buscarLivroPorIsbn(String isbn) throws ExcecaoControlador {
+					
+			if(isbn.isBlank()){
+				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
+			}
+
+			if(!isbn.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
+			}
+
+			if((isbn.length() != 10) && (isbn.length() != 13)) {
+				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
+			}
+
+			try {
+				return dados.buscarLivroPorIsbn(isbn);		
+			}catch (ExcecaoDados e){
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}
+		}
+		
+		
+		
+		public LivroModelo buscarLivroPorTitulo(String titulo) throws ExcecaoControlador {
+
+			if(titulo.isBlank()){
+				throw new ExcecaoControlador("O campo título não pode ser vazio.");
+			}
+
+			try {
+				return dados.buscarLivroPorTitulo(titulo);			
+			}catch (ExcecaoDados e){
+				throw new ExcecaoControlador(e.getMessage(), e);
+			}	
+		}	
 
 
 		private LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
@@ -143,10 +259,10 @@ public class LivroControlador {
 			}
 		}
 		
-		
-		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao) throws ExcecaoControlador{
 
-		    if(isbn.isBlank()){
+		private void verificarCamposCadastrarLivro(String isbn, String titulo, String autor, String editora,
+				String dataPublicacao, String img, String descricao) throws ExcecaoControlador {
+			if(isbn.isBlank()){
 				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
 			
@@ -199,19 +315,12 @@ public class LivroControlador {
 			}catch(ExcecaoDados e1){
 				throw new ExcecaoControlador(e1.getMessage(), e1);
 			}
-		    
-		    LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
-
-			try {
-				dados.cadastrarLivro(livro);			
-			}catch (ExcecaoDados e){
-				throw new ExcecaoControlador(e.getMessage(), e);
-			} 
 		}
 
 
-		public void AdicionarExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
 
+
+		private int verificarCamposExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
 			if(livro.getIsbn().isBlank()){
 				throw new ExcecaoControlador("O campo isbn não pode ser vazio.");
 			}
@@ -233,107 +342,8 @@ public class LivroControlador {
 				throw new ExcecaoControlador("A quantidade não pode ser igual a zero");
 			}
 			
-			try {			
-				dados.acrescentarExemplarLivro(livro, controleExemplarInteiro);
-			}catch (ExcecaoDados e){
-				throw new ExcecaoControlador(e.getMessage(), e);
-			}
-
+			return controleExemplarInteiro;
 		}
 		
-		public void ExcluirExemplares(LivroModelo livro, String controleExemplar) throws ExcecaoControlador {
-
-			if(livro.getIsbn().isBlank()){
-				throw new ExcecaoControlador("O campo isbn não pode ser vazio.");
-			}
-
-			if(controleExemplar.isBlank()){
-				throw new ExcecaoControlador("O campo quantidade não pode ser vazio.");
-			}
-
-			if(!controleExemplar.matches("^\\d+$")){
-				throw new ExcecaoControlador("O campo quantidade não pode ter letras e nem espaços.");
-			}
-			
-			int controleExemplarInteiro = Integer.parseInt(controleExemplar);
-			
-			if(controleExemplarInteiro < 0) {
-				throw new ExcecaoControlador("A quantidade não pode ser menor que zero");
-			}
-			
-			if(controleExemplarInteiro == 0) {
-				throw new ExcecaoControlador("A quantidade não pode ser igual a zero");
-			}
-			
-			try {
-				int quantidade = dados.buscarQuantidadeLivros(livro.getIsbn());
-				if(controleExemplarInteiro > quantidade) {
-					throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
-				+ "\n Quantidade de livro: " + quantidade);
-				}
-				if(quantidade == 0) {
-					throw new ExcecaoControlador("Nao existe exeplares para exclusão");
-				}
-			}catch(ExcecaoDados e) {
-				throw new ExcecaoControlador(e.getMessage(), e);
-			}
-			
-
-			try {
-				dados.deletarExemplarLivro(livro, controleExemplarInteiro);
-
-			}catch (ExcecaoDados e){
-				 throw new ExcecaoControlador(e.getMessage(), e);
-			}
-
-			 
-}
-	
-	
-		public List<LivroModelo> buscarTodosOsLivros() throws ExcecaoControlador{
-
-			try {
-				return dados.buscarTodosOsLivros();
-			}catch (ExcecaoDados e){
-				throw new ExcecaoControlador(e.getMessage(), e);
-			}
-		}
-		
-		
-		public List<LivroModelo> buscarLivroPorISBN(String isbn) throws ExcecaoControlador {
-					
-			if(isbn.isBlank()){
-				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
-			}
-
-			if(!isbn.matches("^\\d+$")){
-				throw new ExcecaoControlador("O campo ISBN não pode ter letras e nem espaços.");
-			}
-
-			if((isbn.length() != 10) && (isbn.length() != 13)) {
-				throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
-			}
-
-			try {
-				return dados.buscarLivroPorAutor(isbn);		
-			}catch (ExcecaoDados e){
-				throw new ExcecaoControlador(e.getMessage(), e);
-			}
-		}
-		
-		
-		
-		public LivroModelo buscarLivroPorTitulo(String titulo) throws ExcecaoControlador {
-
-			if(titulo.isBlank()){
-				throw new ExcecaoControlador("O campo título não pode ser vazio.");
-			}
-
-			try {
-				return dados.buscarLivroPorTitulo(titulo);			
-			}catch (ExcecaoDados e){
-				throw new ExcecaoControlador(e.getMessage(), e);
-			}	
-		}	
 }		
 
