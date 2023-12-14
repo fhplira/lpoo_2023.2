@@ -9,12 +9,19 @@ import javax.swing.border.EmptyBorder;
 
 import controladores.BibliotecarioControlador;
 import controladores.ExcecaoControlador;
+import dados.ExcecaoDados;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -39,6 +46,7 @@ public class LoginBibliotecario extends JFrame {
 			public void run() {
 				try {
 					LoginBibliotecario frame = new LoginBibliotecario();
+					frame.criarBancoDados();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -166,4 +174,42 @@ public class LoginBibliotecario extends JFrame {
 		gbc_btnEntrar.gridy = 6;
 		panel.add(btnEntrar, gbc_btnEntrar);
 	}
+	
+	public void criarBancoDados() {
+		
+		try {
+            Class.forName("com.mysql.cj.jdbc.Driver");  
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+		
+		
+		String url = "jdbc:mysql://localhost:3306/";
+        String usuario = "root";
+        String senha = "root";
+        
+        try (Connection con = DriverManager.getConnection(url, usuario, senha); 
+        		Statement stmt = con.createStatement()) {
+        	
+        	InputStream inputStream = getClass().getResourceAsStream("/bd/sib-database.sql");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder script = new StringBuilder();
+            
+            String linha;
+            
+            while ((linha = reader.readLine()) != null) {
+            	script.append(linha).append("\n");
+            }
+        	
+        	stmt.executeUpdate(linha);
+        	
+        	
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	System.err.println("Erro ao criar o banco de dados");
+        }
+        
+	}
+	
 }
+
