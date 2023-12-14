@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
+import controladores.Constantes;
 import controladores.ExcecaoControlador;
 import controladores.LivroControlador;
 import modelos.LivroModelo;
@@ -15,8 +16,11 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+
+import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
@@ -32,6 +36,9 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Component;
@@ -68,7 +75,7 @@ public class ControleExemplares extends JFrame {
 		setMinimumSize(new Dimension(824, 510));
 		//setResizable(false);
 		
-		DefaultListModel<LivroModelo> modeloJlist = new DefaultListModel();
+		final DefaultListModel<LivroModelo> modeloJlist = new DefaultListModel();
 		
 		final LivroControlador controlador = new LivroControlador();
 			
@@ -248,6 +255,7 @@ public class ControleExemplares extends JFrame {
 		btnNewButton.setForeground(new Color(255, 0, 0));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 3;
 		gbc_btnNewButton.gridy = 9;
 		panel.add(btnNewButton, gbc_btnNewButton);

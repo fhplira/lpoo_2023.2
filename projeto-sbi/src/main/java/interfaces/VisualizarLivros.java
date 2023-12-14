@@ -140,7 +140,7 @@ public class VisualizarLivros extends JFrame {
 	     gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 	     panel.setLayout(gbl_panel);
 	     
-	     JList<LivroModelo> jList = new JList<>(modeloJList);
+	      JList<LivroModelo> jList = new JList<>(modeloJList);
 	     
 	     GridBagConstraints gbc_jList = new GridBagConstraints();
 	     gbc_jList.fill = GridBagConstraints.BOTH;
