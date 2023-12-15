@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+
 import controladores.BibliotecarioControlador;
 import controladores.ExcecaoControlador;
 import dados.ExcecaoDados;
@@ -188,7 +189,23 @@ public class LoginBibliotecario extends JFrame {
         String usuario = "root";
         String senha = "root";
         
+        String urlCreated = "jdbc:mysql://localhost:3306/sib";
+        
         try (Connection con = DriverManager.getConnection(url, usuario, senha); 
+        		Statement stmt = con.createStatement()) {
+        	
+        	String createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS sib";
+            try (Statement statement = con.createStatement()) {
+                statement.executeUpdate(createDatabaseQuery);
+                System.out.println("Banco de dados criado com sucesso!");
+            }
+        	
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	System.err.println("Erro ao criar o banco de dados");
+        }
+        
+        try (Connection con = DriverManager.getConnection(urlCreated, usuario, senha); 
         		Statement stmt = con.createStatement()) {
         	
         	InputStream inputStream = getClass().getResourceAsStream("/bd/sib-database.sql");
@@ -200,16 +217,20 @@ public class LoginBibliotecario extends JFrame {
             while ((linha = reader.readLine()) != null) {
             	script.append(linha).append("\n");
             }
+            
+            String scriptSQL = script.toString();
         	
-        	stmt.executeUpdate(linha);
+        	
+            stmt.execute(scriptSQL);
         	
         	
         } catch (Exception e) {
         	e.printStackTrace();
-        	System.err.println("Erro ao criar o banco de dados");
+        	System.err.println("Erro ao inserir dados no banco de dados");
         }
         
 	}
 	
-}
 
+	
+}
