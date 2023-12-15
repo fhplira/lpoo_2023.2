@@ -15,25 +15,19 @@ import dados.LivroDados;
 @ExtendWith(MockitoExtension.class)
 public class testeLivroControlador {
 	
-	
 
 		@Test
 		public void cadastrarLivroPorIsbnComSucesso(@Mock LivroDados dadosMock) throws ExcecaoControlador, IOException {
 			LivroControlador controlador = new LivroControlador();
 			controlador.setDados(dadosMock);
 			
-			try {
-				 
-				
+			try {	
 				when(dadosMock.verificarLivro("0000000000000")).thenReturn(false);
 				controlador.cadastrarLivroPorISBN("0000000000000");
 				
 			} catch (ExcecaoDados e) {
 				 throw new ExcecaoControlador(e.getMessage(), e);
-			}
-			
-			
-			
+			}	
 		}
 	}
 
