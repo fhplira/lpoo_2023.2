@@ -3,17 +3,22 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -165,24 +170,13 @@ public class LivroControlador {
 
 		private LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
 			
-			final String urlGet = "https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY";
-			HttpClient cliente = HttpClient.newHttpClient();
-
-			HttpRequest request = HttpRequest.newBuilder()
-					.GET()
-					.uri(URI.create(urlGet))
-					.build();
-
-			HttpResponse<String> response = null;
-
-			try {
-				response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
-			} catch (Exception e) {
-				throw new ExcecaoControlador("Houve uma inconsistência com a base de dados.");
-			} 
-
+			CloseableHttpClient httpCliente = HttpClients.createDefault();
+			HttpGet requisicao = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY");
+			
+			CloseableHttpResponse resposta = httpCliente.execute(requisicao);
+		
 			Gson gson = new Gson();
-			JsonObject obj = gson.fromJson(response.body(), JsonObject.class);
+			JsonObject obj = gson.fromJson(EntityUtils.toString(resposta.getEntity()), JsonObject.class);
 
 			int verificaSeTemObjeto = obj.get("totalItems").getAsInt();
 
