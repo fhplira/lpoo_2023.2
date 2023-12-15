@@ -146,13 +146,41 @@ public class VisualizarLivros extends JFrame {
 		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 
-		JList<LivroModelo> jList = new JList<>(modeloJList);
+		JList<LivroModelo> listaLivros = new JList<>(modeloJList);
 
 		GridBagConstraints gbc_jList = new GridBagConstraints();
 		gbc_jList.fill = GridBagConstraints.BOTH;
 		gbc_jList.gridx = 0;
 		gbc_jList.gridy = 0;
-		panel.add(jList, gbc_jList);
+		panel.add(listaLivros, gbc_jList);
+		
+		JButton btnNewButton_1 = new JButton("Visualizar livro");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LivroModelo livroClicado = listaLivros.getSelectedValue();  
+
+				String titulo = livroClicado.getTitulo();
+
+				try {
+					LivroModelo chamarLivroCliclado = livroControlador.buscarLivroPorTitulo(titulo);
+
+					VisualizarLivroEspecifico enviar = new VisualizarLivroEspecifico();
+					enviar.enviarValores(chamarLivroCliclado);
+					enviar.setVisible(true);
+					dispose();
+				} catch (ExcecaoControlador ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception exc){
+					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.anchor = GridBagConstraints.NORTHEAST;
+		gbc_btnNewButton_1.gridx = 3;
+		gbc_btnNewButton_1.gridy = 1;
+		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 
 		JButton visualizarLivro = new JButton("Visualizar Livro");
 		visualizarLivro.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -161,24 +189,7 @@ public class VisualizarLivros extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 
-				LivroModelo livroClicado = jList.getSelectedValue(); 
 
-				JLabel lblNewLabel = new JLabel("VISUALIZAR LIVROS");
-				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-				gbc_lblNewLabel.insets = new Insets(30, 50, 60, 5);
-				gbc_lblNewLabel.gridx = 0;
-				gbc_lblNewLabel.gridy = 0;
-				contentPane.add(lblNewLabel, gbc_lblNewLabel);
-
-				JButton btnNewButton = new JButton("VOLTAR");
-				btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-				GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-				gbc_btnNewButton.anchor = GridBagConstraints.EAST;
-				gbc_btnNewButton.insets = new Insets(30, 0, 60, 5);
-				gbc_btnNewButton.gridx = 1;
-				gbc_btnNewButton.gridy = 0;
-				contentPane.add(btnNewButton, gbc_btnNewButton);
 
 				JPanel panelContents = new JPanel();
 				panelContents.setMinimumSize(new Dimension(824, 510));
@@ -210,6 +221,7 @@ public class VisualizarLivros extends JFrame {
 				panel.add(listaLivros, gbc_listaLivros);
 
 				JButton visualizarLivro = new JButton("Visualizar Livro");
+				visualizarLivro.setVisible(true);
 				GridBagConstraints gbc_visualizarLivro = new GridBagConstraints();
 				gbc_visualizarLivro.insets = new Insets(0, 0, 0, 5);
 				gbc_visualizarLivro.anchor = GridBagConstraints.NORTHEAST;
@@ -219,28 +231,6 @@ public class VisualizarLivros extends JFrame {
 				visualizarLivro.setFont(new Font("Tahoma", Font.BOLD, 13));
 				visualizarLivro.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-				visualizarLivro.addActionListener(new ActionListener() {
-
-					public void actionPerformed(ActionEvent e) {
-
-						LivroModelo livroClicado = listaLivros.getSelectedValue();  
-
-						String titulo = livroClicado.getTitulo();
-
-						try {
-							LivroModelo chamarLivroCliclado = livroControlador.buscarLivroPorTitulo(titulo);
-
-							VisualizarLivroEspecifico enviar = new VisualizarLivroEspecifico();
-							enviar.enviarValores(chamarLivroCliclado);
-							enviar.setVisible(true);
-							dispose();
-						} catch (ExcecaoControlador ex) {
-							JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-						} catch (Exception exc){
-							JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
-						}
-
-					}});
 			
 		}
 	    
