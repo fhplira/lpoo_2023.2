@@ -77,10 +77,10 @@ public class LoginBibliotecario extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
-		
-		
-		
+
+
+
+
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 0, 5);
@@ -88,8 +88,8 @@ public class LoginBibliotecario extends JFrame {
 		gbc_panel.weightx = 1.0;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-		
-		
+
+
 		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{50, 206, 50, 0};
@@ -97,7 +97,7 @@ public class LoginBibliotecario extends JFrame {
 		gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		panel.setLayout(gbl_panel);
-		
+
 		JLabel lblBemVindo = new JLabel("Bem-vindo!");
 		lblBemVindo.setFont(new Font("Dialog", Font.BOLD, 30));
 		GridBagConstraints gbc_lblBemVindo = new GridBagConstraints();
@@ -106,7 +106,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblBemVindo.gridx = 1;
 		gbc_lblBemVindo.gridy = 0;
 		panel.add(lblBemVindo, gbc_lblBemVindo);
-		
+
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Dialog", Font.BOLD, 13));
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
@@ -115,7 +115,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblEmail.gridx = 1;
 		gbc_lblEmail.gridy = 2;
 		panel.add(lblEmail, gbc_lblEmail);
-		
+
 		textEmail = new JTextField();
 		GridBagConstraints gbc_textEmail = new GridBagConstraints();
 		gbc_textEmail.fill = GridBagConstraints.HORIZONTAL;
@@ -124,7 +124,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_textEmail.gridy = 3;
 		panel.add(textEmail, gbc_textEmail);
 		textEmail.setColumns(10);
-		
+
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
 		GridBagConstraints gbc_lblSenha = new GridBagConstraints();
@@ -133,7 +133,7 @@ public class LoginBibliotecario extends JFrame {
 		gbc_lblSenha.gridx = 1;
 		gbc_lblSenha.gridy = 4;
 		panel.add(lblSenha, gbc_lblSenha);
-		
+
 		passwordField = new JPasswordField();
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.insets = new Insets(0, 0, 5, 5);
@@ -141,33 +141,33 @@ public class LoginBibliotecario extends JFrame {
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 5;
 		panel.add(passwordField, gbc_passwordField);
-		
+
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String email = textEmail.getText();
 				char[] senhaBibliotecario = passwordField.getPassword();
 				String senha = String.valueOf(senhaBibliotecario);
-				
+
 				BibliotecarioControlador bibliotecario = new BibliotecarioControlador();
-				
+
 				try {
 					bibliotecario.login(email, senha);
 					dispose();
 					new BotoesPrincipais().setVisible(true);
-					
+
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2){
 					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
-				
+
+
 			}
 		});
-		
-		
+
+
 		GridBagConstraints gbc_btnEntrar = new GridBagConstraints();
 		gbc_btnEntrar.anchor = GridBagConstraints.SOUTH;
 		gbc_btnEntrar.insets = new Insets(0, 0, 5, 5);
@@ -175,62 +175,67 @@ public class LoginBibliotecario extends JFrame {
 		gbc_btnEntrar.gridy = 6;
 		panel.add(btnEntrar, gbc_btnEntrar);
 	}
-	
-	public void criarBancoDados() {
-		
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver");  
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-		
-		
-		String url = "jdbc:mysql://localhost:3306/";
-        String usuario = "root";
-        String senha = "root";
-        
-        String urlCreated = "jdbc:mysql://localhost:3306/sib";
-        
-        try (Connection con = DriverManager.getConnection(url, usuario, senha); 
-        		Statement stmt = con.createStatement()) {
-        	
-        	String createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS sib";
-            try (Statement statement = con.createStatement()) {
-                statement.executeUpdate(createDatabaseQuery);
-                System.out.println("Banco de dados criado com sucesso!");
-            }
-        	
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	System.err.println("Erro ao criar o banco de dados");
-        }
-        
-        try (Connection con = DriverManager.getConnection(urlCreated, usuario, senha); 
-        		Statement stmt = con.createStatement()) {
-        	
-        	InputStream inputStream = getClass().getResourceAsStream("/bd/sib-database.sql");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder script = new StringBuilder();
-            
-            String linha;
-            
-            while ((linha = reader.readLine()) != null) {
-            	script.append(linha).append("\n");
-            }
-            
-            String scriptSQL = script.toString();
-        	
-        	
-            stmt.execute(scriptSQL);
-        	
-        	
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	System.err.println("Erro ao inserir dados no banco de dados");
-        }
-        
-	}
-	
 
-	
+	public void criarBancoDados() {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");  
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+
+		String url = "jdbc:mysql://localhost:3306/";
+		String usuario = "root";
+		String senha = "root";
+
+
+		try (Connection con = DriverManager.getConnection(url, usuario, senha); 
+				Statement stmt = con.createStatement()) {
+
+			String createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS sib";
+			try (Statement statement = con.createStatement()) {
+				statement.executeUpdate(createDatabaseQuery);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Erro ao criar o banco de dados");
+		} 
+
+		try (Connection con = DriverManager.getConnection(url + "sib", usuario, senha); 
+				Statement stmt = con.createStatement()) {
+
+			InputStream inputStream = getClass().getResourceAsStream("/bd/sib-database.sql");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+			StringBuilder script = new StringBuilder();
+
+			String linha;
+
+			while ((linha = reader.readLine()) != null) {
+				script.append(linha).append("\n");
+			}
+
+			String scriptSQL = script.toString();
+
+			String[] queries = scriptSQL.split(";");
+
+			try {
+				for (String querie : queries) {
+					if (!querie.trim().isEmpty()) {
+						stmt.execute(querie);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.err.println("Erro ao inserir dados no banco de dados");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+
 }
