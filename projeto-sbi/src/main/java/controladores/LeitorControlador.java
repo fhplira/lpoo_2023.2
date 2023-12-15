@@ -9,6 +9,7 @@ import modelos.LeitorModelo;
 public class LeitorControlador {
 	
 	private LeitorDados dados = new LeitorDados();
+	private AplicacaoEmail emailControlador = new AplicacaoEmail();
 	
 	public void cadastrarLeitor(String nome, String cpf, String email) throws ExcecaoControlador {
 		
@@ -60,6 +61,7 @@ public class LeitorControlador {
 		LeitorModelo leitor = new LeitorModelo(nome, cpf, email);
 		try{
 			dados.cadastrarLeitor(leitor);
+			emailControlador.enviarEmailCadastro(leitor);
 		}catch(ExcecaoDados e){
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}

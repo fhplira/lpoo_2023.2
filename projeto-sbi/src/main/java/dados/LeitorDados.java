@@ -209,6 +209,34 @@ public class LeitorDados {
 		}
 	}
 	
+	public void removerEmprestimo(LeitorModelo leitor) throws ExcecaoDados {
+		try {
+			con = new ConexaoDados().getConnection();
+			String removerEmprestimo = "UPDATE leitor SET emprestimo_leitor = ? "
+					+ " WHERE cpf_leitor = ?";
+			stmt = con.prepareStatement(removerEmprestimo);
+			
+			stmt.setInt(1, leitor.getEmprestimo());
+			stmt.setString(2, leitor.getCpf());
+			stmt.execute();
+			
+		}catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar remover emprestimo");
+		}finally {
+			try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+		}
+	}
+	
 	public void deletarLeitorPorCpf(String cpf) throws ExcecaoDados {
 		try {
 			con = new ConexaoDados().getConnection();

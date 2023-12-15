@@ -12,15 +12,12 @@ public class EmprestimoModelo {
 	private String cpf;
 	private LocalDateTime dataEmprestimo;
 	private LocalDateTime dataDevolucao;
-	private String dataEmprestimoFormatada;
-	private String dataDevolucaoFormatada;
-	private DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	private DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	
 	public EmprestimoModelo(String isbn, String cpf) {
 		this.isbn = isbn;
 		this.cpf = cpf;
-		this.dataEmprestimoFormatada = getDataEmprestimo().format(padraoHora);
-		this.dataDevolucaoFormatada = getDataDevolucao().format(padraoHora);
 	}
 
 	public EmprestimoModelo() {
@@ -66,7 +63,7 @@ public class EmprestimoModelo {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-
+	
 	public LocalDateTime getDataEmprestimo() {
 		return dataEmprestimo;
 	}
@@ -82,24 +79,15 @@ public class EmprestimoModelo {
 	public void setDataDevolucao(LocalDateTime dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
-
-	public String getDataEmprestimoFormatada() {
-		return dataEmprestimoFormatada;
-	}
 	
-	public void setDataEmprestimoFormatada(String dataEmprestimoFormatada) {
-		this.dataEmprestimoFormatada = dataEmprestimoFormatada;
-	}
-	
-	public void setDataDevolucaoFormatada(String dataDevolucaoFormatada) {
-		this.dataDevolucaoFormatada = dataDevolucaoFormatada;
-	}
-	
-	public String getDataDevolucaoFormatada() {
-		return dataDevolucaoFormatada;
+	public DateTimeFormatter getPadraoHora() {
+		return padraoHora;
 	}
 
-	@Override
+	public void setPadraoHora(DateTimeFormatter padraoHora) {
+		this.padraoHora = padraoHora;
+	}
+
 	public String toString() {
 		return "ID do Empréstimo = " + id + " , CPF do Leitor = " + cpf;
 	}	

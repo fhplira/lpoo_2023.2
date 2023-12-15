@@ -19,6 +19,7 @@ public class EmprestimoControlador {
 	private LivroDados livroDados = new LivroDados();
 	private LeitorControlador leitorControlador = new LeitorControlador();
 	private LivroControlador livroControlador = new LivroControlador();
+	private AplicacaoEmail emailControlador = new AplicacaoEmail();
 	
 	public void realizarEmprestimo(String isbn, String cpf) throws ExcecaoControlador, ExcecaoDados {
 			
@@ -49,7 +50,7 @@ public class EmprestimoControlador {
 			}
 			
 			try {
-				if(dados.verificarEmprestimo(cpf, isbn)) {
+				if(dados.verificarEmprestimo(cpf, isbn )) {
 					throw new ExcecaoControlador("Este emprestimo já foi realizado para o leitor");
 				}
 			}catch(ExcecaoDados e) {
@@ -63,6 +64,8 @@ public class EmprestimoControlador {
 				livro.setAdicionarEmprestado(1);
 				livro.setRemoverDisponivel(1);
 				livroDados.modificarExemplarFazerEmprestimo(livro);
+				emprestimo = dados.buscarEmprestimo(cpf, isbn);
+				emailControlador.enviarEmailEmprestimo(emprestimo);
 			}
 			catch(ExcecaoDados e) {
 				throw new ExcecaoControlador(e.getMessage(), e);
@@ -111,7 +114,9 @@ public class EmprestimoControlador {
 			leitor.removerEmprestimo(1);
 			livro.setRemoverEmprestado(1);
 			livro.setAdicionarDisponivel(1);
+			leitorDados.removerEmprestimo(leitor);
 			livroDados.modificarExemplarFinalizarEmprestimo(livro);
+			emailControlador.enviarEmailDevolucao(emprestimo);
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
