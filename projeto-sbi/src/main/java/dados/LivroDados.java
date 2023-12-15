@@ -33,7 +33,6 @@ public class LivroDados implements InterfaceDados {
             stmt.setInt(9, livro.getDisponivel());
             stmt.setInt(10, livro.getEmprestado());
             
-            //verificar se o executeQuery é sem parâmetro
             stmt.execute();
         } catch (Exception e) {
         	throw new ExcecaoDados("Erro ao tentar cadastrar o livro");

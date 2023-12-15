@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import controladores.BibliotecarioControlador;
 import controladores.ExcecaoControlador;
 import dados.ExcecaoDados;
+import dados.ConexaoDados;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -39,6 +40,7 @@ public class LoginBibliotecario extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textEmail;
+	private static ConexaoDados execucaoScript = new ConexaoDados();
 	/**
 	 * Launch the application.
 	 */
@@ -47,7 +49,7 @@ public class LoginBibliotecario extends JFrame {
 			public void run() {
 				try {
 					LoginBibliotecario frame = new LoginBibliotecario();
-					frame.criarBancoDados();
+					execucaoScript.criarBancoDados();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -176,7 +178,7 @@ public class LoginBibliotecario extends JFrame {
 		panel.add(btnEntrar, gbc_btnEntrar);
 	}
 
-	public void criarBancoDados() {
+	/*public void criarBancoDados() {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");  
@@ -234,7 +236,7 @@ public class LoginBibliotecario extends JFrame {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 
 
 
