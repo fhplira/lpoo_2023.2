@@ -80,7 +80,7 @@ public class VisualizarLivros extends JFrame {
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0};
 		gbl_contentPane.rowHeights = new int[]{0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, 0.0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0};
 		gbl_contentPane.rowWeights = new double[]{0.0, 1.0};
 		contentPane.setLayout(gbl_contentPane);
 
@@ -91,18 +91,17 @@ public class VisualizarLivros extends JFrame {
 		try {
 			livros = livroControlador.buscarTodosOsLivros();
 		} catch (ExcecaoControlador e) {
-			// TODO Auto-generated catch block
+			//inserir mensagem de excecao
 			e.printStackTrace();
 		}
 		DefaultListModel<LivroModelo> modeloJList = new DefaultListModel<>();
 
 		modeloJList.addAll(livros);
+
 		JScrollPane scrollPane = new JScrollPane();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-
-
 
 
 		JLabel lblNewLabel = new JLabel("VisualizarLivros");
@@ -131,7 +130,11 @@ public class VisualizarLivros extends JFrame {
 
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
+
 		gbc_panel.fill = GridBagConstraints.BOTH;
+
+		gbc_panel.fill = GridBagConstraints.VERTICAL;
+
 		gbc_panel.insets = new Insets(0, 0, 20, 5);
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 1;
@@ -155,10 +158,10 @@ public class VisualizarLivros extends JFrame {
 		visualizarLivro.setAlignmentX(Component.CENTER_ALIGNMENT);
 		visualizarLivro.addActionListener(new ActionListener() {
 
+
 			public void actionPerformed(ActionEvent e) {
 
-				LivroModelo livroClicado = jList.getSelectedValue();  
-
+				LivroModelo livroClicado = jList.getSelectedValue(); 
 
 				JLabel lblNewLabel = new JLabel("VISUALIZAR LIVROS");
 				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -215,6 +218,7 @@ public class VisualizarLivros extends JFrame {
 				contentPane.add(visualizarLivro, gbc_visualizarLivro);
 				visualizarLivro.setFont(new Font("Tahoma", Font.BOLD, 13));
 				visualizarLivro.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 				visualizarLivro.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
@@ -237,7 +241,10 @@ public class VisualizarLivros extends JFrame {
 						}
 
 					}});
-			}
+			
+		}
+	    
+			
 		});
 	}
 }
