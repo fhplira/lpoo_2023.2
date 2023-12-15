@@ -9,7 +9,7 @@ import java.util.List;
 
 import modelos.LivroModelo;
 
-public class LivroDados {
+public class LivroDados implements InterfaceDados {
 	
 	PreparedStatement stmt;
 	Connection con = null;

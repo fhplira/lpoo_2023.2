@@ -18,15 +18,20 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import dados.ExcecaoDados;
+import dados.InterfaceDados;
 import dados.LivroDados;
 import modelos.LivroModelo;
 
 
 public class LivroControlador {
-		
-		private LivroDados dados = new LivroDados() ;
 	
-
+		private InterfaceDados dados;
+		
+		public LivroControlador() {
+			this.dados = new LivroDados();
+		}
+		
+		
 		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador, IOException{	
 
 			verificarIsbn(isbn); 
@@ -344,6 +349,17 @@ public class LivroControlador {
 			
 			return controleExemplarInteiro;
 		}
+
+
+		public InterfaceDados getDados() {
+			return dados;
+		}
+
+
+		public void setDados(InterfaceDados dados) {
+			this.dados = dados;
+		}
+		
 		
 }		
 
