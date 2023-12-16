@@ -122,6 +122,7 @@ public class EmprestimoControlador {
 		}
 	}
 	
+
 	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoControlador {
 		try {
 			return dados.buscarEmprestimo(cpf, isbn);
@@ -129,5 +130,29 @@ public class EmprestimoControlador {
 			throw new ExcecaoControlador(e2.getMessage(), e2);
 		}
 	
+	}
+	
+	public EmprestimoDados getDados() {
+		return dados;
+	}
+
+	public void setDados(EmprestimoDados dados) {
+		this.dados = dados;
+	}
+
+	public LeitorDados getLeitorDados() {
+		return leitorDados;
+	}
+
+	public void setLeitorDados(LeitorDados leitorDados) {
+		this.leitorDados = leitorDados;
+	}
+
+	public LivroDados getLivroDados() {
+		return livroDados;
+	}
+
+	public void setLivroDados(LivroDados livroDados) {
+		this.livroDados = livroDados;
 	}
 }
