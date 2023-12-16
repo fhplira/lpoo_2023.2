@@ -1,7 +1,9 @@
 package controladores;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import dados.EmprestimoDados;
 import dados.ExcecaoDados;
@@ -50,7 +52,7 @@ public class EmprestimoControlador {
 			}
 			
 			try {
-				if(dados.verificarEmprestimo(cpf, isbn )) {
+				if(dados.verificarEmprestimo(cpf, isbn ) && !dados.verificarDevolucao(emprestimo)) {
 					throw new ExcecaoControlador("Este emprestimo já foi realizado para o leitor");
 				}
 			}catch(ExcecaoDados e) {
@@ -74,17 +76,9 @@ public class EmprestimoControlador {
 		}
 	
 	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoControlador{
-		try {
-			List<EmprestimoModelo> emprestimos = new ArrayList<>();
-			emprestimos = dados.buscarTodosEmprestimos();
-			List<EmprestimoModelo> emprestimosAbertos = new ArrayList<>();
-			for(EmprestimoModelo emprestimo : emprestimos) {
-				if(!dados.verificarDevolucao(emprestimo)) {
-					emprestimosAbertos.add(emprestimo);
-				}
-			}
-			return emprestimosAbertos;
-		}catch(ExcecaoDados e) {
+			try {
+				return dados.buscarTodosEmprestimos();
+			}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 	}
@@ -96,10 +90,6 @@ public class EmprestimoControlador {
 			}
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
-		}
-		
-		if(emprestimo.isDevolvido()) {
-			throw new ExcecaoControlador("Emprestimo já devolvido");
 		}
 		
 		LeitorModelo leitor = new LeitorModelo();
@@ -122,6 +112,7 @@ public class EmprestimoControlador {
 		}
 	}
 	
+
 	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoControlador {
 		try {
 			return dados.buscarEmprestimo(cpf, isbn);
@@ -129,5 +120,29 @@ public class EmprestimoControlador {
 			throw new ExcecaoControlador(e2.getMessage(), e2);
 		}
 	
+	}
+	
+	public EmprestimoDados getDados() {
+		return dados;
+	}
+
+	public void setDados(EmprestimoDados dados) {
+		this.dados = dados;
+	}
+
+	public LeitorDados getLeitorDados() {
+		return leitorDados;
+	}
+
+	public void setLeitorDados(LeitorDados leitorDados) {
+		this.leitorDados = leitorDados;
+	}
+
+	public LivroDados getLivroDados() {
+		return livroDados;
+	}
+
+	public void setLivroDados(LivroDados livroDados) {
+		this.livroDados = livroDados;
 	}
 }

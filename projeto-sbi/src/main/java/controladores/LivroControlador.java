@@ -37,12 +37,12 @@ public class LivroControlador {
 		}
 		
 			
-		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador, IOException{	
+		public void cadastrarLivroPorISBN(String isbn, String exemplares) throws ExcecaoControlador, IOException{	
 
-			verificarIsbn(isbn); 
-
+			int exemplar = verificarIsbnExemplar(isbn, exemplares); 
+			
 			LivroModelo livro = buscarLivroApi(isbn);
-			livro.setAdicionarDisponivel(1);
+			livro.setAdicionarDisponivel(exemplar);
 			livro.setEmprestado(0);
 			livro.setValorTotal();
 
@@ -55,12 +55,12 @@ public class LivroControlador {
 		}
 		
 		
-		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao) throws ExcecaoControlador{
+		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao, String exemplares) throws ExcecaoControlador{
 
-		    verificarCamposCadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
-		    
+		    int exemplar = verificarCamposCadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, img, descricao, exemplares);
+	
 		    LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
-			livro.setAdicionarDisponivel(1);
+			livro.setAdicionarDisponivel(exemplar);
 			livro.setEmprestado(0);
 			livro.setValorTotal();
 
@@ -233,7 +233,7 @@ public class LivroControlador {
 		}
 
 
-		private void verificarIsbn(String isbn) throws ExcecaoControlador {
+		private int verificarIsbnExemplar(String isbn, String exemplares) throws ExcecaoControlador {
 			
 			if(isbn.isBlank()){
 					throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
@@ -246,7 +246,21 @@ public class LivroControlador {
 			if((isbn.length() != 10) && (isbn.length() != 13)) {
 					throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
 			}	
-
+			
+			
+			if(exemplares.isBlank()){
+				throw new ExcecaoControlador("O campo Exemplares não pode ser vazio.");
+			}
+			
+			if(!exemplares.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo Exemplares não pode ter letras e nem espaços.");
+			}
+			
+			int exemplar = Integer.parseInt(exemplares);
+			
+			if(exemplar < 0) {
+				throw new ExcecaoControlador("A quantidade de Exemplares não pode ser menor que zero");
+			}
 			
 			try{
 			  	 if (dados.verificarLivro(isbn)){
@@ -256,11 +270,13 @@ public class LivroControlador {
 			}catch(ExcecaoDados e){
 				  	 throw new ExcecaoControlador(e.getMessage(), e);
 			}
+			
+			return exemplar;
 		}
 		
 
-		private void verificarCamposCadastrarLivro(String isbn, String titulo, String autor, String editora,
-				String dataPublicacao, String img, String descricao) throws ExcecaoControlador {
+		private int verificarCamposCadastrarLivro(String isbn, String titulo, String autor, String editora,
+				String dataPublicacao, String img, String descricao, String exemplares) throws ExcecaoControlador {
 			if(isbn.isBlank()){
 				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
@@ -307,6 +323,20 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo descrição não pode ser vazio.");
 			}
 			
+			if(exemplares.isBlank()){
+				throw new ExcecaoControlador("O campo Exemplares não pode ser vazio.");
+			}
+			
+			if(!exemplares.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo Exemplares não pode ter letras e nem espaços.");
+			}
+			
+			int exemplar = Integer.parseInt(exemplares);
+			
+			if(exemplar < 0) {
+				throw new ExcecaoControlador("A quantidade de Exemplares não pode ser menor que zero");
+			}
+			
 			try{
 				if (dados.verificarLivro(isbn)){
 					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
@@ -314,6 +344,8 @@ public class LivroControlador {
 			}catch(ExcecaoDados e1){
 				throw new ExcecaoControlador(e1.getMessage(), e1);
 			}
+			
+			return exemplar;
 		}
 
 

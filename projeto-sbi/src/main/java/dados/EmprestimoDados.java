@@ -157,7 +157,7 @@ public class EmprestimoDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String buscaEmprestimos = "SELECT * FROM emprestimo"; 
+			String buscaEmprestimos = "SELECT * FROM emprestimo WHERE devolvido = 0"; 
 			stmt = con.prepareStatement(buscaEmprestimos);
 			result = stmt.executeQuery();
 			
