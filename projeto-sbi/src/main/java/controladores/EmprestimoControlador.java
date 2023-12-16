@@ -1,7 +1,9 @@
 package controladores;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import dados.EmprestimoDados;
 import dados.ExcecaoDados;
@@ -50,7 +52,7 @@ public class EmprestimoControlador {
 			}
 			
 			try {
-				if(dados.verificarEmprestimo(cpf, isbn )) {
+				if(dados.verificarEmprestimo(cpf, isbn ) && !dados.verificarDevolucao(emprestimo)) {
 					throw new ExcecaoControlador("Este emprestimo já foi realizado para o leitor");
 				}
 			}catch(ExcecaoDados e) {
@@ -74,17 +76,9 @@ public class EmprestimoControlador {
 		}
 	
 	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoControlador{
-		try {
-			List<EmprestimoModelo> emprestimos = new ArrayList<>();
-			emprestimos = dados.buscarTodosEmprestimos();
-			List<EmprestimoModelo> emprestimosAbertos = new ArrayList<>();
-			for(EmprestimoModelo emprestimo : emprestimos) {
-				if(!dados.verificarDevolucao(emprestimo)) {
-					emprestimosAbertos.add(emprestimo);
-				}
-			}
-			return emprestimosAbertos;
-		}catch(ExcecaoDados e) {
+			try {
+				return dados.buscarTodosEmprestimos();
+			}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 	}
@@ -96,10 +90,6 @@ public class EmprestimoControlador {
 			}
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
-		}
-		
-		if(emprestimo.isDevolvido()) {
-			throw new ExcecaoControlador("Emprestimo já devolvido");
 		}
 		
 		LeitorModelo leitor = new LeitorModelo();

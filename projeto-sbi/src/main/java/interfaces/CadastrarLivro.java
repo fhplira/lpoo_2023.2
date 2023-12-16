@@ -42,7 +42,7 @@ public class CadastrarLivro extends JFrame {
 	private JFormattedTextField formattedtxtDataPublicacao;
 	CadastrarLivro frameCadastrarLivro; 
 	private JTextField txtDescricao;
-	private JTextField textField;
+	private JTextField txtExemplares;
 	
 	
 	
@@ -148,9 +148,10 @@ public class CadastrarLivro extends JFrame {
 		btnCadastrarPorIsbn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ISBN = txtIsbn.getText();
+				String exemplares = txtExemplares.getText();
 				LivroControlador controlador = new LivroControlador(); 
 				try {
-					controlador.cadastrarLivroPorISBN(ISBN);
+					controlador.cadastrarLivroPorISBN(ISBN, exemplares);
 					JOptionPane.showMessageDialog(null, "O livro foi cadastrado com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ExcecaoControlador ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -169,14 +170,15 @@ public class CadastrarLivro extends JFrame {
 		gbc_lblNewLabel.gridy = 1;
 		panelCadastro.add(lblNewLabel, gbc_lblNewLabel);
 		
-		textField = new JTextField();
+		txtExemplares = new JTextField();
+		txtExemplares.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.insets = new Insets(0, 0, 10, 5);
 		gbc_textField.gridx = 3;
 		gbc_textField.gridy = 1;
-		panelCadastro.add(textField, gbc_textField);
-		textField.setColumns(10);
+		panelCadastro.add(txtExemplares, gbc_textField);
+		txtExemplares.setColumns(10);
 		
 		btnCadastrarPorIsbn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_btnCadastrarPorIsbn = new GridBagConstraints();
@@ -311,11 +313,12 @@ public class CadastrarLivro extends JFrame {
 				String dataPublicacao = formattedtxtDataPublicacao_1.getText();
 				String imagem = txtImagem.getText();
 				String descricao = txtDescricao.getText();
+				String exemplares  = txtExemplares.getText();
 				
 				LivroControlador controlador = new LivroControlador();
 				
 				try {
-					controlador.cadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, imagem, descricao);
+					controlador.cadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, imagem, descricao, exemplares);
 					JOptionPane.showMessageDialog(null, "O livro foi cadastrado com sucesso.", "Success", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
