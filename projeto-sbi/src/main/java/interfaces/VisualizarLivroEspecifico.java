@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -71,6 +72,22 @@ public class VisualizarLivroEspecifico extends JFrame {
 		});
 	}
 	
+	private static String obterCaminhoSemExtensao(String caminhoArquivo) {
+        File arquivo = new File(caminhoArquivo);
+        String nomeArquivo = arquivo.getName();
+        int posicaoPonto = nomeArquivo.lastIndexOf('.');
+
+        if (posicaoPonto > 0) {
+            // Remove a extensão do nome do arquivo
+            String nomeSemExtensao = nomeArquivo.substring(0, posicaoPonto);
+            
+            // Concatena o caminho do diretório com o nome do arquivo sem extensão
+            return arquivo.getParent() + File.separator + nomeSemExtensao;
+        } else {
+            // Se não houver extensão, retorna o caminho original
+            return caminhoArquivo;
+        }
+    }
 	
 	public void enviarValores(LivroModelo livroClicado) throws HeadlessException {
 		textFieldTitulo.setText(livroClicado.getTitulo());
@@ -83,35 +100,35 @@ public class VisualizarLivroEspecifico extends JFrame {
 		textFieldEmprestados.setText(Integer.toString(livroClicado.getEmprestado()));
 		textAreaDescricao.setText(livroClicado.getDescricao());
 		
-		String nomeImagem = livroClicado.getIsbn();
-		String caminhoPastaLivros = System.getenv("APPDATA") + "/" + Constantes.PASTA_APP + "/" + Constantes.PASTA_LIVROS;
-		String nomeImagemLivro = caminhoPastaLivros + "/" + nomeImagem;
-		File file = new File(nomeImagemLivro);
-		
-		ClassLoader classLoader = getClass().getClassLoader();
-		
-		String imagePath = "images/livro-generico.png";
-		
-		URL imageURL = classLoader.getResource(imagePath);
-		
-		try {
-			BufferedImage imagem = ImageIO.read(file);
-			if (imagem != null) {
-				ImageIcon icon = new ImageIcon(imagem);	
-				lblNewLabelImagemLivro.setIcon(icon);
-			} else {
-				if (imageURL != null) {
-		            ImageIcon icon = new ImageIcon(imageURL);
+		if (livroClicado.getImg() != null) {
+			String nomeImagem = livroClicado.getIsbn();
+			String caminhoPastaLivros = System.getenv("APPDATA") + "/" + Constantes.PASTA_APP + "/" + Constantes.PASTA_LIVROS;
+			String nomeImagemLivro = caminhoPastaLivros + "/" + nomeImagem;
+			File file = new File(nomeImagemLivro);
+			
+			try {
+				BufferedImage imagem = ImageIO.read(file);
+				if (imagem != null) {
+					ImageIcon icon = new ImageIcon(imagem);	
+					lblNewLabelImagemLivro.setIcon(icon);
+				} 
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				BufferedImage imagemDefault = ImageIO.read(getClass().getResource("/images/livro-generico.png"));
+				if (imagemDefault != null) {
+		            ImageIcon icon = new ImageIcon(imagemDefault);
 		            lblNewLabelImagemLivro.setIcon(icon);
 				}
-			} 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (IOException e){
+				e.printStackTrace();
+			}
+			
+			
 		}
-
-		
-		
 	    
 	    
 	}
