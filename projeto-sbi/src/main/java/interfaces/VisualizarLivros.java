@@ -152,12 +152,14 @@ public class VisualizarLivros extends JFrame {
 		JButton btnNewButton_1 = new JButton("Visualizar livro");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int index = listaLivros.getSelectedIndex();  
-				String titulo = modeloJList.get(index).getTitulo();
+				LivroModelo livroClicado = listaLivros.getSelectedValue();
+				//int index = listaLivros.getSelectedIndex();  
+				//String titulo = modeloJList.get(index).getTitulo();
 
 				try {
+					
 					VisualizarLivroEspecifico enviar = new VisualizarLivroEspecifico();
-					enviar.enviarValores(livroControlador.buscarLivroPorTitulo(titulo));
+					enviar.enviarValores(livroClicado);
 					enviar.setVisible(true);
 					dispose();
 				} catch (ExcecaoControlador ex) {
