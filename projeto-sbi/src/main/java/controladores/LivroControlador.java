@@ -36,7 +36,7 @@ public class LivroControlador {
 			this.dados = new LivroDados();
 		}
 		
-		
+			
 		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador, IOException{	
 
 			verificarIsbn(isbn); 
@@ -170,13 +170,13 @@ public class LivroControlador {
 
 		private LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
 			
-			CloseableHttpClient httpCliente = HttpClients.createDefault();
+			CloseableHttpClient httpCliente = HttpClients.createDefault();	
 			HttpGet requisicao = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY");
+			CloseableHttpResponse httpResposta = httpCliente.execute(requisicao);
+			HttpEntity entidade = httpResposta.getEntity();
 			
-			CloseableHttpResponse resposta = httpCliente.execute(requisicao);
-		
 			Gson gson = new Gson();
-			JsonObject obj = gson.fromJson(EntityUtils.toString(resposta.getEntity()), JsonObject.class);
+			JsonObject obj = gson.fromJson(EntityUtils.toString(entidade), JsonObject.class);
 
 			int verificaSeTemObjeto = obj.get("totalItems").getAsInt();
 
@@ -353,7 +353,6 @@ public class LivroControlador {
 		public void setDados(InterfaceDados dados) {
 			this.dados = dados;
 		}
-		
 		
 }		
 

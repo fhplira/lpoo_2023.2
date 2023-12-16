@@ -1,8 +1,7 @@
 package testesLivro;
 
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
-
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -12,22 +11,22 @@ import controladores.LivroControlador;
 import dados.ExcecaoDados;
 import dados.LivroDados;
 
+
 @ExtendWith(MockitoExtension.class)
 public class testeLivroControlador {
 	
+	LivroControlador controlador = new LivroControlador();
 
 		@Test
-		public void cadastrarLivroPorIsbnComSucesso(@Mock LivroDados dadosMock) throws ExcecaoControlador, IOException {
-			LivroControlador controlador = new LivroControlador();
-			controlador.setDados(dadosMock);
-			
-			try {	
-				when(dadosMock.verificarLivro("0000000000000")).thenReturn(false);
-				controlador.cadastrarLivroPorISBN("0000000000000");
-				
-			} catch (ExcecaoDados e) {
-				 throw new ExcecaoControlador(e.getMessage(), e);
-			}	
-		}
-	}
+		public void cadastrarLivroManualmenteComSucesso(@Mock LivroDados dadosMock) {
 
+			controlador.setDados(dadosMock);
+
+			try {
+				when(dadosMock.verificarLivro("1111111111111")).thenReturn(false);	
+				controlador.cadastrarLivro("1111111111111", "tituloTeste", "autorTeste", "editoraTeste", "2000", "imagem.png", "testeDescricao");	
+			} catch (ExcecaoDados  | ExcecaoControlador e2 ) {
+				fail();
+			}
+		}
+}
