@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Path;
 
 import javax.swing.JTextField;
@@ -87,28 +88,23 @@ public class VisualizarLivroEspecifico extends JFrame {
 		String nomeImagemLivro = caminhoPastaLivros + "/" + nomeImagem;
 		File file = new File(nomeImagemLivro);
 		
+		ClassLoader classLoader = getClass().getClassLoader();
 		
-		InputStream inputStreamImagemDefault = getClass().getResourceAsStream("/images/livro-generico.png");
-		String nomeImagemDefault = inputStreamImagemDefault.toString();
-		File fileDefault = new File(nomeImagemDefault);
+		String imagePath = "images/livro-generico.png";
+		
+		URL imageURL = classLoader.getResource(imagePath);
 		
 		try {
 			BufferedImage imagem = ImageIO.read(file);
 			if (imagem != null) {
 				ImageIcon icon = new ImageIcon(imagem);	
 				lblNewLabelImagemLivro.setIcon(icon);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			BufferedImage imagemDefault = ImageIO.read(fileDefault);
-			if (imagemDefault != null) {
-				ImageIcon iconDefault = new ImageIcon(imagemDefault);
-				lblNewLabelImagemLivro.setIcon(iconDefault);
-			}
+			} else {
+				if (imageURL != null) {
+		            ImageIcon icon = new ImageIcon(imageURL);
+		            lblNewLabelImagemLivro.setIcon(icon);
+				}
+			} 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
