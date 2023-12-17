@@ -82,8 +82,7 @@ public class testeLivroControlador {
 		public void FalhaCadastrarLivroManualmenteTituloVazio() {
 			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivro("123456789", "  ", "autorTeste", "editoraTeste", "2000", "imagem.png", "testeDescricao", "2");});	
 		}
-		
-		
+			
 		@Test
 		public void FalhaCadastrarLivroManualmenteAutorNulo() {
 			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivro("123456789", "tituloTeste", "", "editoraTeste", "2000", "imagem.png", "testeDescricao", "2");});	
