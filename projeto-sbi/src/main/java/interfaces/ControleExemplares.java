@@ -271,6 +271,7 @@ public class ControleExemplares extends JFrame {
 					LivroModelo livro = new LivroModelo();
 					livro = controlador.buscarLivroPorIsbn(isbn);
 					controlador.AdicionarExemplares(livro, qtdExemplares);
+					livro = controlador.buscarLivroPorIsbn(isbn);
 					JOptionPane.showMessageDialog(null, "Exemplar/s adicionado/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {
 					// TODO Auto-generated catch block
@@ -303,6 +304,7 @@ public class ControleExemplares extends JFrame {
 					LivroModelo livro = new LivroModelo();
 					livro = controlador.buscarLivroPorIsbn(Isbn);
 					controlador.ExcluirExemplares(livro, qtdExemplares);
+					livro = controlador.buscarLivroPorIsbn(Isbn);
 					JOptionPane.showMessageDialog(null, "Exemplar/s excluído/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -329,12 +331,16 @@ public class ControleExemplares extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				int index = listaLivros.getSelectedIndex();
 				LivroModelo livro = modeloJlist.get(index);
+				try {
+					livro = controlador.buscarLivroPorIsbn(livro.getIsbn());
+				} catch (ExcecaoControlador e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 				txtIsbn.setText(livro.getIsbn());
 				txtTotalExemplares.setText("" + livro.getTotal());
 				txtEmprestados.setText("" + livro.getEmprestado());
 				txtDisponiveis.setText("" + livro.getDisponivel());
 				txtQtdExemplares.setText("");;
-			
 			}
 		});
 		

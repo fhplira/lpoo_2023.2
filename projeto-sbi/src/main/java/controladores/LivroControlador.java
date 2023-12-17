@@ -111,6 +111,14 @@ public class LivroControlador {
 			+ "\n Quantidade de livro: " + livro.getTotal());
 			}
 			
+			int exemplarVerificacao = livro.getDisponivel() - controleExemplarInteiro;
+			
+			if(controleExemplarInteiro == livro.getTotal() && exemplarVerificacao < 0) {
+				throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
+						+ " \nPois existem livros emprestados: " + livro.getEmprestado()
+			+ "\n Quantidade de livro disponiveis para exclusão: " + livro.getDisponivel());
+			}
+			
 			
 			LivroModelo exemplarLivro = new LivroModelo();
 			

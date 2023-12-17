@@ -133,6 +133,7 @@ public class VisualizarEmprestimos extends JFrame {
 					LivroModelo livro = livroControlador.buscarLivroPorIsbn(emprestimoClicado.getIsbn());
 					LeitorModelo leitor = leitorControlador.buscarLeitorPorCpf(emprestimoClicado.getCpf());
 					VisualizarEmprestimoEspecifico enviar = new VisualizarEmprestimoEspecifico();
+					emprestimoControlador.atualizarAtraso(emprestimoClicado);
 					enviar.enviarValores(emprestimoClicado, livro, leitor);
 					enviar.setVisible(true);
 					dispose();
