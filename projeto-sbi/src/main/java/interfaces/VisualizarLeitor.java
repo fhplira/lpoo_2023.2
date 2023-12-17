@@ -59,7 +59,6 @@ public class VisualizarLeitor extends JFrame {
 		final LeitorControlador controlador = new LeitorControlador();
 		final JButton btnEditarDados = new JButton("Editar dados");
 		final JButton btnAtualizarDados = new JButton("Atualizar dados");
-		final String cpf = txtCpf.getText();
 		
 		btnEditarDados.setEnabled(false);
 		btnEditarDados.addActionListener(new ActionListener() {
@@ -246,6 +245,7 @@ public class VisualizarLeitor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String email = txtEmail.getText();
 				String nome = txtNome.getText();
+				String cpf = txtCpf.getText();
 
 				try {
 					LeitorModelo leitor = controlador.buscarLeitorPorCpf(cpf);
