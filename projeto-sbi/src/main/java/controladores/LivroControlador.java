@@ -111,6 +111,14 @@ public class LivroControlador {
 			+ "\n Quantidade de livro: " + livro.getTotal());
 			}
 			
+			int exemplarVerificacao = livro.getDisponivel() - controleExemplarInteiro;
+			
+			if(controleExemplarInteiro == livro.getTotal() && exemplarVerificacao < 0) {
+				throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
+						+ " \nPois existem livros emprestados: " + livro.getEmprestado()
+			+ "\n Quantidade de livro disponiveis para exclusão: " + livro.getDisponivel());
+			}
+			
 			
 			LivroModelo exemplarLivro = new LivroModelo();
 			
@@ -175,16 +183,13 @@ public class LivroControlador {
 
 
 		private LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
-			
+			this.httpCliente = HttpClients. createDefault();
 			HttpGet requisicao = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY");
 			this.httpResposta = this.httpCliente.execute(requisicao);
 			
 			this.entidade = httpResposta.getEntity();
-			
-			if (entidade != null) { 
-                entidade.getContent().close(); 
-            
-			
+	
+         
 			Gson gson = new Gson();
 			JsonObject obj = gson.fromJson(EntityUtils.toString(entidade), JsonObject.class);
 			
@@ -240,9 +245,6 @@ public class LivroControlador {
 			livro.setAutor((String) ((Map) map.get("volumeInfo")).get("authors").toString());
 			livro.setIsbn(isbn);	
 			return livro;
-			}else {
-				return null;
-			}
 		}
 
 

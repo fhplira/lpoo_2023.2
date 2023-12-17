@@ -102,6 +102,8 @@ public class EmprestimoControlador {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 		
+		atualizarAtraso(emprestimo);
+		
 		LeitorModelo leitor = new LeitorModelo();
 		leitor = leitorControlador.buscarLeitorPorCpf(emprestimo.getCpf());
 		
@@ -125,11 +127,48 @@ public class EmprestimoControlador {
 
 	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoControlador {
 		try {
-			return dados.buscarEmprestimo(cpf, isbn);
+			EmprestimoModelo emprestimo = new EmprestimoModelo();
+			emprestimo = dados.buscarEmprestimo(cpf, isbn);
+			atualizarAtraso(emprestimo);
+			emprestimo = dados.buscarEmprestimo(cpf, isbn);
+			return emprestimo;
 		}catch(ExcecaoDados e2) {
 			throw new ExcecaoControlador(e2.getMessage(), e2);
 		}
 	
+	}
+	
+	public void atraso(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+		try {
+			atualizarAtraso(emprestimo);
+			if(dados.verificarAtraso(emprestimo)) {
+				emailControlador.enviarEmailAtraso(emprestimo);
+			}
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
+	
+	public void atualizarAtraso(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+		emprestimo.setDataAgora();
+		try {
+			if(emprestimo.getDataAtual().isAfter(emprestimo.getDataDevolucao())) {
+					emprestimo.setDiasAtraso(emprestimo.duracaoDiasAtraso());
+					dados.atualizarAtraso(emprestimo);
+			}
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
+		}
+	}
+	
+	public void enviarEmailAviso(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+		try {
+			if(emprestimo.getDataAtual().equals(emprestimo.getDataAviso())) {
+				emailControlador.enviarEmailAviso(emprestimo);
+			}
+		}catch(Exception e) {
+			throw new ExcecaoControlador("Falha ao enviar Email Aviso", e);
+		}
 	}
 	
 	public InterfaceEmprestimoDados getDados() {

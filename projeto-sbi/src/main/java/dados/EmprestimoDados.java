@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelos.EmprestimoModelo;
+import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
 public class EmprestimoDados implements InterfaceEmprestimoDados {
@@ -26,14 +27,14 @@ public class EmprestimoDados implements InterfaceEmprestimoDados {
             		+ " VALUES (?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(realizaEmprestimo);
 
-            //adicionar para pegar data atual e data de devolução
+            
             stmt.setString(1, emprestimo.getIsbn());
             stmt.setString(2, emprestimo.getCpf());
             java.sql.Date dataSqlEmprestimo = java.sql.Date.valueOf(emprestimo.getDataEmprestimo());
             stmt.setDate(3, dataSqlEmprestimo);
             java.sql.Date dataSqlDevoulucao = java.sql.Date.valueOf(emprestimo.getDataDevolucao());
             stmt.setDate(4, dataSqlDevoulucao);
-            stmt.setInt(5, emprestimo.getDiasAtraso());
+            stmt.setLong(5, emprestimo.getDiasAtraso());
             stmt.setBoolean(6, emprestimo.isDevolvido());
             
             //verificar se o executeQuery é sem parâmetro
@@ -133,6 +134,68 @@ public class EmprestimoDados implements InterfaceEmprestimoDados {
 			
 			String verificarDevolucao = "SELECT * FROM emprestimo WHERE devolvido = 1 AND cpf_leitor_fk = ? AND isbn_fk = ?";
 			stmt = con.prepareStatement(verificarDevolucao);
+			
+			stmt.setString(1, emprestimo.getCpf());
+			stmt.setString(2, emprestimo.getIsbn());
+			result = stmt.executeQuery();
+			 if (result.next()) {    
+		            return true;
+		        } else {
+		            return false;
+		        }
+		} catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar buscar Status do Emprestimo");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+        }
+	}
+	
+	public void atualizarAtraso(EmprestimoModelo emprestimo) throws ExcecaoDados {
+		
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String atualizarAtraso = "UPDATE emprestimo SET dias_atraso = ? "
+					+ "WHERE cpf_leitor_fk = ? AND isbn_fk = ?";
+			stmt = con.prepareStatement(atualizarAtraso);
+			
+			stmt.setLong(1, emprestimo.getDiasAtraso());
+			stmt.setString(2, emprestimo.getCpf());
+			stmt.setString(3, emprestimo.getIsbn());
+			stmt.execute();
+			
+		} catch(Exception e) {
+			throw new ExcecaoDados("Erro ao tentar atualizar atraso");
+		} finally {
+            try {
+                if (stmt != null) {stmt.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar o Statement: ");
+            }
+            
+            try {
+                if (con != null) {con.close();}
+            } catch (SQLException e) {
+                throw new ExcecaoDados("Erro ao fechar a conexão: ");                
+            }
+        }
+	}
+	
+	public boolean verificarAtraso(EmprestimoModelo emprestimo) throws ExcecaoDados {
+		try {
+			con = new ConexaoDados().getConnection();
+			
+			String verificarAtraso = "SELECT * FROM emprestimo WHERE dias_atraso > 0 AND cpf_leitor_fk = ? AND isbn_fk = ?";
+			stmt = con.prepareStatement(verificarAtraso);
 			
 			stmt.setString(1, emprestimo.getCpf());
 			stmt.setString(2, emprestimo.getIsbn());

@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import controladores.EmprestimoControlador;
@@ -14,6 +15,7 @@ import dados.EmprestimoDados;
 import dados.ExcecaoDados;
 import dados.LeitorDados;
 import dados.LivroDados;
+import modelos.EmprestimoModelo;
 import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
@@ -25,7 +27,13 @@ public class testeEmprestimoControlador {
 	LivroControlador controladorLivro = new LivroControlador();
 	
 	@Test
-	public void RealizarEmprestimoComSucesso(@Mock LivroDados dadosLivroMock, @Mock LeitorDados dadosLeitorMock, @Mock EmprestimoDados dadosEmprestimoMock, @Mock LivroModelo livroMock, @Mock LeitorModelo leitorMock) {
+	public void RealizarEmprestimoComSucesso() {
+		
+		 LivroDados dadosLivroMock = Mockito.mock(LivroDados.class);
+	     LeitorDados dadosLeitorMock = Mockito.mock(LeitorDados.class);
+	     EmprestimoDados dadosEmprestimoMock = Mockito.mock(EmprestimoDados.class);
+	     LivroModelo livro = new LivroModelo();
+	     LeitorModelo leitor = new LeitorModelo();
 		
 		controladorEmprestimo.setDados(dadosEmprestimoMock);
 		controladorEmprestimo.setLeitorDados(dadosLeitorMock);
@@ -34,15 +42,16 @@ public class testeEmprestimoControlador {
 		controladorLeitor.setDados(dadosLeitorMock);
 		
 		
-		livroMock.setIsbn("00000000000");
-		leitorMock.setCpf("00000000000");
+		
 		
 		try {
-			when(dadosLivroMock.verificarLivro("00000000000")).thenReturn(true);
-			when(dadosEmprestimoMock.verificarEmprestimo("00000000000", "00000000000")).thenReturn(false);
-			when(controladorLeitor.buscarLeitorPorCpf("00000000000")).thenReturn(leitorMock);
-			when(controladorLivro.buscarLivroPorIsbn("00000000000")).thenReturn(livroMock);
-			controladorEmprestimo.realizarEmprestimo("00000000000", "00000000000");
+			when(dadosLivroMock.verificarLivro("0000000000")).thenReturn(true);
+			when(controladorLeitor.buscarLeitorPorCpf("00000000000")).thenReturn(leitor);
+			when(controladorLivro.buscarLivroPorIsbn("00000000000")).thenReturn(livro);
+			when(dadosEmprestimoMock.verificarEmprestimo("00000000000", "0000000000")).thenReturn(false);
+			when(dadosLeitorMock.buscarLeitorPorCpf("00000000000")).thenReturn(leitor);
+			when(dadosLivroMock.buscarLivroPorIsbn("0000000000")).thenReturn(livro);
+			controladorEmprestimo.realizarEmprestimo("0000000000", "00000000000");
 			
 		} catch (ExcecaoControlador e) {
 			// TODO Auto-generated catch block
@@ -53,5 +62,20 @@ public class testeEmprestimoControlador {
 		}
 		
 	}
+	
+	@Test 
+	public void BuscarEmprestimoComSucesso() throws ExcecaoDados, ExcecaoControlador {
+		EmprestimoDados dadosEmprestimoMock = Mockito.mock(EmprestimoDados.class);
+		EmprestimoModelo emprestimo = new EmprestimoModelo();
+		controladorEmprestimo.setDados(dadosEmprestimoMock);
+	
+		
+	
+		when(dadosEmprestimoMock.buscarEmprestimo("11111111111", "0000000000")).thenReturn(emprestimo);
+		controladorEmprestimo.buscarEmprestimo("11111111111", "0000000000");
+		
+	}
+	
+	
 
 }

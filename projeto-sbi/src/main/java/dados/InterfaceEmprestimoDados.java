@@ -17,4 +17,8 @@ public interface InterfaceEmprestimoDados {
 	public List<EmprestimoModelo> buscarTodosEmprestimos() throws ExcecaoDados;
 	
 	public void fazerDevolucao(EmprestimoModelo emprestimo) throws ExcecaoDados;
+	
+	public boolean verificarAtraso(EmprestimoModelo emprestimo) throws ExcecaoDados;
+	
+	public void atualizarAtraso(EmprestimoModelo emprestimo) throws ExcecaoDados;
 }

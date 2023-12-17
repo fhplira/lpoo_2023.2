@@ -49,6 +49,9 @@ public class ControleExemplares extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtIsbn;
 	private JTextField txtQtdExemplares;
+	private JTextField txtTotalExemplares;
+	private JTextField txtEmprestados;
+	private JTextField txtDisponiveis;
 	
 	
 
@@ -128,9 +131,9 @@ public class ControleExemplares extends JFrame {
 		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{207, 214, 0, 0, 0, 0};
-		gbl_panel.rowHeights = new int[]{37, 50, 22, 22, 140, 27, 0, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{37, 50, 22, 22, 0, 0, 140, 27, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblTitutlo = new JLabel("CONTROLE DE EXEMPLARES");
@@ -165,19 +168,77 @@ public class ControleExemplares extends JFrame {
 		gbc_lblIsbn.anchor = GridBagConstraints.EAST;
 		gbc_lblIsbn.insets = new Insets(0, 0, 5, 5);
 		gbc_lblIsbn.gridx = 0;
-		gbc_lblIsbn.gridy = 5;
+		gbc_lblIsbn.gridy = 2;
 		panel.add(lblIsbn, gbc_lblIsbn);
 		
 		txtIsbn = new JTextField();
+		txtIsbn.setEditable(false);
 		txtIsbn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtIsbn.setEnabled(false);
 		GridBagConstraints gbc_txtIsbn = new GridBagConstraints();
 		gbc_txtIsbn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtIsbn.insets = new Insets(0, 0, 5, 5);
 		gbc_txtIsbn.gridx = 1;
-		gbc_txtIsbn.gridy = 5;
+		gbc_txtIsbn.gridy = 2;
 		panel.add(txtIsbn, gbc_txtIsbn);
 		txtIsbn.setColumns(10);
+		
+		JLabel lblTotal = new JLabel("Exemplares cadastrados");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblTotal = new GridBagConstraints();
+		gbc_lblTotal.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTotal.anchor = GridBagConstraints.EAST;
+		gbc_lblTotal.gridx = 0;
+		gbc_lblTotal.gridy = 3;
+		panel.add(lblTotal, gbc_lblTotal);
+		
+		txtTotalExemplares = new JTextField();
+		txtTotalExemplares.setEditable(false);
+		GridBagConstraints gbc_txtTotalExemplares = new GridBagConstraints();
+		gbc_txtTotalExemplares.insets = new Insets(0, 0, 5, 5);
+		gbc_txtTotalExemplares.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtTotalExemplares.gridx = 1;
+		gbc_txtTotalExemplares.gridy = 3;
+		panel.add(txtTotalExemplares, gbc_txtTotalExemplares);
+		txtTotalExemplares.setColumns(10);
+		
+		JLabel lblEmprestados = new JLabel("Emprestados.");
+		lblEmprestados.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblEmprestados = new GridBagConstraints();
+		gbc_lblEmprestados.anchor = GridBagConstraints.EAST;
+		gbc_lblEmprestados.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEmprestados.gridx = 0;
+		gbc_lblEmprestados.gridy = 4;
+		panel.add(lblEmprestados, gbc_lblEmprestados);
+		
+		txtEmprestados = new JTextField();
+		txtEmprestados.setEditable(false);
+		GridBagConstraints gbc_txtEmprestados = new GridBagConstraints();
+		gbc_txtEmprestados.insets = new Insets(0, 0, 5, 5);
+		gbc_txtEmprestados.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtEmprestados.gridx = 1;
+		gbc_txtEmprestados.gridy = 4;
+		panel.add(txtEmprestados, gbc_txtEmprestados);
+		txtEmprestados.setColumns(10);
+		
+		JLabel lblDisponiveis = new JLabel("Disponíveis p/ empréstimo");
+		lblDisponiveis.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblDisponiveis = new GridBagConstraints();
+		gbc_lblDisponiveis.anchor = GridBagConstraints.EAST;
+		gbc_lblDisponiveis.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDisponiveis.gridx = 0;
+		gbc_lblDisponiveis.gridy = 5;
+		panel.add(lblDisponiveis, gbc_lblDisponiveis);
+		
+		txtDisponiveis = new JTextField();
+		txtDisponiveis.setEditable(false);
+		txtDisponiveis.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_txtDisponiveis = new GridBagConstraints();
+		gbc_txtDisponiveis.insets = new Insets(0, 0, 5, 5);
+		gbc_txtDisponiveis.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtDisponiveis.gridx = 1;
+		gbc_txtDisponiveis.gridy = 5;
+		panel.add(txtDisponiveis, gbc_txtDisponiveis);
+		txtDisponiveis.setColumns(10);
 		
 		JLabel lblQtdExemplares = new JLabel("Quantidade de exemplares:");
 		lblQtdExemplares.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -193,7 +254,6 @@ public class ControleExemplares extends JFrame {
 		txtQtdExemplares.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_txtQtdExemplares = new GridBagConstraints();
 		gbc_txtQtdExemplares.gridheight = 2;
-		gbc_txtQtdExemplares.anchor = GridBagConstraints.NORTH;
 		gbc_txtQtdExemplares.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtQtdExemplares.insets = new Insets(0, 0, 20, 5);
 		gbc_txtQtdExemplares.gridx = 1;
@@ -211,6 +271,7 @@ public class ControleExemplares extends JFrame {
 					LivroModelo livro = new LivroModelo();
 					livro = controlador.buscarLivroPorIsbn(isbn);
 					controlador.AdicionarExemplares(livro, qtdExemplares);
+					livro = controlador.buscarLivroPorIsbn(isbn);
 					JOptionPane.showMessageDialog(null, "Exemplar/s adicionado/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {
 					// TODO Auto-generated catch block
@@ -227,7 +288,7 @@ public class ControleExemplares extends JFrame {
 		GridBagConstraints gbc_btnAdicionarExemplar = new GridBagConstraints();
 		gbc_btnAdicionarExemplar.gridwidth = 2;
 		gbc_btnAdicionarExemplar.anchor = GridBagConstraints.WEST;
-		gbc_btnAdicionarExemplar.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAdicionarExemplar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnAdicionarExemplar.gridx = 0;
 		gbc_btnAdicionarExemplar.gridy = 9;
 		panel.add(btnAdicionarExemplar, gbc_btnAdicionarExemplar);
@@ -243,6 +304,7 @@ public class ControleExemplares extends JFrame {
 					LivroModelo livro = new LivroModelo();
 					livro = controlador.buscarLivroPorIsbn(Isbn);
 					controlador.ExcluirExemplares(livro, qtdExemplares);
+					livro = controlador.buscarLivroPorIsbn(Isbn);
 					JOptionPane.showMessageDialog(null, "Exemplar/s excluído/s com sucesso!", null, JOptionPane.INFORMATION_MESSAGE, null);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -255,9 +317,10 @@ public class ControleExemplares extends JFrame {
 		});
 		btnRemoverExemplar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_btnRemoverExemplar = new GridBagConstraints();
+		gbc_btnRemoverExemplar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnRemoverExemplar.gridwidth = 2;
 		gbc_btnRemoverExemplar.anchor = GridBagConstraints.NORTHEAST;
-		gbc_btnRemoverExemplar.gridx = 4;
+		gbc_btnRemoverExemplar.gridx = 5;
 		gbc_btnRemoverExemplar.gridy = 9;
 		panel.add(btnRemoverExemplar, gbc_btnRemoverExemplar);
 
@@ -267,8 +330,17 @@ public class ControleExemplares extends JFrame {
 		listaLivros.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int index = listaLivros.getSelectedIndex();
-				String isbn = modeloJlist.get(index).getIsbn();
-				txtIsbn.setText(isbn);
+				LivroModelo livro = modeloJlist.get(index);
+				try {
+					livro = controlador.buscarLivroPorIsbn(livro.getIsbn());
+				} catch (ExcecaoControlador e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				txtIsbn.setText(livro.getIsbn());
+				txtTotalExemplares.setText("" + livro.getTotal());
+				txtEmprestados.setText("" + livro.getEmprestado());
+				txtDisponiveis.setText("" + livro.getDisponivel());
+				txtQtdExemplares.setText("");;
 			}
 		});
 		
