@@ -182,7 +182,7 @@ public class LivroControlador {
 		}	
 
 
-		private LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
+	public LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
 			this.httpCliente = HttpClients. createDefault();
 			HttpGet requisicao = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY");
 			this.httpResposta = this.httpCliente.execute(requisicao);
