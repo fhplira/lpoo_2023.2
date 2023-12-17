@@ -140,6 +140,7 @@ public class LeitorControlador {
 			if(!email.equals(leitor.getEmail())) {
 				leitor.setEmail(email);
 				dados.atualizarEmailLeitor(leitor);
+				emailControlador.enviarEmailAtualizarDados(leitor);
 			}
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);

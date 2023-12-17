@@ -255,6 +255,7 @@ public class VisualizarLeitor extends JFrame {
 					if(!nome.isBlank()) {
 						controlador.atualizarNomeLeitor(leitor, nome);
 					}
+					JOptionPane.showMessageDialog(null,  "Dados do leitor atualizados com sucesso", "Success", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ExcecaoControlador e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
