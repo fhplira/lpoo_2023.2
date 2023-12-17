@@ -27,32 +27,14 @@ public class testeEmprestimoControlador {
 	LivroControlador controladorLivro = new LivroControlador();
 	
 	@Test
-	public void RealizarEmprestimoComSucesso() {
-		
-		 LivroDados dadosLivroMock = Mockito.mock(LivroDados.class);
-	     LeitorDados dadosLeitorMock = Mockito.mock(LeitorDados.class);
-	     EmprestimoDados dadosEmprestimoMock = Mockito.mock(EmprestimoDados.class);
-	     LivroModelo livro = new LivroModelo();
-	     LeitorModelo leitor = new LeitorModelo();
+	public void RealizarEmprestimoComSucesso(@Mock LivroDados dadosLivroMock, @Mock LeitorDados dadosLeitorMock, @Mock EmprestimoDados dadosEmprestimoMock ) {
 		
 		controladorEmprestimo.setDados(dadosEmprestimoMock);
-		controladorEmprestimo.setLeitorDados(dadosLeitorMock);
-		controladorEmprestimo.setLivroDados(dadosLivroMock);
-		controladorLivro.setDados(dadosLivroMock);
 		controladorLeitor.setDados(dadosLeitorMock);
-		
-		
-		
+		controladorLivro.setDados(dadosLivroMock);
 		
 		try {
-			when(dadosLivroMock.verificarLivro("0000000000")).thenReturn(true);
-			when(controladorLeitor.buscarLeitorPorCpf("00000000000")).thenReturn(leitor);
-			when(controladorLivro.buscarLivroPorIsbn("00000000000")).thenReturn(livro);
-			when(dadosEmprestimoMock.verificarEmprestimo("00000000000", "0000000000")).thenReturn(false);
-			when(dadosLeitorMock.buscarLeitorPorCpf("00000000000")).thenReturn(leitor);
-			when(dadosLivroMock.buscarLivroPorIsbn("0000000000")).thenReturn(livro);
-			controladorEmprestimo.realizarEmprestimo("0000000000", "00000000000");
-			
+			controladorEmprestimo.realizarEmprestimo("1111111111", "00000000000");
 		} catch (ExcecaoControlador e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,12 +42,10 @@ public class testeEmprestimoControlador {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	@Test 
-	public void BuscarEmprestimoComSucesso() throws ExcecaoDados, ExcecaoControlador {
-		EmprestimoDados dadosEmprestimoMock = Mockito.mock(EmprestimoDados.class);
+	public void BuscarEmprestimoComSucesso(@Mock EmprestimoDados dadosEmprestimoMock) throws ExcecaoDados, ExcecaoControlador {
 		EmprestimoModelo emprestimo = new EmprestimoModelo();
 		controladorEmprestimo.setDados(dadosEmprestimoMock);
 	
