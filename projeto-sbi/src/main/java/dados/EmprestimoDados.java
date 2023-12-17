@@ -21,14 +21,20 @@ public class EmprestimoDados implements InterfaceEmprestimoDados {
 		try {
         	con = new ConexaoDados().getConnection();
 
-            String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, dias_atraso, devolvido) VALUES (?, ?, ?, ?)";
+            String realizaEmprestimo = "INSERT INTO emprestimo (isbn_fk, cpf_leitor_fk, data_emprestimo, "
+            		+ "data_devolucao, dias_atraso, devolvido)"
+            		+ " VALUES (?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(realizaEmprestimo);
 
-
+            //adicionar para pegar data atual e data de devolução
             stmt.setString(1, emprestimo.getIsbn());
             stmt.setString(2, emprestimo.getCpf());
-            stmt.setInt(3, emprestimo.getDiasAtraso());
-            stmt.setBoolean(4, emprestimo.isDevolvido());
+            java.sql.Date dataSqlEmprestimo = java.sql.Date.valueOf(emprestimo.getDataEmprestimo());
+            stmt.setDate(3, dataSqlEmprestimo);
+            java.sql.Date dataSqlDevoulucao = java.sql.Date.valueOf(emprestimo.getDataDevolucao());
+            stmt.setDate(4, dataSqlDevoulucao);
+            stmt.setInt(5, emprestimo.getDiasAtraso());
+            stmt.setBoolean(6, emprestimo.isDevolvido());
             
             //verificar se o executeQuery é sem parâmetro
             stmt.execute();
@@ -96,10 +102,10 @@ public class EmprestimoDados implements InterfaceEmprestimoDados {
 				emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn_fk"));
 				emprestimo.setCpf(result.getString("cpf_leitor_fk"));
-				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
-	            emprestimo.setDataEmprestimo(timestampDataEmprestimo.toLocalDateTime());
-	            java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
-	            emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
+				java.sql.Date dateDataEmprestimo = result.getDate("data_emprestimo");
+	            emprestimo.setDataEmprestimo(dateDataEmprestimo.toLocalDate());
+	            java.sql.Date dateDataDevolucao = result.getDate("data_devolucao");
+	            emprestimo.setDataDevolucao(dateDataDevolucao.toLocalDate());
 	            emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
 	            emprestimo.setDevolvido(result.getBoolean("devolvido"));
 				}
@@ -168,10 +174,10 @@ public class EmprestimoDados implements InterfaceEmprestimoDados {
 				emprestimo.setId(result.getInt("id_emprestimo"));
 				emprestimo.setIsbn(result.getString("isbn_fk"));
 				emprestimo.setCpf(result.getString("cpf_leitor_fk"));
-				java.sql.Timestamp timestampDataEmprestimo = result.getTimestamp("data_emprestimo");
-                emprestimo.setDataEmprestimo(timestampDataEmprestimo.toLocalDateTime());
-                java.sql.Timestamp timestampDataDevolucao = result.getTimestamp("data_devolucao");
-                emprestimo.setDataDevolucao(timestampDataDevolucao.toLocalDateTime());
+				java.sql.Date dateDataEmprestimo = result.getDate("data_emprestimo");
+	            emprestimo.setDataEmprestimo(dateDataEmprestimo.toLocalDate());
+	            java.sql.Date dateDataDevolucao = result.getDate("data_devolucao");
+	            emprestimo.setDataDevolucao(dateDataDevolucao.toLocalDate());
                 emprestimo.setDiasAtraso(result.getInt("dias_atraso"));
                 emprestimo.setDevolvido(result.getBoolean("devolvido"));
                 

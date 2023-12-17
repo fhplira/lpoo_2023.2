@@ -1,6 +1,7 @@
 package modelos;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class EmprestimoModelo {
@@ -10,17 +11,18 @@ public class EmprestimoModelo {
 	private int id;
 	private String isbn;
 	private String cpf;
-	private LocalDateTime dataAtual;
-	private LocalDateTime dataEmprestimo;
-	private LocalDateTime dataAviso;
-	private LocalDateTime dataDevolucao;
+	private LocalDate dataAtual;
+	private LocalDate dataEmprestimo;
+	private LocalDate dataAviso;
+	private LocalDate dataDevolucao;
 	private DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	private String dataEmprestimoFormatada;
-	private String dataDevolucaoFormatada;
 	
 	public EmprestimoModelo(String isbn, String cpf) {
 		this.isbn = isbn;
 		this.cpf = cpf;
+		this.dataEmprestimo = LocalDate.now();
+		this.dataAviso = dataEmprestimo.plusDays(12);
+		this.dataDevolucao = dataEmprestimo.plusDays(15);
 	}
 
 	public EmprestimoModelo() {
@@ -67,19 +69,19 @@ public class EmprestimoModelo {
 		this.isbn = isbn;
 	}
 	
-	public LocalDateTime getDataEmprestimo() {
+	public LocalDate getDataEmprestimo() {
 		return dataEmprestimo;
 	}
 
-	public void setDataEmprestimo(LocalDateTime dataEmprestimo) {
+	public void setDataEmprestimo(LocalDate dataEmprestimo) {
 		this.dataEmprestimo = dataEmprestimo;
 	}
 
-	public LocalDateTime getDataDevolucao() {
+	public LocalDate getDataDevolucao() {
 		return dataDevolucao;
 	}
 
-	public void setDataDevolucao(LocalDateTime dataDevolucao) {
+	public void setDataDevolucao(LocalDate dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
 	
@@ -90,39 +92,25 @@ public class EmprestimoModelo {
 	public void setPadraoHora(DateTimeFormatter padraoHora) {
 		this.padraoHora = padraoHora;
 	}
-	
-	
 
-	public LocalDateTime getDataAtual() {
+	public LocalDate getDataAtual() {
 		return dataAtual;
 	}
-
-	public void setDataAtual() {
-		this.dataAtual = LocalDateTime.now();
+	
+	public void setDataAtual(LocalDate dataAtual) {
+		this.dataAtual = dataAtual;
 	}
 
-	public LocalDateTime getDataAviso() {
+	public void setDataAgora() {
+		this.dataAtual = LocalDate.now();
+	}
+
+	public LocalDate getDataAviso() {
 		return dataAviso;
 	}
 
-	public void setDataAviso(LocalDateTime dataAviso) {
+	public void setDataAviso(LocalDate dataAviso) {
 		this.dataAviso = dataAviso;
-	}
-
-	public String getDataEmprestimoFormatada() {
-		return dataEmprestimoFormatada;
-	}
-
-	public void setDataEmprestimoFormatada(String dataEmprestimoFormatada) {
-		this.dataEmprestimoFormatada = dataEmprestimoFormatada;
-	}
-
-	public String getDataDevolucaoFormatada() {
-		return dataDevolucaoFormatada;
-	}
-
-	public void setDataDevolucaoFormatada(String dataDevolucaoFormatada) {
-		this.dataDevolucaoFormatada = dataDevolucaoFormatada;
 	}
 
 	public String toString() {
