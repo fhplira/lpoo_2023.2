@@ -31,10 +31,15 @@ import modelos.LivroModelo;
 public class LivroControlador {
 	
 		private InterfaceLivroDados dados;
+		private CloseableHttpClient httpCliente;
+		private CloseableHttpResponse httpResposta;
+		private HttpEntity entidade;
 		
 		public LivroControlador() {
 			this.dados = new LivroDados();
+			this.httpCliente = HttpClients.createDefault();	 
 		}
+		
 		
 			
 		public void cadastrarLivroPorISBN(String isbn, String exemplares) throws ExcecaoControlador, IOException{	
@@ -171,14 +176,18 @@ public class LivroControlador {
 
 		private LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
 			
-			CloseableHttpClient httpCliente = HttpClients.createDefault();	
 			HttpGet requisicao = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY");
-			CloseableHttpResponse httpResposta = httpCliente.execute(requisicao);
-			HttpEntity entidade = httpResposta.getEntity();
+			this.httpResposta = this.httpCliente.execute(requisicao);
+			
+			this.entidade = httpResposta.getEntity();
+			
+			if (entidade != null) { 
+                entidade.getContent().close(); 
+            
 			
 			Gson gson = new Gson();
 			JsonObject obj = gson.fromJson(EntityUtils.toString(entidade), JsonObject.class);
-
+			
 			int verificaSeTemObjeto = obj.get("totalItems").getAsInt();
 
 
@@ -231,6 +240,9 @@ public class LivroControlador {
 			livro.setAutor((String) ((Map) map.get("volumeInfo")).get("authors").toString());
 			livro.setIsbn(isbn);	
 			return livro;
+			}else {
+				return null;
+			}
 		}
 
 
@@ -258,10 +270,6 @@ public class LivroControlador {
 			}
 			
 			int exemplar = Integer.parseInt(exemplares);
-			
-			if(exemplar < 0) {
-				throw new ExcecaoControlador("A quantidade de Exemplares não pode ser menor que zero");
-			}
 			
 			try{
 			  	 if (dados.verificarLivro(isbn)){
@@ -380,6 +388,10 @@ public class LivroControlador {
 		public void setDados(InterfaceLivroDados dados) {
 			this.dados = dados;
 		}
+
+		public void setHttpCliente(CloseableHttpClient httpCliente) {
+			this.httpCliente = httpCliente;
+		}	
 		
 }		
 
