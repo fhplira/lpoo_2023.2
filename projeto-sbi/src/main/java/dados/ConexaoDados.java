@@ -80,4 +80,39 @@ public class ConexaoDados {
 		}
 		
 	}
+	
+	public void inserirDadosNoSistema() {
+		
+		try (Connection con = DriverManager.getConnection(url + "sib", usuario, senha); 
+				Statement stmt = con.createStatement()) {
+
+			InputStream inputStream = getClass().getResourceAsStream("/bd/sib-insercao-dados.sql");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+			StringBuilder script = new StringBuilder();
+
+			String linha;
+
+			while ((linha = reader.readLine()) != null) {
+				script.append(linha).append("\n");
+			}
+
+			String scriptSQL = script.toString();
+
+			String[] queries = scriptSQL.split(";");
+
+			try {
+				for (String querie : queries) {
+					if (!querie.trim().isEmpty()) {
+						stmt.execute(querie);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.err.println("Erro ao inserir dados de livros e leitores no banco de dados");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
