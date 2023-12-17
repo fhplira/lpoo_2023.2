@@ -102,7 +102,7 @@ public class EmprestimoControlador {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 		
-		atualizarAtraso(emprestimo);
+		//atualizarAtraso(emprestimo);
 		
 		LeitorModelo leitor = new LeitorModelo();
 		leitor = leitorControlador.buscarLeitorPorCpf(emprestimo.getCpf());
@@ -128,8 +128,10 @@ public class EmprestimoControlador {
 	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoControlador {
 		try {
 			EmprestimoModelo emprestimo = new EmprestimoModelo();
-			emprestimo = dados.buscarEmprestimo(cpf, isbn);
-			atualizarAtraso(emprestimo);
+			//emprestimo = dados.buscarEmprestimo(cpf, isbn);
+			//atualizarAtraso(emprestimo);
+			//enviarEmailAviso(emprestimo);
+			//atraso(emprestimo);
 			emprestimo = dados.buscarEmprestimo(cpf, isbn);
 			return emprestimo;
 		}catch(ExcecaoDados e2) {
@@ -141,9 +143,12 @@ public class EmprestimoControlador {
 	public void atraso(EmprestimoModelo emprestimo) throws ExcecaoControlador {
 		try {
 			atualizarAtraso(emprestimo);
-			if(dados.verificarAtraso(emprestimo)) {
-				emailControlador.enviarEmailAtraso(emprestimo);
+			if(emprestimo.getDataAtual().isAfter(emprestimo.getDataDevolucao())) {
+				if(dados.verificarAtraso(emprestimo)) {
+					emailControlador.enviarEmailAtraso(emprestimo);
+				}
 			}
+			
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
@@ -161,13 +166,30 @@ public class EmprestimoControlador {
 		}
 	}
 	
+	
 	public void enviarEmailAviso(EmprestimoModelo emprestimo) throws ExcecaoControlador {
+		emprestimo.setDataAgora();
+		emprestimo.setDataAvisarLeitor();
 		try {
 			if(emprestimo.getDataAtual().equals(emprestimo.getDataAviso())) {
 				emailControlador.enviarEmailAviso(emprestimo);
 			}
 		}catch(Exception e) {
 			throw new ExcecaoControlador("Falha ao enviar Email Aviso", e);
+		}
+	}
+	
+	public void verificarEmprestimosIncial() throws ExcecaoControlador{
+		try {
+			List<EmprestimoModelo> emprestimos = new ArrayList<>();
+			emprestimos = dados.buscarTodosEmprestimos();
+			for(EmprestimoModelo emprestimo : emprestimos) {
+				emprestimo = buscarEmprestimo(emprestimo.getCpf(), emprestimo.getIsbn());
+				atraso(emprestimo);
+				enviarEmailAviso(emprestimo);
+			}
+		}catch(ExcecaoDados e) {
+			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 	}
 	
