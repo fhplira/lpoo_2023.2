@@ -45,9 +45,7 @@ public class EmprestimoControlador {
 				throw new ExcecaoControlador(e.getMessage(), e);
 			}
 			
-			EmprestimoModelo emprestimo = new EmprestimoModelo();
-			emprestimo.setIsbn(isbn);
-			emprestimo.setCpf(cpf);
+			EmprestimoModelo emprestimo = new EmprestimoModelo(isbn, cpf);
 			
 			LeitorModelo leitor = new LeitorModelo();
 			leitor = leitorControlador.buscarLeitorPorCpf(cpf);
