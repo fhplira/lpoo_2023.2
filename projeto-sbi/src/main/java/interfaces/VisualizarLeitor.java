@@ -60,6 +60,15 @@ public class VisualizarLeitor extends JFrame {
 		final JButton btnEditarDados = new JButton("Editar dados");
 		final JButton btnAtualizarDados = new JButton("Atualizar dados");
 		
+		btnEditarDados.setEnabled(false);
+		btnEditarDados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtNome.setEditable(true);
+				txtEmail.setEditable(true);
+				btnAtualizarDados.setEnabled(true);
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 689, 550);
 		contentPane = new JPanel();
@@ -231,11 +240,33 @@ public class VisualizarLeitor extends JFrame {
 		gbc_btnEditarDados.gridy = 6;
 		panel.add(btnEditarDados, gbc_btnEditarDados);
 		
-
+		btnAtualizarDados.setEnabled(false);
 		btnAtualizarDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String email = txtEmail.getText();
+				String nome = txtNome.getText();
+				String cpf = txtCpf.getText();
+
+				try {
+					LeitorModelo leitor = controlador.buscarLeitorPorCpf(cpf);
+					if(!email.isBlank()) {
+						controlador.atualizarEmailLeitor(leitor, email);
+					}
+					if(!nome.isBlank()) {
+						controlador.atualizarNomeLeitor(leitor, nome);
+					}
+					JOptionPane.showMessageDialog(null,  "Dados do leitor atualizados com sucesso", "Success", JOptionPane.INFORMATION_MESSAGE);
+				} catch (ExcecaoControlador e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				} catch (Exception exc) {
+					JOptionPane.showMessageDialog(null, "Algum erro inesperado aconteceu.", "Error", JOptionPane.ERROR_MESSAGE);
+					exc.printStackTrace();
+				}
+
 			}
 		});
+	
 		btnAtualizarDados.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnAtualizarDados.setEnabled(false);
 		GridBagConstraints gbc_btnAtualizarDados = new GridBagConstraints();

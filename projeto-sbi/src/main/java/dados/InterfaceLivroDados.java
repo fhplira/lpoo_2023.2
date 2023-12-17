@@ -3,7 +3,7 @@ package dados;
 import modelos.LivroModelo;
 import java.util.List;
 
-public interface InterfaceDados {
+public interface InterfaceLivroDados {
 	public void cadastrarLivro(LivroModelo livro) throws ExcecaoDados;
     
     public boolean verificarLivro(String isbn) throws ExcecaoDados;

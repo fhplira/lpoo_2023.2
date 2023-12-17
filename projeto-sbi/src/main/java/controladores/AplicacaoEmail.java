@@ -123,4 +123,25 @@ public class AplicacaoEmail {
 			}
 			
 		}
+		
+		public void enviarEmailAtualizarDados(LeitorModelo leitor) throws ExcecaoControlador {
+			SimpleEmail email = new SimpleEmail();
+			email.setHostName("smtp.gmail.com");
+			email.setSmtpPort(465);
+			email.setAuthenticator(new DefaultAuthenticator(meuEmail, minhaSenha));
+			email.setSSLOnConnect(true);
+			
+			try {
+				email.setFrom(meuEmail);
+				email.setSubject("Atualização de Email");
+				email.setMsg("Olá "+ leitor.getNome() + "\n"
+						+ "\nNotamos que você atualizou seu email \n"
+						+ "\nA partir de agora entraremos em contato com você por aqui \n"
+						+ "\nCaso necessário solicite novamente a troca de email!");
+				email.addTo(leitor.getEmail());
+				email.send();
+				}catch(Exception e) {
+					throw new ExcecaoControlador(e.getMessage(), e);
+			}
+		}
 }

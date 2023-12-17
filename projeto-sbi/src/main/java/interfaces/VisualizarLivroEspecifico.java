@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import controladores.Constantes;
 import controladores.ExcecaoControlador;
+import controladores.LivroControlador;
 import modelos.LivroModelo;
 
 import java.awt.GridBagLayout;
@@ -53,7 +54,7 @@ public class VisualizarLivroEspecifico extends JFrame {
 	private JTextField textFieldEmprestados;
 	private JTextArea textAreaDescricao;
 	private JLabel lblNewLabelImagemLivro;
-
+	private final LivroControlador livroControlador = new LivroControlador();
 
 
 	/**
@@ -89,7 +90,8 @@ public class VisualizarLivroEspecifico extends JFrame {
         }
     }
 	
-	public void enviarValores(LivroModelo livroClicado) throws HeadlessException {
+	public void enviarValores(LivroModelo livroClicado) throws HeadlessException, ExcecaoControlador {
+		livroClicado = livroControlador.buscarLivroPorIsbn(livroClicado.getIsbn());
 		textFieldTitulo.setText(livroClicado.getTitulo());
 		textFieldCampoAutor.setText(livroClicado.getAutor());
 	    textFieldCampoIsbn.setText(livroClicado.getIsbn());

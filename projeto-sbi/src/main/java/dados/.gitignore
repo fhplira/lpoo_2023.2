@@ -6,3 +6,6 @@
 /emprestimo.class
 /EmprestimoDados.class
 /BibliotecarioDados.class
+/InterfaceEmprestimoDados.class
+/InterfaceLeitorDados.class
+/InterfaceLivroDados.class

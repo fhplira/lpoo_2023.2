@@ -3,12 +3,18 @@ package controladores;
 import java.util.List;
 
 import dados.ExcecaoDados;
+import dados.InterfaceLeitorDados;
 import dados.LeitorDados;
 import modelos.LeitorModelo;
 
 public class LeitorControlador {
 	
-	private LeitorDados dados = new LeitorDados();
+	private InterfaceLeitorDados dados;
+	
+	public LeitorControlador() {
+		this.dados = new LeitorDados();
+	}
+	
 	private AplicacaoEmail emailControlador = new AplicacaoEmail();
 	
 	public void cadastrarLeitor(String nome, String cpf, String email) throws ExcecaoControlador {
@@ -134,6 +140,7 @@ public class LeitorControlador {
 			if(!email.equals(leitor.getEmail())) {
 				leitor.setEmail(email);
 				dados.atualizarEmailLeitor(leitor);
+				emailControlador.enviarEmailAtualizarDados(leitor);
 			}
 		}catch(ExcecaoDados e) {
 			throw new ExcecaoControlador(e.getMessage(), e);
@@ -147,4 +154,14 @@ public class LeitorControlador {
 			throw new ExcecaoControlador(e.getMessage(), e);
 		}
 	}
+
+	public InterfaceLeitorDados getDados() {
+		return dados;
+	}
+
+	public void setDados(InterfaceLeitorDados dados) {
+		this.dados = dados;
+	}
+	
+	
 }

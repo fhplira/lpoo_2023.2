@@ -21,16 +21,18 @@ import modelos.LivroModelo;
 @ExtendWith(MockitoExtension.class)
 public class testeEmprestimoControlador {
 	
+	EmprestimoControlador controladorEmprestimo = new EmprestimoControlador();
+	LeitorControlador controladorLeitor = new LeitorControlador();
+	LivroControlador controladorLivro = new LivroControlador();
+	
 	@Test
 	public void RealizarEmprestimoComSucesso(@Mock LivroDados dadosLivroMock, @Mock LeitorDados dadosLeitorMock, @Mock EmprestimoDados dadosEmprestimoMock, @Mock LivroModelo livroMock, @Mock LeitorModelo leitorMock) {
-		EmprestimoControlador controladorEmprestimo = new EmprestimoControlador();
-		
-		LeitorControlador controladorLeitor = new LeitorControlador();
-		LivroControlador controladorLivro = new LivroControlador();
 		
 		controladorEmprestimo.setDados(dadosEmprestimoMock);
 		controladorEmprestimo.setLeitorDados(dadosLeitorMock);
 		controladorEmprestimo.setLivroDados(dadosLivroMock);
+		controladorLivro.setDados(dadosLivroMock);
+		controladorLeitor.setDados(dadosLeitorMock);
 		
 		
 		livroMock.setIsbn("00000000000");

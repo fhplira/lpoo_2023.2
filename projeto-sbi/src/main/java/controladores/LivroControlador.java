@@ -23,26 +23,31 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import dados.ExcecaoDados;
-import dados.InterfaceDados;
+import dados.InterfaceLivroDados;
 import dados.LivroDados;
 import modelos.LivroModelo;
 
 
 public class LivroControlador {
 	
-		private InterfaceDados dados;
+		private InterfaceLivroDados dados;
+		private CloseableHttpClient httpCliente;
+		private CloseableHttpResponse httpResposta;
+		private HttpEntity entidade;
 		
 		public LivroControlador() {
 			this.dados = new LivroDados();
+			this.httpCliente = HttpClients.createDefault();	 
 		}
 		
+		
 			
-		public void cadastrarLivroPorISBN(String isbn) throws ExcecaoControlador, IOException{	
+		public void cadastrarLivroPorISBN(String isbn, String exemplares) throws ExcecaoControlador, IOException{	
 
-			verificarIsbn(isbn); 
-
+			int exemplar = verificarIsbnExemplar(isbn, exemplares); 
+			
 			LivroModelo livro = buscarLivroApi(isbn);
-			livro.setAdicionarDisponivel(1);
+			livro.setAdicionarDisponivel(exemplar);
 			livro.setEmprestado(0);
 			livro.setValorTotal();
 
@@ -55,12 +60,12 @@ public class LivroControlador {
 		}
 		
 		
-		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao) throws ExcecaoControlador{
+		public void cadastrarLivro(String isbn, String titulo, String autor, String editora, String dataPublicacao, String img, String descricao, String exemplares) throws ExcecaoControlador{
 
-		    verificarCamposCadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
-		    
+		    int exemplar = verificarCamposCadastrarLivro(isbn, titulo, autor, editora, dataPublicacao, img, descricao, exemplares);
+	
 		    LivroModelo livro = new LivroModelo(isbn, titulo, autor, editora, dataPublicacao, img, descricao);
-			livro.setAdicionarDisponivel(1);
+			livro.setAdicionarDisponivel(exemplar);
 			livro.setEmprestado(0);
 			livro.setValorTotal();
 
@@ -97,14 +102,15 @@ public class LivroControlador {
 				throw new ExcecaoControlador("Não há exemplares para exclusão");
 			}
 			
+			if(livro.getTotal() == 0) {
+				throw new ExcecaoControlador("Nao existe exeplares para exclusão");
+			}
+			
 			if(controleExemplarInteiro > livro.getTotal()) {
 				throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
 			+ "\n Quantidade de livro: " + livro.getTotal());
 			}
 			
-			if(livro.getTotal() == 0) {
-				throw new ExcecaoControlador("Nao existe exeplares para exclusão");
-			}
 			
 			LivroModelo exemplarLivro = new LivroModelo();
 			
@@ -169,15 +175,16 @@ public class LivroControlador {
 
 
 		private LivroModelo buscarLivroApi(String isbn) throws ExcecaoControlador, MalformedURLException, IOException {
-			
-			CloseableHttpClient httpCliente = HttpClients.createDefault();	
+			this.httpCliente = HttpClients. createDefault();
 			HttpGet requisicao = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=+isbn:"+isbn+"&key=AIzaSyAgg6itGrlT3cWjIMrprDV6_nduS_NvTwY");
-			CloseableHttpResponse httpResposta = httpCliente.execute(requisicao);
-			HttpEntity entidade = httpResposta.getEntity();
+			this.httpResposta = this.httpCliente.execute(requisicao);
 			
+			this.entidade = httpResposta.getEntity();
+	
+         
 			Gson gson = new Gson();
 			JsonObject obj = gson.fromJson(EntityUtils.toString(entidade), JsonObject.class);
-
+			
 			int verificaSeTemObjeto = obj.get("totalItems").getAsInt();
 
 
@@ -233,7 +240,7 @@ public class LivroControlador {
 		}
 
 
-		private void verificarIsbn(String isbn) throws ExcecaoControlador {
+		private int verificarIsbnExemplar(String isbn, String exemplares) throws ExcecaoControlador {
 			
 			if(isbn.isBlank()){
 					throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
@@ -246,7 +253,17 @@ public class LivroControlador {
 			if((isbn.length() != 10) && (isbn.length() != 13)) {
 					throw new ExcecaoControlador("O campo ISBN deve ter 10 ou 13 números.");
 			}	
-
+			
+			
+			if(exemplares.isBlank()){
+				throw new ExcecaoControlador("O campo Exemplares não pode ser vazio.");
+			}
+			
+			if(!exemplares.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo Exemplares não pode ter letras e nem espaços.");
+			}
+			
+			int exemplar = Integer.parseInt(exemplares);
 			
 			try{
 			  	 if (dados.verificarLivro(isbn)){
@@ -256,11 +273,13 @@ public class LivroControlador {
 			}catch(ExcecaoDados e){
 				  	 throw new ExcecaoControlador(e.getMessage(), e);
 			}
+			
+			return exemplar;
 		}
 		
 
-		private void verificarCamposCadastrarLivro(String isbn, String titulo, String autor, String editora,
-				String dataPublicacao, String img, String descricao) throws ExcecaoControlador {
+		private int verificarCamposCadastrarLivro(String isbn, String titulo, String autor, String editora,
+				String dataPublicacao, String img, String descricao, String exemplares) throws ExcecaoControlador {
 			if(isbn.isBlank()){
 				throw new ExcecaoControlador("O campo ISBN não pode ser vazio.");
 			}
@@ -307,6 +326,18 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo descrição não pode ser vazio.");
 			}
 			
+			if(exemplares.isBlank()){
+				throw new ExcecaoControlador("O campo Exemplares não pode ser vazio.");
+			}
+			
+			if(!exemplares.matches("^\\d+$")){
+				throw new ExcecaoControlador("O campo Exemplares não pode ter letras e nem espaços.");
+			}
+			
+			int exemplar = Integer.parseInt(exemplares);
+			
+			
+			
 			try{
 				if (dados.verificarLivro(isbn)){
 					throw new ExcecaoControlador("ISBN já cadastrado na base de dados.");
@@ -314,6 +345,8 @@ public class LivroControlador {
 			}catch(ExcecaoDados e1){
 				throw new ExcecaoControlador(e1.getMessage(), e1);
 			}
+			
+			return exemplar;
 		}
 
 
@@ -333,10 +366,6 @@ public class LivroControlador {
 			}
 			int controleExemplarInteiro = Integer.parseInt(controleExemplar);
 			
-			if(controleExemplarInteiro < 0) {
-				throw new ExcecaoControlador("A quantidade não pode ser menor que zero");
-			}
-			
 			if(controleExemplarInteiro == 0) {
 				throw new ExcecaoControlador("A quantidade não pode ser igual a zero");
 			}
@@ -345,14 +374,18 @@ public class LivroControlador {
 		}
 
 
-		public InterfaceDados getDados() {
+		public InterfaceLivroDados getDados() {
 			return dados;
 		}
 
 
-		public void setDados(InterfaceDados dados) {
+		public void setDados(InterfaceLivroDados dados) {
 			this.dados = dados;
 		}
+
+		public void setHttpCliente(CloseableHttpClient httpCliente) {
+			this.httpCliente = httpCliente;
+		}	
 		
 }		
 

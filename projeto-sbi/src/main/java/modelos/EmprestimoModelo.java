@@ -1,6 +1,7 @@
 package modelos;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class EmprestimoModelo {
@@ -10,14 +11,18 @@ public class EmprestimoModelo {
 	private int id;
 	private String isbn;
 	private String cpf;
-	private LocalDateTime dataEmprestimo;
-	private LocalDateTime dataDevolucao;
+	private LocalDate dataAtual;
+	private LocalDate dataEmprestimo;
+	private LocalDate dataAviso;
+	private LocalDate dataDevolucao;
 	private DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
 	
 	public EmprestimoModelo(String isbn, String cpf) {
 		this.isbn = isbn;
 		this.cpf = cpf;
+		this.dataEmprestimo = LocalDate.now();
+		this.dataAviso = dataEmprestimo.plusDays(12);
+		this.dataDevolucao = dataEmprestimo.plusDays(15);
 	}
 
 	public EmprestimoModelo() {
@@ -64,19 +69,19 @@ public class EmprestimoModelo {
 		this.isbn = isbn;
 	}
 	
-	public LocalDateTime getDataEmprestimo() {
+	public LocalDate getDataEmprestimo() {
 		return dataEmprestimo;
 	}
 
-	public void setDataEmprestimo(LocalDateTime dataEmprestimo) {
+	public void setDataEmprestimo(LocalDate dataEmprestimo) {
 		this.dataEmprestimo = dataEmprestimo;
 	}
 
-	public LocalDateTime getDataDevolucao() {
+	public LocalDate getDataDevolucao() {
 		return dataDevolucao;
 	}
 
-	public void setDataDevolucao(LocalDateTime dataDevolucao) {
+	public void setDataDevolucao(LocalDate dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
 	
@@ -86,6 +91,26 @@ public class EmprestimoModelo {
 
 	public void setPadraoHora(DateTimeFormatter padraoHora) {
 		this.padraoHora = padraoHora;
+	}
+
+	public LocalDate getDataAtual() {
+		return dataAtual;
+	}
+	
+	public void setDataAtual(LocalDate dataAtual) {
+		this.dataAtual = dataAtual;
+	}
+
+	public void setDataAgora() {
+		this.dataAtual = LocalDate.now();
+	}
+
+	public LocalDate getDataAviso() {
+		return dataAviso;
+	}
+
+	public void setDataAviso(LocalDate dataAviso) {
+		this.dataAviso = dataAviso;
 	}
 
 	public String toString() {
