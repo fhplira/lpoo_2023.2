@@ -333,9 +333,7 @@ public class LivroControlador {
 			
 			int exemplar = Integer.parseInt(exemplares);
 			
-			if(exemplar < 0) {
-				throw new ExcecaoControlador("A quantidade de Exemplares não pode ser menor que zero");
-			}
+			
 			
 			try{
 				if (dados.verificarLivro(isbn)){
@@ -364,10 +362,6 @@ public class LivroControlador {
 				throw new ExcecaoControlador("O campo quantidade não pode ter letras e nem espaços.");
 			}
 			int controleExemplarInteiro = Integer.parseInt(controleExemplar);
-			
-			if(controleExemplarInteiro < 0) {
-				throw new ExcecaoControlador("A quantidade não pode ser menor que zero");
-			}
 			
 			if(controleExemplarInteiro == 0) {
 				throw new ExcecaoControlador("A quantidade não pode ser igual a zero");
