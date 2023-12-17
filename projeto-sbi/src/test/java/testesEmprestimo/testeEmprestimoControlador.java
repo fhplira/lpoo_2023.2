@@ -14,6 +14,7 @@ import dados.EmprestimoDados;
 import dados.ExcecaoDados;
 import dados.LeitorDados;
 import dados.LivroDados;
+import modelos.EmprestimoModelo;
 import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
@@ -50,6 +51,18 @@ public class testeEmprestimoControlador {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Test 
+	public void BuscarEmprestimoComSucesso(@Mock EmprestimoDados dadosEmprestimoMock) {
+		EmprestimoModelo emprestimo = new EmprestimoModelo("00000000000","00000000000");
+		
+		try {
+			dadosEmprestimoMock.buscarEmprestimo("00000000000","00000000000");
+		} catch (ExcecaoDados e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
