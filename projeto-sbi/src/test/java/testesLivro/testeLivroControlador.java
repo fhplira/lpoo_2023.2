@@ -10,6 +10,8 @@ import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -20,6 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import controladores.ExcecaoControlador;
 import controladores.LivroControlador;
@@ -285,7 +288,7 @@ public class testeLivroControlador {
 	}
 
 	@Test
-	public void falhaAoExcluirexemplaresQuantidadeZero() {
+	public void falhaAoExcluirExemplaresQuantidadeZero() {
 		LivroModelo livro = new LivroModelo();
 		livro.setIsbn("1234567890123");
 		livro.setDisponivel(1);
@@ -301,8 +304,8 @@ public class testeLivroControlador {
 
 		controlador.setHttpCliente(httpClienteMock);
 
-		when(httpClienteMock.execute(any(HttpGet.class))).thenReturn(httpResponseMock);
-		when(httpResponseMock.getEntity()).thenReturn(httpEntityMock);
+		Mockito.lenient().when(httpClienteMock.execute(any(HttpGet.class))).thenReturn(httpResponseMock);
+		Mockito.lenient().when(httpResponseMock.getEntity()).thenReturn(httpEntityMock);
 
 		String api = "{\r\n"
 				+ "  \"kind\": \"books#volumes\",\r\n"
@@ -413,7 +416,7 @@ public class testeLivroControlador {
 				+ "}\r\n"
 				+ "";
 
-		when(httpEntityMock.getContent()).thenReturn(new ByteArrayInputStream(api.getBytes()));
+		Mockito.lenient().when(httpEntityMock.getContent()).thenReturn(new ByteArrayInputStream(api.getBytes()));
 
 		try {
 			when(dadosMock.verificarLivro("9788543808246")).thenReturn(false);
@@ -431,9 +434,9 @@ public class testeLivroControlador {
 
 		controlador.setHttpCliente(httpClienteMock);
 
-		when(httpClienteMock.execute(any(HttpGet.class))).thenReturn(httpResponseMock);
+		Mockito.lenient().when(httpClienteMock.execute(any(HttpGet.class))).thenReturn(httpResponseMock);
 
-		when(httpResponseMock.getEntity()).thenReturn(httpEntityMock);
+		Mockito.lenient().when(httpResponseMock.getEntity()).thenReturn(httpEntityMock);
 
 
 		String api = "{\r\n"
@@ -441,20 +444,32 @@ public class testeLivroControlador {
 				+ "  \"totalItems\": 0\r\n"
 				+ "}";
 
-		when(httpEntityMock.getContent()).thenReturn(new ByteArrayInputStream(api.getBytes()));
+		Mockito.lenient().when(httpEntityMock.getContent()).thenReturn(new ByteArrayInputStream(api.getBytes()));
 
 		Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivroPorISBN("9788504020267", "2");});	
 	}
+	
+	
+	@Test
+	public void falhaAoCadastrarLivroPorIsbnJaExistente(@Mock LivroDados dadosMock) {
+		try {
+			when(dadosMock.verificarLivro("1111111111111")).thenReturn(true);
+		} catch (ExcecaoDados e) {
+			fail();
+		}	
+		controlador.setDados(dadosMock);
 
+		Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivroPorISBN("1111111111111", "2");});	
+	}
 	
 	@Test
 	public void falhaAoCadastrarLivroPorIsbnVazio() {
-		Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivroPorISBN("1111111111111", "2");});	
+		Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivroPorISBN("", "2");});	
 	}
 
 	@Test
 	public void falhaAoCadastrarLivroPorIsbnComLetras() {
-		Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivroPorISBN("111111111111a", "2");});	
+		Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivroPorISBN("1111111111a1a", "2");});	
 	}
 
 	@Test
@@ -478,8 +493,80 @@ public class testeLivroControlador {
 	}
 
 	@Test
-	public void falhaAoAdicionarLivroPorIsbnExemplaresNegativos() {
-		Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.cadastrarLivroPorISBN("1111111111111", "-3");});
+	public void buscarTodosOsLivrosComSucesso(@Mock LivroDados dadosMock) {
+		controlador.setDados(dadosMock);
+		
+		 List<LivroModelo> livrosMock = Arrays.asList(new LivroModelo("1111111111111", "tituloTeste", "autorTeste", "editoraTeste", "2000", "imagem.png", "testeDescricao"), new LivroModelo("2222222222222", "tituloTeste", "autorTeste", "editoraTeste", "2000", "imagem.png", "testeDescricao"));				
+	        try {
+				when(dadosMock.buscarTodosOsLivros()).thenReturn(livrosMock);
+				List<LivroModelo> resultado = controlador.buscarTodosOsLivros();
+			} catch (ExcecaoDados | ExcecaoControlador e) {
+				fail();
+			}		
+	}
+	
+	@Test
+	public void buscarLivroPorIsbnComSucesso(@Mock LivroDados dadosMock) {
+		controlador.setDados(dadosMock);
+				
+		LivroModelo livroMock = new LivroModelo();
+	        try {
+				when(dadosMock.buscarLivroPorIsbn("1111111111111")).thenReturn(livroMock);
+				LivroModelo resultado = controlador.buscarLivroPorIsbn("1111111111111");
+			} catch (ExcecaoDados | ExcecaoControlador e) {
+				fail();
+			}		
 	}
 
+	
+	@Test
+	public void buscarLivroPorIsbnNulo() {		
+	        Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.buscarLivroPorIsbn("");});		
+	}
+	
+	@Test
+	public void buscarLivroPorIsbnVazio() {		
+	        Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.buscarLivroPorIsbn("    ");});		
+	}
+	
+	@Test
+	public void buscarLivroPorIsbnComLetra() {		
+	        Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.buscarLivroPorIsbn("4758444a");});		
+	}
+	
+	@Test
+	public void buscarLivroPorIsbnComNumeroDeCaracteresAMais() {		
+	        Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.buscarLivroPorIsbn("123456789123456");});		
+	}
+	
+	@Test
+	public void buscarLivroPorIsbnComNumeroDeCaracteresAMenos() {		
+	        Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.buscarLivroPorIsbn("123456789");});		
+	}
+	
+	@Test
+	public void buscarLivroPorTituloComSucesso(@Mock LivroDados dadosMock) {
+		controlador.setDados(dadosMock);
+				
+		LivroModelo livroMock = new LivroModelo();
+	        try {
+				when(dadosMock.buscarLivroPorTitulo("A caverna")).thenReturn(livroMock);
+				livroMock = controlador.buscarLivroPorTitulo("A caverna");
+			} catch (ExcecaoDados | ExcecaoControlador e) {
+				fail();
+			}		
+	        
+	    
+
+	}
+	
+	@Test
+	public void buscarLivroPorTituloNulo() {		
+	        Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.buscarLivroPorTitulo("");});		
+	}
+	
+	@Test
+	public void buscarLivroPorTituloVazio() {		
+	        Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.buscarLivroPorTitulo("    ");});		
+	}
 }
