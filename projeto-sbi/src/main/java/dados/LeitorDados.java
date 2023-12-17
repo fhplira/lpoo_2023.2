@@ -10,7 +10,7 @@ import java.util.List;
 import modelos.LeitorModelo;
 import modelos.LivroModelo;
 
-public class LeitorDados {
+public class LeitorDados implements InterfaceLeitorDados {
 
 	PreparedStatement stmt;
 	Connection con = null;
@@ -265,7 +265,7 @@ public class LeitorDados {
 		}
 	}
 	
-	public List<LeitorModelo> buscarTodosLeitores() throws ExcecaoDados{
+	public List<LeitorModelo> buscarTodosLeitores() throws ExcecaoDados {
 		try {
     		con = new ConexaoDados().getConnection();
     		

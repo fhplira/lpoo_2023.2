@@ -10,7 +10,7 @@ import java.util.List;
 import modelos.EmprestimoModelo;
 import modelos.LivroModelo;
 
-public class EmprestimoDados {
+public class EmprestimoDados implements InterfaceEmprestimoDados {
 	
 	PreparedStatement stmt;
 	Connection con = null;
@@ -82,7 +82,7 @@ public class EmprestimoDados {
         }
 	}
 	
-	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoDados{
+	public EmprestimoModelo buscarEmprestimo(String cpf, String isbn) throws ExcecaoDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			
@@ -121,7 +121,7 @@ public class EmprestimoDados {
 		}
 	}
 	
-	public boolean verificarDevolucao(EmprestimoModelo emprestimo) throws ExcecaoDados{
+	public boolean verificarDevolucao(EmprestimoModelo emprestimo) throws ExcecaoDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			

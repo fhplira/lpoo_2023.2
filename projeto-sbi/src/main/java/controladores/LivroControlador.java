@@ -23,14 +23,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import dados.ExcecaoDados;
-import dados.InterfaceDados;
+import dados.InterfaceLivroDados;
 import dados.LivroDados;
 import modelos.LivroModelo;
 
 
 public class LivroControlador {
 	
-		private InterfaceDados dados;
+		private InterfaceLivroDados dados;
 		
 		public LivroControlador() {
 			this.dados = new LivroDados();
@@ -377,12 +377,12 @@ public class LivroControlador {
 		}
 
 
-		public InterfaceDados getDados() {
+		public InterfaceLivroDados getDados() {
 			return dados;
 		}
 
 
-		public void setDados(InterfaceDados dados) {
+		public void setDados(InterfaceLivroDados dados) {
 			this.dados = dados;
 		}
 		

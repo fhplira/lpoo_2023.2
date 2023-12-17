@@ -10,10 +10,13 @@ public class EmprestimoModelo {
 	private int id;
 	private String isbn;
 	private String cpf;
+	private LocalDateTime dataAtual;
 	private LocalDateTime dataEmprestimo;
+	private LocalDateTime dataAviso;
 	private LocalDateTime dataDevolucao;
 	private DateTimeFormatter padraoHora = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
+	private String dataEmprestimoFormatada;
+	private String dataDevolucaoFormatada;
 	
 	public EmprestimoModelo(String isbn, String cpf) {
 		this.isbn = isbn;
@@ -86,6 +89,40 @@ public class EmprestimoModelo {
 
 	public void setPadraoHora(DateTimeFormatter padraoHora) {
 		this.padraoHora = padraoHora;
+	}
+	
+	
+
+	public LocalDateTime getDataAtual() {
+		return dataAtual;
+	}
+
+	public void setDataAtual() {
+		this.dataAtual = LocalDateTime.now();
+	}
+
+	public LocalDateTime getDataAviso() {
+		return dataAviso;
+	}
+
+	public void setDataAviso(LocalDateTime dataAviso) {
+		this.dataAviso = dataAviso;
+	}
+
+	public String getDataEmprestimoFormatada() {
+		return dataEmprestimoFormatada;
+	}
+
+	public void setDataEmprestimoFormatada(String dataEmprestimoFormatada) {
+		this.dataEmprestimoFormatada = dataEmprestimoFormatada;
+	}
+
+	public String getDataDevolucaoFormatada() {
+		return dataDevolucaoFormatada;
+	}
+
+	public void setDataDevolucaoFormatada(String dataDevolucaoFormatada) {
+		this.dataDevolucaoFormatada = dataDevolucaoFormatada;
 	}
 
 	public String toString() {

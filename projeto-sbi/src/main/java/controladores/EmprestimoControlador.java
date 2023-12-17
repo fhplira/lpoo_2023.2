@@ -7,6 +7,9 @@ import java.util.Set;
 
 import dados.EmprestimoDados;
 import dados.ExcecaoDados;
+import dados.InterfaceEmprestimoDados;
+import dados.InterfaceLeitorDados;
+import dados.InterfaceLivroDados;
 import dados.LeitorDados;
 import dados.LivroDados;
 import modelos.EmprestimoModelo;
@@ -16,9 +19,18 @@ import modelos.LivroModelo;
 // Avisar Leitor (sobre a proximidade do final do emprestimo).
 
 public class EmprestimoControlador {
-	private EmprestimoDados dados = new EmprestimoDados();   
-	private LeitorDados leitorDados = new LeitorDados();
-	private LivroDados livroDados = new LivroDados();
+	
+	
+	private InterfaceEmprestimoDados dados;
+	private InterfaceLivroDados livroDados;
+	private InterfaceLeitorDados leitorDados;
+	
+	public EmprestimoControlador() {
+		this.dados = new EmprestimoDados();
+		this.leitorDados = new LeitorDados();
+		this.livroDados = new LivroDados();
+	}
+	
 	private LeitorControlador leitorControlador = new LeitorControlador();
 	private LivroControlador livroControlador = new LivroControlador();
 	private AplicacaoEmail emailControlador = new AplicacaoEmail();
@@ -122,27 +134,27 @@ public class EmprestimoControlador {
 	
 	}
 	
-	public EmprestimoDados getDados() {
+	public InterfaceEmprestimoDados getDados() {
 		return dados;
 	}
 
-	public void setDados(EmprestimoDados dados) {
+	public void setDados(InterfaceEmprestimoDados dados) {
 		this.dados = dados;
 	}
 
-	public LeitorDados getLeitorDados() {
+	public InterfaceLeitorDados getLeitorDados() {
 		return leitorDados;
 	}
 
-	public void setLeitorDados(LeitorDados leitorDados) {
+	public void setLeitorDados(InterfaceLeitorDados leitorDados) {
 		this.leitorDados = leitorDados;
 	}
 
-	public LivroDados getLivroDados() {
+	public InterfaceLivroDados getLivroDados() {
 		return livroDados;
 	}
 
-	public void setLivroDados(LivroDados livroDados) {
+	public void setLivroDados(InterfaceLivroDados livroDados) {
 		this.livroDados = livroDados;
 	}
 }
