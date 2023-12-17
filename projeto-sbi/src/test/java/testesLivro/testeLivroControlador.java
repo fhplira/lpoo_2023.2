@@ -5,14 +5,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import controladores.ExcecaoControlador;
 import controladores.LivroControlador;
@@ -195,6 +193,7 @@ public class testeLivroControlador {
 				fail();
 			}
 		}
+		
 
 		@Test
 		public void excluirExemplaresComSucesso(@Mock LivroDados dadosMock) {
@@ -216,5 +215,43 @@ public class testeLivroControlador {
 				fail();
 			}
 		}
+		
+		@Test
+		public void falhaAoExcluirexemplaresNenhumLivroDisponivel() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("1234567890123");
+			livro.setDisponivel(0);
+			livro.setTotal(2);
+
+			String controleExemplar = "1";
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.ExcluirExemplares(livro, controleExemplar);});	
+		}
+		
+		
+		@Test
+		public void falhaAoExcluirexemplaresQuantidadeMaiorQueTotal() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("1234567890123");
+			livro.setDisponivel(1);
+			livro.setTotal(1);
+
+			String controleExemplar = "3";
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.ExcluirExemplares(livro, controleExemplar);});	
+		}
+		
+		@Test
+		public void falhaAoExcluirexemplaresQuantidadeZero() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("1234567890123");
+			livro.setDisponivel(1);
+			livro.setTotal(0);
+
+			String controleExemplar = "2";
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.ExcluirExemplares(livro, controleExemplar);});	
+		}
+		
+		
+		
+		
 		
 }
