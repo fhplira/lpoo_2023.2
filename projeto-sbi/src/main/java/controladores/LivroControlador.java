@@ -97,14 +97,15 @@ public class LivroControlador {
 				throw new ExcecaoControlador("Não há exemplares para exclusão");
 			}
 			
+			if(livro.getTotal() == 0) {
+				throw new ExcecaoControlador("Nao existe exeplares para exclusão");
+			}
+			
 			if(controleExemplarInteiro > livro.getTotal()) {
 				throw new ExcecaoControlador("Quantidade informada é maior do que exemplares existentes"
 			+ "\n Quantidade de livro: " + livro.getTotal());
 			}
 			
-			if(livro.getTotal() == 0) {
-				throw new ExcecaoControlador("Nao existe exeplares para exclusão");
-			}
 			
 			LivroModelo exemplarLivro = new LivroModelo();
 			

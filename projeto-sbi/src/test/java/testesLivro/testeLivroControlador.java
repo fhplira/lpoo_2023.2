@@ -194,6 +194,42 @@ public class testeLivroControlador {
 			}
 		}
 		
+		@Test
+		public void falhaAoAdicionarExemplaresIsbnVazio() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("");
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.AdicionarExemplares(livro, "2");});	
+		}
+		
+		@Test
+		public void falhaAoAdicionarExemplaresQuantidadeVazia() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("1111111111111");
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.AdicionarExemplares(livro, "");});	
+		}
+		
+		@Test
+		public void falhaAoAdicionarExemplaresQuantidadeNegativa() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("1111111111111");
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.AdicionarExemplares(livro, "-1");});	
+		}
+		
+		@Test
+		public void falhaAoAdicionarExemplaresQuantidadeComLetra() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("1111111111111");
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.AdicionarExemplares(livro, "a1");});	
+		}
+		
+		@Test
+		public void falhaAoAdicionarExemplaresQuantidadeZero() {
+			LivroModelo livro = new LivroModelo();
+			livro.setIsbn("1111111111111");
+			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.AdicionarExemplares(livro, "0");});	
+		}
+
+		
 
 		@Test
 		public void excluirExemplaresComSucesso(@Mock LivroDados dadosMock) {
@@ -249,9 +285,6 @@ public class testeLivroControlador {
 			String controleExemplar = "2";
 			Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.ExcluirExemplares(livro, controleExemplar);});	
 		}
-		
-		
-		
-		
+	
 		
 }
