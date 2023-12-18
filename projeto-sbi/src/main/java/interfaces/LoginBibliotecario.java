@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
 
@@ -19,6 +20,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +31,12 @@ import java.sql.Statement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -75,6 +82,18 @@ public class LoginBibliotecario extends JFrame {
 		contentPane.setMaximumSize(new Dimension(2048, 2048));
 		contentPane.setBackground(new Color(141, 197, 62));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		InputMap inputMap = contentPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "entrar no sistema");
+        
+        ActionMap actionMap = contentPane.getActionMap();
+        actionMap.put("entrar no sistema", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	dispose();
+				new BotoesPrincipais().setVisible(true);
+            }
+        });
 
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();

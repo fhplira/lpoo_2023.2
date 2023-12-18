@@ -13,7 +13,7 @@ public class ConexaoDados {
 	
 	String url = "jdbc:mysql://localhost:3306/";
 	String usuario = "root";
-	String senha = "root";
+	String senha = "12345";
 	
 	public Connection getConnection() throws ExcecaoDados {
         Connection con = null;

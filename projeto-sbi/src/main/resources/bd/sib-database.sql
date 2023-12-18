@@ -42,4 +42,4 @@ CREATE TABLE IF NOT EXISTS emprestimo (
     FOREIGN KEY (isbn_fk) REFERENCES livro (isbn)
 );
 
-INSERT INTO bibliotecario (nome_bibliotecario, email_bibliotecario, senha_bibliotecario) VALUES ("Bruno Cartaxo", "bruno.cartaxo@paulista.ifpe.edu.br", "12345");
+INSERT INTO bibliotecario (nome_bibliotecario, email_bibliotecario, senha_bibliotecario) VALUES ("Bruno Cartaxo", "admin@gmail.com", "12345");

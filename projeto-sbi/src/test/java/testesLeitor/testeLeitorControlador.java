@@ -1,32 +1,25 @@
 package testesLeitor;
 
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
+
+import controladores.AplicacaoEmail;
+import controladores.ExcecaoControlador;
+import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.OngoingStubbing;
 
-import controladores.AplicacaoEmail;
-import controladores.ExcecaoControlador;
-import controladores.LeitorControlador;
-import dados.ExcecaoDados;
 import dados.InterfaceLeitorDados;
 import modelos.LeitorModelo;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
+import controladores.LeitorControlador;
 
 @ExtendWith(MockitoExtension.class)
-public class testeLeitorControlador {
-
-	private LeitorControlador leitorControladorMock;
+public class TesteLeitorControlador {
 
 	@Mock
 	private InterfaceLeitorDados dadosMock;
@@ -34,72 +27,103 @@ public class testeLeitorControlador {
 	@Mock
 	private AplicacaoEmail emailControladorMock;
 
-	@Mock
-	private LeitorModelo leitorModeloMock;
+	@InjectMocks
+	private LeitorControlador leitorControlador;
 
-
+	@Before
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+		emailControladorMock = new AplicacaoEmail();
+		leitorControlador = new LeitorControlador();
+	}
 
 	@Test
-	public void testeCadastrarLeitorComSucesso(@Mock String nome, @Mock String cpf, @Mock String email) {
-		// Arrange
+	public void cadastrarLeitorComSucesso() throws Exception {
+
+		String nome = "João Silva";
+		String cpf = "12345678901";
+		String email = "joao.silva@example.com";
+
+
+		when(dadosMock.verificarLeitor(cpf)).thenReturn(false);
+
+
+		leitorControlador.cadastrarLeitor(nome, cpf, email);
+
+
+		verify(dadosMock).verificarLeitor(cpf);
+		verify(dadosMock).cadastrarLeitor(any(LeitorModelo.class));
+		verify(emailControladorMock).enviarEmailCadastro(any(LeitorModelo.class));
+	}
+
+	@Test
+	public void buscarLeitorExistentePorCpf() throws Exception {
 		
-		/*
-		 * nome = "Joaozinho"; cpf = "12345678901"; email = "joaozinho@example.com";
-		 */
+		String cpf = "12345678901";
+		LeitorModelo leitorExistente = new LeitorModelo("João Silva", cpf, "joao.silva@example.com");
 
-	    //leitorModelo = new LeitorModelo(nome, cpf, email);
+		when(dadosMock.verificarLeitor(cpf)).thenReturn(true);
+		when(dadosMock.buscarLeitorPorCpf(cpf)).thenReturn(leitorExistente);
+
+		LeitorModelo leitorObtido = leitorControlador.buscarLeitorPorCpf(cpf);
+
+		assertEquals(leitorExistente, leitorObtido);
+		verify(dadosMock).verificarLeitor(cpf);
+		verify(dadosMock).buscarLeitorPorCpf(cpf);
+	}
+
+	@Test
+	public void buscarLeitorNaoExistentePorCpf() throws Exception {
 		
+		String cpf = "12345678901";
+
+		when(dadosMock.verificarLeitor(cpf)).thenReturn(false);
+
+		Assertions.assertThrows(ExcecaoControlador.class, () -> {leitorControlador.buscarLeitorPorCpf(cpf);});
+	}
+
+	@Test
+	public void preencherOCampoDeCpfIncorretamenteNoCadastro() throws Exception {
 		
-		/*
-		 * try { leitorControlador.cadastrarLeitor(nome, cpf, email); } catch
-		 * (ExcecaoControlador e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
-		//dadosMock.cadastrarLeitor(leitorModelo);
-
-
-		try {
-			when(dadosMock.verificarLeitor(cpf)).thenReturn(false);
-			//leitorControlador.cadastrarLeitor(nome, cpf, email);
-		} catch (ExcecaoDados e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//leitorControlador.cadastrarLeitor(nome, cpf, email);
-		//when(dadosMock.cadastrarLeitor(any(LeitorModelo.class))).thenReturn(true);
-
-		// Act
-
-
-		// Assert
-		try {
-			verify(dadosMock).verificarLeitor(cpf);
-			//verify(dadosMock).cadastrarLeitor(leitorModelo);
-			//verify(emailControladorMock).enviarEmailCadastro(leitorModelo);
-		} catch (ExcecaoDados e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-
-
+		String cpf = "aaaaaaaaaaa";
+		
+		when(dadosMock.verificarLeitor(cpf)).thenReturn(false);
+		
+		Assertions.assertThrows(ExcecaoControlador.class, () -> {leitorControlador.buscarLeitorPorCpf(cpf);});
+		
 	}
 	
 	@Test
-	public void cadastrarLeitorComSucesso(@Mock InterfaceLeitorDados dadosMock, @Mock String nome, @Mock String cpf, @Mock String email) throws ExcecaoControlador, ExcecaoDados {
+	public void atualizarEmailLeitorComSucesso() throws Exception {
 		
-		leitorControladorMock = new LeitorControlador();
-		emailControladorMock = new AplicacaoEmail();
-		leitorModeloMock = new LeitorModelo(nome, cpf, email);
-		leitorControladorMock.setDados(dadosMock);
-		
-		Boolean verificacaoLeitor = dadosMock.verificarLeitor(cpf);
-		
-		when(verificacaoLeitor).thenReturn(false);
-		
-		leitorControladorMock.cadastrarLeitor(nome, cpf, email);
-		emailControladorMock.enviarEmailCadastro(leitorModeloMock);
-				
-		
+		String cpf = "12345678901";
+		String novoEmail = "novo.email@example.com";
+		LeitorModelo leitor = new LeitorModelo("João Silva", cpf, "joao.silva@example.com");
+
+		doNothing().when(dadosMock).atualizarEmailLeitor(leitor);
+		doNothing().when(emailControladorMock).enviarEmailAtualizarDados(leitor);
+
+		leitorControlador.atualizarEmailLeitor(leitor, novoEmail);
+
+		assertEquals(novoEmail, leitor.getEmail());
+		verify(dadosMock).atualizarEmailLeitor(leitor);
+		verify(emailControladorMock).enviarEmailAtualizarDados(leitor);
 	}
+
+	@Test
+	public void atualizarNomeLeitorComSucesso() throws Exception {
+		
+		String cpf = "12345678901";
+		String novoNome = "João Pereira";
+		LeitorModelo leitor = new LeitorModelo("João Silva", cpf, "joao.silva@example.com");
+
+		doNothing().when(dadosMock).atualizarNomeLeitor(leitor);
+
+		leitorControlador.atualizarNomeLeitor(leitor, novoNome);
+
+		assertEquals(novoNome, leitor.getNome());
+		verify(dadosMock).atualizarNomeLeitor(leitor);
+	}
+
 
 }
