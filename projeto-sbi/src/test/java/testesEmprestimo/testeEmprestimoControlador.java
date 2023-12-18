@@ -1,12 +1,18 @@
 package testesEmprestimo;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import org.junit.Test;
+
+import org.junit.Before;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import controladores.AplicacaoEmail;
 import controladores.EmprestimoControlador;
 import controladores.ExcecaoControlador;
 import controladores.LeitorControlador;
@@ -21,38 +27,75 @@ import modelos.LivroModelo;
 
 @ExtendWith(MockitoExtension.class)
 public class testeEmprestimoControlador {
+	@Mock
+	LeitorModelo leitor;
 	
-	EmprestimoControlador controladorEmprestimo = new EmprestimoControlador();
-	LeitorControlador controladorLeitor = new LeitorControlador();
-	LivroControlador controladorLivro = new LivroControlador();
+	@Mock
+	LivroModelo livro;
+	
+	@Mock
+    private LivroDados livroDados;
+
+    @Mock
+    private LeitorControlador leitorControlador;
+
+    @Mock
+    private LivroControlador livroControlador;
+
+    @Mock
+    private EmprestimoDados dadosEmprestimo;
+
+    @Mock
+    private LeitorDados leitorDados;
+
+    @Mock
+    private AplicacaoEmail emailControlador;
+
+    @InjectMocks
+    private EmprestimoControlador emprestimoControlador;
 	
 	@Test
-	public void RealizarEmprestimoComSucesso(@Mock LivroDados dadosLivroMock, @Mock LeitorDados dadosLeitorMock, @Mock EmprestimoDados dadosEmprestimoMock ) {
+	public void RealizarEmprestimoComSucesso()  {
 		
-		controladorEmprestimo.setDados(dadosEmprestimoMock);
-		controladorLeitor.setDados(dadosLeitorMock);
-		controladorLivro.setDados(dadosLivroMock);
 		
-		try {
-			controladorEmprestimo.realizarEmprestimo("1111111111", "00000000000");
-		} catch (ExcecaoControlador e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+        String isbn = "1234567891";
+        String cpf = "10987654321";
+        
+
+        leitor = new LeitorModelo();
+        leitor.setCpf(cpf);
+        leitor.setEmprestimo(0);
+        
+        livro = new LivroModelo();
+        livro.setIsbn(isbn);
+        livro.setDisponivel(1);
+    
+        try {
+			when(livroDados.verificarLivro(isbn)).thenReturn(true);
+			when(leitorControlador.buscarLeitorPorCpf(cpf)).thenReturn(leitor);
+			when(livroControlador.buscarLivroPorIsbn(isbn)).thenReturn(livro);
+			when(dadosEmprestimo.verificarEmprestimo(cpf, isbn)).thenReturn(false);
+			when(dadosEmprestimo.verificarDevolucao(any(EmprestimoModelo.class))).thenReturn(true);
+			emprestimoControlador.realizarEmprestimo(isbn, cpf);
 		} catch (ExcecaoDados e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (ExcecaoControlador e) {
 			e.printStackTrace();
 		}
+
+        
 	}
 	
 	@Test 
 	public void BuscarEmprestimoComSucesso(@Mock EmprestimoDados dadosEmprestimoMock) throws ExcecaoDados, ExcecaoControlador {
-		EmprestimoModelo emprestimo = new EmprestimoModelo();
-		controladorEmprestimo.setDados(dadosEmprestimoMock);
+		EmprestimoModelo emprestimo = new EmprestimoModelo("11111111111", "0000000000");
+		emprestimoControlador.setDados(dadosEmprestimoMock);
 	
 		
 	
 		when(dadosEmprestimoMock.buscarEmprestimo("11111111111", "0000000000")).thenReturn(emprestimo);
-		controladorEmprestimo.buscarEmprestimo("11111111111", "0000000000");
+		emprestimoControlador.buscarEmprestimo("11111111111", "0000000000");
 		
 	}
 	
