@@ -22,7 +22,6 @@ public class EmprestimoModelo {
 		this.isbn = isbn;
 		this.cpf = cpf;
 		this.dataEmprestimo = LocalDate.now();
-		this.dataAviso = dataEmprestimo.plusDays(12);
 		this.dataDevolucao = dataEmprestimo.plusDays(15);
 	}
 
@@ -109,11 +108,15 @@ public class EmprestimoModelo {
 	public LocalDate getDataAviso() {
 		return dataAviso;
 	}
-
+	
 	public void setDataAviso(LocalDate dataAviso) {
 		this.dataAviso = dataAviso;
 	}
 
+	public void setDataAvisarLeitor() {
+		this.dataAviso = dataEmprestimo.plusDays(12);;
+	}
+	
 	public long duracaoDiasAtraso() {
 		setDataAgora();
 		long dias = ChronoUnit.DAYS.between(getDataDevolucao(), getDataAtual());

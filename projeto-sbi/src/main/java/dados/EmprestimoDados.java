@@ -93,7 +93,7 @@ public class EmprestimoDados implements InterfaceEmprestimoDados {
 		try {
 			con = new ConexaoDados().getConnection();
 			
-			String buscaEmprestimo = "SELECT * FROM emprestimo WHERE cpf_leitor_fk = ? AND isbn_fk = ?"; 
+			String buscaEmprestimo = "SELECT * FROM emprestimo WHERE devolvido = 0 AND cpf_leitor_fk = ? AND isbn_fk = ?"; 
 			stmt = con.prepareStatement(buscaEmprestimo);
 			stmt.setString(1, cpf);
 			stmt.setString(2, isbn);
@@ -165,7 +165,7 @@ public class EmprestimoDados implements InterfaceEmprestimoDados {
 			con = new ConexaoDados().getConnection();
 			
 			String atualizarAtraso = "UPDATE emprestimo SET dias_atraso = ? "
-					+ "WHERE cpf_leitor_fk = ? AND isbn_fk = ?";
+					+ "WHERE devolvido = 0 AND cpf_leitor_fk = ? AND isbn_fk = ?";
 			stmt = con.prepareStatement(atualizarAtraso);
 			
 			stmt.setLong(1, emprestimo.getDiasAtraso());

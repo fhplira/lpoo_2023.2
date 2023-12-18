@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
+import controladores.EmprestimoControlador;
 import dados.ConexaoDados;
 
 import javax.swing.JButton;
@@ -16,6 +17,8 @@ import javax.swing.JComponent;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.AbstractAction;
@@ -33,7 +36,6 @@ public class BotoesPrincipais extends JFrame {
 	private JPanel contentPane;
 	private static ConexaoDados metodoDeDados = new ConexaoDados();
 	BotoesPrincipais frameBotoesPrincipais;
-
 	/**
 	 * Launch the application.
 	 */

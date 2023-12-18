@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 
 import controladores.BibliotecarioControlador;
+import controladores.EmprestimoControlador;
 import controladores.ExcecaoControlador;
 import dados.ExcecaoDados;
 import dados.ConexaoDados;
@@ -41,6 +42,8 @@ public class LoginBibliotecario extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textEmail;
 	private static ConexaoDados execucaoScript = new ConexaoDados();
+	private static EmprestimoControlador emprestimo = new EmprestimoControlador();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -50,6 +53,7 @@ public class LoginBibliotecario extends JFrame {
 				try {
 					LoginBibliotecario frame = new LoginBibliotecario();
 					execucaoScript.criarBancoDados();
+					emprestimo.verificarEmprestimosIncial();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
