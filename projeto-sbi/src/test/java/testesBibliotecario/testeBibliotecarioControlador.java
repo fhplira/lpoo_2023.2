@@ -1,13 +1,15 @@
 package testesBibliotecario;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import controladores.BibliotecarioControlador;
@@ -22,17 +24,21 @@ public class testeBibliotecarioControlador {
 
     @Mock
     private BibliotecarioDados dadosMock;
+    
+    @BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+		controlador = new BibliotecarioControlador();
+		controlador.setDados(dadosMock);
+	}
 
     @Test
     public void loginBibliotecarioComSucessoTest() throws Exception {
-        when(dadosMock.verificarEmailBibliotecario("exemplo@gmail.com")).thenReturn(true);
+    	
+    	when(dadosMock.verificarEmailBibliotecario("exemplo@gmail.com")).thenReturn(true);
         when(dadosMock.verificarSenha("exemplo@gmail.com", "senha123")).thenReturn(true);
 
-        try {
-            controlador.login("exemplo@gmail.com", "senha123");
-        } catch (ExcecaoControlador e) {
-            fail("Os dados deveriam ser válidos.");
-        }
+        assertDoesNotThrow(() -> controlador.login("exemplo@gmail.com", "senha123"));
     }
     
     @Test
@@ -45,15 +51,15 @@ public class testeBibliotecarioControlador {
     	Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.login("exemplo@gmail.com", " ");});		
     }
     
-    /*@Test
+    @Test
     public void falhaLoginEmailNulo() {
-    	Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.login(null, "senha123");});		
+    	Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.login("", "senha123");});		
     }
     
     @Test
     public void falhaSenhaNula() {
-    	Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.login("exemplo@gmail.com", null);});		
-    }*/
+    	Assertions.assertThrows(ExcecaoControlador.class, () -> {controlador.login("exemplo@gmail.com", "");});		
+    }
     
     @Test
     public void falhaEmailSemCaractere() {

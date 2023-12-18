@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class BibliotecarioDados {
+public class BibliotecarioDados implements InterfaceBibliotecarioDados{
 	
 	PreparedStatement stmt;
 	Connection con = null;

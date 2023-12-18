@@ -2,10 +2,16 @@ package controladores;
 
 import dados.BibliotecarioDados;
 import dados.ExcecaoDados;
+import dados.InterfaceBibliotecarioDados;
 
 public class BibliotecarioControlador {
 	
-	private BibliotecarioDados dados = new BibliotecarioDados();
+	private InterfaceBibliotecarioDados dados;
+	
+	public BibliotecarioControlador() {
+		this.dados = new BibliotecarioDados();
+	}
+	
 
 	public void login(String email, String senha) throws Exception, ExcecaoControlador {
 		
@@ -33,4 +39,14 @@ public class BibliotecarioControlador {
 		
 	}
 
+
+	public InterfaceBibliotecarioDados getDados() {
+		return dados;
+	}
+
+
+	public void setDados(InterfaceBibliotecarioDados dados) {
+		this.dados = dados;
+	}
+	
 }
