@@ -30,7 +30,7 @@ public class EmprestimoControlador {
 		this.leitorDados = new LeitorDados();
 		this.livroDados = new LivroDados();
 	}
-	
+
 	private LeitorControlador leitorControlador = new LeitorControlador();
 	private LivroControlador livroControlador = new LivroControlador();
 	private AplicacaoEmail emailControlador = new AplicacaoEmail();
