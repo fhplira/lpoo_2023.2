@@ -1,5 +1,11 @@
 <h1 align="center">📚 SBI - Sistema Bibliotecário Inteligente 📚</h1>
 
+<p align="center">
+    <img loading="lazy" src="https://img.shields.io/github/stars/fhplira/lpoo_2023.2%20?style=social"/>
+    <img loading="lazy" src="https://img.shields.io/badge/linguagem%20-%20java%20-%20red"/>
+    <img loading="lazy" src="https://img.shields.io/badge/maven%20-%20v4.0.1%20-%20blue"/>
+    <img loading="lazy" src="https://img.shields.io/badge/status%20-%20conclu%C3%ADdo%20-%20lilac"/>
+</p>
 
 <h2> 📝Descrição do Projeto</h2>
 Sistema desktop desenvolvido na disciplina de LPOO do curso de Análise e Desenvolvimento de Sistemas.
