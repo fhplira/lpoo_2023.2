@@ -72,7 +72,7 @@ public class VisualizarEmprestimoEspecifico extends JFrame {
 
 		textField_dataEmprestimo_1.setText(dataEmprestimoFormatada);
 		textField_data_devolucao_1.setText(dataDevolucaoFormatada);
-		textField_diasAtrasados_1.setText(Integer.toString(emprestimo.getDiasAtraso()));
+		textField_diasAtrasados_1.setText(Long.toString(emprestimo.getDiasAtraso()));
 		textField_Titulo_1.setText(livro.getTitulo());
 		textFieldNomeLeitor.setText(leitor.getNome());
 		textFieldEmailLeitor.setText(leitor.getEmail());

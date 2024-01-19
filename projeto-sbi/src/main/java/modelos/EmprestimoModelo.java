@@ -3,11 +3,12 @@ package modelos;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class EmprestimoModelo {
 	
 	private boolean devolvido = false;
-	private int diasAtraso = 0; 
+	private long diasAtraso = 0; 
 	private int id;
 	private String isbn;
 	private String cpf;
@@ -37,11 +38,11 @@ public class EmprestimoModelo {
 		this.devolvido = devolvido;
 	}
 
-	public int getDiasAtraso() {
+	public long getDiasAtraso() {
 		return diasAtraso;
 	}
 
-	public void setDiasAtraso(int diasAtraso) {
+	public void setDiasAtraso(long diasAtraso) {
 		this.diasAtraso = diasAtraso;
 	}
 
@@ -113,6 +114,12 @@ public class EmprestimoModelo {
 		this.dataAviso = dataAviso;
 	}
 
+	public long duracaoDiasAtraso() {
+		setDataAgora();
+		long dias = ChronoUnit.DAYS.between(getDataDevolucao(), getDataAtual());
+		return dias;
+	}
+	
 	public String toString() {
 		return "ID do Empréstimo = " + id + " , CPF do Leitor = " + cpf;
 	}	
